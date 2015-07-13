@@ -19,18 +19,25 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-/*
+/**
  * 此类提供以城市ID查询天气信息的功能
  * 使用方法为JsonDao。getCityWeatherbyCityID(String cityID)
  * 返回CityWeather类的变量
+ * @author 延昊南
+ *
  */
 public class JsonDao {
 	
-	private static  String preurl = "http://wap.youhubst.com/weather/getweather.php?ID=";
-	private static CityWeather cityWeather = null; 
-    private volatile static String strResult = "";
-    private static Thread thread;
+	private static  String preurl = "http://wap.youhubst.com/weather/getweather.php?ID=";	// 请求网址的前部分
+	private static CityWeather cityWeather = null; 											// 返回的对象
+    private volatile static String strResult = "";											// JSON结果字符串
+    private static Thread thread;															// 线程——请求操作必须在线程中进行
 	
+    /**
+     * 通过城市ID得到该城市的天气数据
+     * @param cityID 城市ID
+     * @return CityWeather对象
+     */
 	public static CityWeather getCityWeatherbyCityID(String cityID) {
 		connServerForResult(cityID);
 		try {
@@ -42,6 +49,10 @@ public class JsonDao {
 		return parseJson(strResult);
 	}
     
+	/**
+	 * HTTP GET方法获得天气数据
+	 * @param strUrl 城市ID字符串
+	 */
 	private static void connServerForResult(String strUrl) {   
         // HttpGet对象   
         final HttpGet httpRequest = new HttpGet(preurl + strUrl); 
@@ -61,8 +72,7 @@ public class JsonDao {
                     // 获得HttpResponse对象   
                     HttpResponse httpResponse = httpClient.execute(httpRequest);   
                     if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {   
-                        // 取得返回的数据   
-                        //bundle.putString("result", EntityUtils.toString(httpResponse.getEntity())); 
+                        // 取得返回的数据    
                         strResult = EntityUtils.toString(httpResponse.getEntity());
                     }
                     else {
@@ -78,7 +88,12 @@ public class JsonDao {
         thread.start();
     }   
 	
-	private static  CityWeather parseJson(String strResult) {
+	/**
+	 * 解析请求到的JSON数据，生成CityWeather对象
+	 * @param strResult 请求到的JSON字符串
+	 * @return CityWeather对象
+	 */
+	private static CityWeather parseJson(String strResult) {
         try {   
             JSONObject jsonObj = new JSONObject(strResult).getJSONObject("weatherinfo");  
         	//JSONTokener jsonParser = new JSONTokener(strResult);
