@@ -1,9 +1,13 @@
 package weatherforecast.view;
 
+import java.io.IOException;
+
 import weatherforecast.dao.*;
 import weatherforecast.model.CityWeather;
+import weatherforecast.util.CreateDB;
 import android.os.Bundle;
 import android.app.Activity;
+import android.database.SQLException;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +29,28 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        CreateDB myDbHelper = new CreateDB(this);  
+       // myDbHelper = new CreateDB(this);  
+   
+        try {  
+   
+         myDbHelper.createDataBase();  
+   
+     } catch (IOException ioe) {  
+   
+         throw new Error("Unable to create database");  
+   
+     }  
+   
+     try {  
+   
+         myDbHelper.openDataBase();  
+   
+     }catch(SQLException sqle){  
+   
+         throw sqle;  
+   
+     }  
         setContentView(R.layout.activity_main);
         
         editText1 = (EditText) findViewById(R.id.editText1);
@@ -36,8 +62,9 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				String cityID = editText1.getEditableText().toString();
-				cityWeather = JsonDao.getCityWeatherbyCityID(cityID);
+				String city = editText1.getEditableText().toString();
+				int cityID=CityDao.getIDByNameCN1(city);
+				cityWeather = JsonDao.getCityWeatherbyCityID(cityID+"");
 				String result = cityWeather.getCity()+"\n"+cityWeather.getCityid()+"\n"
 						+cityWeather.getDate_y()+"\n"+cityWeather.getIndex()+"\n"
 						+cityWeather.getIndex_co()+"\n"+cityWeather.getIndex_d()+"\n"
