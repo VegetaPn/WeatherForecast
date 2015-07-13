@@ -1,9 +1,11 @@
 package weatherforecast.view;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import weatherforecast.dao.*;
 import weatherforecast.model.CityWeather;
+import weatherforecast.model.City_ID;
 import weatherforecast.util.CreateDB;
 import android.os.Bundle;
 import android.app.Activity;
@@ -63,8 +65,9 @@ public class MainActivity extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				String city = editText1.getEditableText().toString();
-				int cityID=CityDao.getIDByNameCN1(city);
-				cityWeather = JsonDao.getCityWeatherbyCityID(cityID+"");
+				ArrayList<City_ID> list=CityDao.getIDByName(city);
+				
+				cityWeather = JsonDao.getCityWeatherbyCityID(list.get(1).getId()+"");
 				String result = cityWeather.getCity()+"\n"+cityWeather.getCityid()+"\n"
 						+cityWeather.getDate_y()+"\n"+cityWeather.getIndex()+"\n"
 						+cityWeather.getIndex_co()+"\n"+cityWeather.getIndex_d()+"\n"
