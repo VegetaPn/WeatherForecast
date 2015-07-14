@@ -1,6 +1,7 @@
 package weatherforecast.view;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -9,7 +10,11 @@ import com.baidu.location.LocationClientOption;
 
 import weatherforecast.dao.*;
 import weatherforecast.model.CityWeather;
+<<<<<<< HEAD
 import weatherforecast.service.MyLocationListener;
+=======
+import weatherforecast.model.City_ID;
+>>>>>>> 36430d800d8669c5f39d9aa00f63ea4aa5e19fec
 import weatherforecast.util.CreateDB;
 import android.os.Bundle;
 import android.os.Handler;
@@ -87,8 +92,9 @@ public class MainActivity extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				String city = editText1.getEditableText().toString();
-				int cityID=CityDao.getIDByNameCN1(city);
-				cityWeather = JsonDao.getCityWeatherbyCityID(cityID+"");
+				ArrayList<City_ID> list=CityDao.getIDByName(city);
+				
+				cityWeather = JsonDao.getCityWeatherbyCityID(list.get(1).getId()+"");
 				String result = cityWeather.getCity()+"\n"+cityWeather.getCityid()+"\n"
 						+cityWeather.getDate_y()+"\n"+cityWeather.getIndex()+"\n"
 						+cityWeather.getIndex_co()+"\n"+cityWeather.getIndex_d()+"\n"
