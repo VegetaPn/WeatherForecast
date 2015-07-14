@@ -10,11 +10,8 @@ import com.baidu.location.LocationClientOption;
 
 import weatherforecast.dao.*;
 import weatherforecast.model.CityWeather;
-<<<<<<< HEAD
 import weatherforecast.service.MyLocationListener;
-=======
 import weatherforecast.model.City_ID;
->>>>>>> 36430d800d8669c5f39d9aa00f63ea4aa5e19fec
 import weatherforecast.util.CreateDB;
 import android.os.Bundle;
 import android.os.Handler;
