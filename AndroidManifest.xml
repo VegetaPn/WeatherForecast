@@ -53,6 +53,7 @@
             </intent-filter>
         </activity>
         <activity android:name="weatherforecast.view.AddCityActivity" ></activity>
+        <activity android:name="weatherforecast.view.AddCityActivity"></activity>       
         <activity android:name="weatherforecast.view.testSucceed" ></activity>
     </application>
 
