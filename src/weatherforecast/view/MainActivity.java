@@ -31,22 +31,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 /*
- * 主界面，
- * 测试用，此界面的部分代码和控件可删或改
+ * 主界面
  */
 public class MainActivity extends Activity {
 
-	private EditText editText1;
-	private TextView textView2;
-	private Button button1;
-	private Button btn_location;
 	private CityWeather cityWeather;
-
-	private Button button2;
-
+	private EditText editTextInputCityName;
+	private TextView textViewShowMessage;
+	private Button btn_searchWeather;
+	private Button btn_location;
+	private Button btn_addCity;
 	public LocationClient mLocationClient = null;							// 定位服务客户端的声明，勿删
 	public MyLocationListener myListener = new MyLocationListener();		// 勿删
-	private StringBuffer sb = null;
 
 
     @Override
@@ -61,6 +57,7 @@ public class MainActivity extends Activity {
         option.setIsNeedAddress(true);
         mLocationClient.setLocOption(option);
         mLocationClient.registerLocationListener( myListener );				//注册监听函数
+        mLocationClient.start();
         /*以上*/
    
         try {  
@@ -85,71 +82,14 @@ public class MainActivity extends Activity {
      
         setContentView(R.layout.activity_main);
         
-        editText1 = (EditText) findViewById(R.id.editText1);
-        button1 = (Button) findViewById(R.id.button1);
-        btn_location = (Button) findViewById(R.id.button3);
-        textView2 = (TextView) findViewById(R.id.textView2);
-
-        button2=(Button) findViewById(R.id.button2);
-
-        
-        mLocationClient.start();
-        
-
-        button1.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				String city = editText1.getEditableText().toString();
-				ArrayList<City_ID> list=CityDao.getIDByName(city);
-				
-				cityWeather = JsonDao.getCityWeatherbyCityID(list.get(1).getId()+"");
-				String result = cityWeather.getCity()+"\n"+cityWeather.getCityid()+"\n"
-						+cityWeather.getDate_y()+"\n"+cityWeather.getIndex()+"\n"
-						+cityWeather.getIndex_co()+"\n"+cityWeather.getIndex_d()+"\n"
-						+cityWeather.getIndex_tr()+"\n"+cityWeather.getIndex_uv()+"\n"
-						+cityWeather.getIndex_xc()+"\n"+cityWeather.getTemp1()+"\n"
-						+cityWeather.getWeather1()+"\n"+cityWeather.getWeek()+"\n"
-						+cityWeather.getWind1()+"\n";
-				textView2.setText(result);
-			}
-		});
-        
-
-        
-        
-        button2.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				
-				Intent i=new Intent();
-				i.setClass(MainActivity.this, AddCityActivity.class);
-				startActivity(i);
-
-		       
-
-			}
-		});
-
-        /*
-         * 目前不会非阻塞来显示结果，等到学会后再改
-         */
-        btn_location.setOnClickListener(new OnClickListener() {
-
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-
-				 mLocationClient.requestLocation();
-			        textView2.setText("城市名："+myListener.getCityName()
-							+"\n区县名："+myListener.getDistrictName()
-							+"\nErrcode: "+myListener.getErrcode());
-			}
-		});
+        editTextInputCityName = (EditText) findViewById(R.id.editTextInputCityName);
+        btn_searchWeather = (Button) findViewById(R.id.btn_searchWeather);
+        btn_location = (Button) findViewById(R.id.btn_location);
+        btn_addCity = (Button) findViewById(R.id.btn_addCity);
+        textViewShowMessage = (TextView) findViewById(R.id.textViewShowMessage);
+        btn_searchWeather.setOnClickListener(new WeatherSearchListener());
+        btn_location.setOnClickListener(new LocationButtonListener());
+        btn_addCity.setOnClickListener(new AddCityButtonListener());
     }
 
 
@@ -160,4 +100,64 @@ public class MainActivity extends Activity {
         return true;
     }
   
+    
+    /**
+     * 查询按钮的监听器类
+     * @author 延昊南
+     *
+     */
+    private class WeatherSearchListener implements OnClickListener {
+
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			String city = editTextInputCityName.getEditableText().toString();
+			ArrayList<City_ID> list=CityDao.getIDByName(city);
+			
+			cityWeather = JsonDao.getCityWeatherbyCityID(list.get(1).getId()+"");
+			String result = cityWeather.getCity()+"\n"+cityWeather.getCityid()+"\n"
+					+cityWeather.getDate_y()+"\n"+cityWeather.getIndex()+"\n"
+					+cityWeather.getIndex_co()+"\n"+cityWeather.getIndex_d()+"\n"
+					+cityWeather.getIndex_tr()+"\n"+cityWeather.getIndex_uv()+"\n"
+					+cityWeather.getIndex_xc()+"\n"+cityWeather.getTemp1()+"\n"
+					+cityWeather.getWeather1()+"\n"+cityWeather.getWeek()+"\n"
+					+cityWeather.getWind1()+"\n";
+			textViewShowMessage.setText(result);
+		}
+    	
+    }
+    
+    
+    /**
+     * 定位按钮 的监听器类
+     * @author 延昊南
+     */
+    private class LocationButtonListener implements OnClickListener {
+
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			mLocationClient.requestLocation();
+			textViewShowMessage.setText("城市名："+myListener.getCityName()
+					+"\n区县名："+myListener.getDistrictName()
+					+"\nErrcode: "+myListener.getErrcode());
+		}
+    	
+    }
+    
+    /**
+     * 添加城市按钮的监听器
+     *
+     */
+    private class AddCityButtonListener implements OnClickListener {
+
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			Intent i=new Intent();
+			i.setClass(MainActivity.this, AddCityActivity.class);
+			startActivity(i);
+		}
+    	
+    }
 }

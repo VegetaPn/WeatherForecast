@@ -9,53 +9,56 @@
     tools:context=".MainActivity" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewTipForInputCityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="请输入城市全名：" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="请输入城市名：" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/editTextInputCityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/textView1"
-        android:layout_below="@id/textView1"
-        android:ems="10" android:inputType="text"/>
+        android:layout_alignLeft="@+id/textViewTipForInputCityName"
+        android:layout_below="@+id/textViewTipForInputCityName"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btn_searchWeather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/editText1"
-        android:layout_below="@id/editText1"
+        android:layout_alignLeft="@+id/editTextInputCityName"
+        android:layout_below="@+id/editTextInputCityName"
         android:text="查询" />
 
-    <TextView
-        android:id="@+id/textView2"
+    <Button
+        android:id="@+id/btn_addCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/button1"
-        android:layout_below="@id/button1"
+        android:layout_alignRight="@+id/editTextInputCityName"
+        android:layout_below="@+id/editTextInputCityName"
+        android:text="添加城市" />
+
+    <Button
+        android:id="@+id/btn_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextInputCityName"
+        android:layout_marginLeft="18dp"
+        android:layout_toRightOf="@+id/btn_searchWeather"
+        android:text="定位" />
+
+    <TextView
+        android:id="@+id/textViewShowMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_searchWeather"
+        android:layout_below="@+id/btn_searchWeather"
+        android:layout_marginTop="18dp"
         android:text="" />
-
-       <Button
-           android:id="@+id/button2"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignParentBottom="true"
-           android:layout_alignRight="@+id/button3"
-           android:layout_marginBottom="44dp"
-           android:layout_marginRight="26dp"
-           android:text="添加城市" />
-
-       <Button
-           android:id="@+id/button3"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignParentRight="true"
-           android:layout_below="@+id/textView2"
-           android:layout_marginRight="19dp"
-           android:layout_marginTop="62dp"
-           android:text="定位" />
 
 </RelativeLayout>

@@ -25,7 +25,7 @@ public class AddCityActivity  extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_city);
 		l=(LinearLayout) findViewById(R.id.l1);
-        edit=(EditText) findViewById(R.id.editText1);
+        edit=(EditText) findViewById(R.id.editTextInputCityName);
         
         TextView t = new TextView(this);
         t.setText("当前定位城市");
