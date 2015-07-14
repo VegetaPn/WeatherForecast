@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -55,8 +53,9 @@ public class AddCityActivity  extends Activity{
 			// TODO Auto-generated method stub
 			l.removeAllViews();
 		    TextView tv = new TextView(AddCityActivity.this);
-		    CityDao cityDao=new CityDao();
-	        ArrayList<City_ID> list=cityDao.getIDByName(edit.getText().toString());
+		    @SuppressWarnings("unused")
+			CityDao cityDao=new CityDao();
+	        ArrayList<City_ID> list=CityDao.getIDByName(edit.getText().toString());
 	        for(int i=0;i<list.size();i++)
 	        {
 	        	City_ID city_ID=list.get(i);

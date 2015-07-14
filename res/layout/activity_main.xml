@@ -18,38 +18,44 @@
         android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:ems="10" />
+        android:layout_alignLeft="@id/textView1"
+        android:layout_below="@id/textView1"
+        android:ems="10" android:inputType="text"/>
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/editText1"
+        android:layout_alignLeft="@id/editText1"
+        android:layout_below="@id/editText1"
         android:text="查询" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_below="@+id/button1"
+        android:layout_alignLeft="@id/button1"
+        android:layout_below="@id/button1"
         android:text="" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_centerVertical="true"
-        android:text="添加城市" />
-=======
-        android:layout_above="@+id/textView2"
-        android:layout_alignRight="@+id/textView1"
-        android:text="定位" />
->>>>>>> 124d86df54fd81900445218644717ad173699b32
+       <Button
+           android:id="@+id/button2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentBottom="true"
+           android:layout_alignRight="@+id/button3"
+           android:layout_marginBottom="44dp"
+           android:layout_marginRight="26dp"
+           android:text="添加城市" />
+
+       <Button
+           android:id="@+id/button3"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentRight="true"
+           android:layout_below="@+id/textView2"
+           android:layout_marginRight="19dp"
+           android:layout_marginTop="62dp"
+           android:text="定位" />
 
 </RelativeLayout>

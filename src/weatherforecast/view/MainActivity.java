@@ -3,14 +3,14 @@ package weatherforecast.view;
 import java.io.IOException;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
+
 import com.baidu.mapapi.utils.i;
-=======
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
->>>>>>> 124d86df54fd81900445218644717ad173699b32
+
 
 import weatherforecast.dao.*;
 import weatherforecast.model.CityWeather;
@@ -41,13 +41,13 @@ public class MainActivity extends Activity {
 	private Button button1;
 	private Button btn_location;
 	private CityWeather cityWeather;
-<<<<<<< HEAD
+
 	private Button button2;
-=======
+
 	public LocationClient mLocationClient = null;							// 定位服务客户端的声明，勿删
 	public MyLocationListener myListener = new MyLocationListener();		// 勿删
 	private StringBuffer sb = null;
->>>>>>> 124d86df54fd81900445218644717ad173699b32
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,15 +87,15 @@ public class MainActivity extends Activity {
         
         editText1 = (EditText) findViewById(R.id.editText1);
         button1 = (Button) findViewById(R.id.button1);
-        btn_location = (Button) findViewById(R.id.button2);
+        btn_location = (Button) findViewById(R.id.button3);
         textView2 = (TextView) findViewById(R.id.textView2);
-<<<<<<< HEAD
+
         button2=(Button) findViewById(R.id.button2);
-=======
+
         
         mLocationClient.start();
         
->>>>>>> 124d86df54fd81900445218644717ad173699b32
+
         button1.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -116,30 +116,38 @@ public class MainActivity extends Activity {
 			}
 		});
         
-<<<<<<< HEAD
+
         
         
         button2.setOnClickListener(new OnClickListener() {
-=======
-        /*
-         * 目前不会非阻塞来显示结果，等到学会后再改
-         */
-        btn_location.setOnClickListener(new OnClickListener() {
->>>>>>> 124d86df54fd81900445218644717ad173699b32
 			
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-<<<<<<< HEAD
+				
 				Intent i=new Intent();
 				i.setClass(MainActivity.this, AddCityActivity.class);
 				startActivity(i);
-=======
-		        mLocationClient.requestLocation();
-		        textView2.setText("城市名："+myListener.getCityName()
-						+"\n区县名："+myListener.getDistrictName()
-						+"\nErrcode: "+myListener.getErrcode());
->>>>>>> 124d86df54fd81900445218644717ad173699b32
+
+		       
+
+			}
+		});
+
+        /*
+         * 目前不会非阻塞来显示结果，等到学会后再改
+         */
+        btn_location.setOnClickListener(new OnClickListener() {
+
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+
+				 mLocationClient.requestLocation();
+			        textView2.setText("城市名："+myListener.getCityName()
+							+"\n区县名："+myListener.getDistrictName()
+							+"\nErrcode: "+myListener.getErrcode());
 			}
 		});
     }
