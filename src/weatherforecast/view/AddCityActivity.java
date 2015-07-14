@@ -58,7 +58,7 @@ public class AddCityActivity  extends Activity{
 	        ArrayList<City_ID> list=CityDao.getIDByName(edit.getText().toString());
 	        for(int i=0;i<list.size();i++)
 	        {
-	        	City_ID city_ID=list.get(i);
+	        	final City_ID city_ID=list.get(i);
 	        	String city=""+city_ID.getNamecn()+","+city_ID.getDistrictcn()+","+city_ID.getProvcn();
 	        	tv = new TextView(AddCityActivity.this);
 	        	tv.setText(city);
@@ -68,6 +68,7 @@ public class AddCityActivity  extends Activity{
 	 				@Override
 	 				public void onClick(View arg0) {
 	 					// TODO Auto-generated method stub
+	 					CityDao.insertCity(city_ID);//加入到收藏城市列表
 	 					Intent i=new Intent();
 	 					i.setClass(AddCityActivity.this, testSucceed.class);
 	 					startActivity(i);

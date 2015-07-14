@@ -1,11 +1,39 @@
 package weatherforecast.dao;
+/**
+ * 提供城市查询,添加城市的类
+ * @author 杨幸潮
+ *
+ */
 import java.util.ArrayList;
+
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import weatherforecast.model.City_ID;
 import weatherforecast.util.*;
 public class CityDao {
+	
+	public static ArrayList<City_ID> showicity(){//返回收藏的城市的集合
+		SQLiteDatabase db=DButil.getDB();
+		ArrayList<City_ID> list1 =new ArrayList<City_ID>();
+		String sql="select * from icity";
+        Cursor cursor =db.rawQuery(sql, null);
+		
+		while(cursor.moveToNext()){
+			City_ID city=new City_ID(cursor.getInt(0),cursor.getString(1),cursor.getString(2),
+					cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
+			list1.add(city);
+		}
+		return list1;
+	}
+	public static void insertCity(City_ID mycity){//增加城市到收藏列表
+		SQLiteDatabase db=DButil.getDB();
+		String sql="insert into icity values("+mycity.getId()+",'"
+				+mycity.getNameen()+"','"+mycity.getNamecn()+"','"
+				+mycity.getDistricten()+"','"+mycity.getDistrictcn()+"','"
+				+mycity.getProven()+"','"+mycity.getProvcn()+"')";
+		db.execSQL(sql);
+	}
 	public static ArrayList<City_ID>  getIDByName(String name) {//执行总查询
 		ArrayList<City_ID> list1 =new ArrayList<City_ID>();
 		if(!name.equals(""))
@@ -40,7 +68,7 @@ public class CityDao {
 	}
 	public static ArrayList<City_ID> getIDByNameEN (String name){//通过英文名查询
 		ArrayList<City_ID> list=new ArrayList<City_ID>();
-		SQLiteDatabase db=DButil.getDB();
+		SQLiteDatabase db=DButil.getDB();//获取库
 		String str1 = "";
 		for(int i=0;i<name.length();i++){
 			str1=str1+"%"+name.charAt(i);

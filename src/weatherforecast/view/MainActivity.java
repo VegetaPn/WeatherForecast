@@ -62,27 +62,8 @@ public class MainActivity extends Activity {
         mLocationClient.setLocOption(option);
         mLocationClient.registerLocationListener( myListener );				//注册监听函数
         /*以上*/
-   
-        try {  
-   
-        	myDbHelper.createDataBase();  
-   
-        } catch (IOException ioe) {  
-   
-        	throw new Error("Unable to create database");  
-	   
-        }  
-   
-        try {  
-   
-        	myDbHelper.openDataBase();  
-   
-	     }catch(SQLException sqle){  
-	   
-	         throw sqle;  
-	   
-	     }  
-     
+        copyDB(myDbHelper);
+        
         setContentView(R.layout.activity_main);
         
         editText1 = (EditText) findViewById(R.id.editText1);
@@ -104,7 +85,7 @@ public class MainActivity extends Activity {
 				String city = editText1.getEditableText().toString();
 				ArrayList<City_ID> list=CityDao.getIDByName(city);
 				
-				cityWeather = JsonDao.getCityWeatherbyCityID(list.get(1).getId()+"");
+				cityWeather = JsonDao.getCityWeatherbyCityID(list.get(0).getId()+"");
 				String result = cityWeather.getCity()+"\n"+cityWeather.getCityid()+"\n"
 						+cityWeather.getDate_y()+"\n"+cityWeather.getIndex()+"\n"
 						+cityWeather.getIndex_co()+"\n"+cityWeather.getIndex_d()+"\n"
@@ -151,7 +132,28 @@ public class MainActivity extends Activity {
 			}
 		});
     }
+ public void copyDB(CreateDB myDbHelper){//调用CreateDB类中的方法来复制城市数据库
+	 try {  
+		   
+     	myDbHelper.createDataBase();  
 
+     } catch (IOException ioe) {  
+
+     	throw new Error("Unable to create database");  
+	   
+     }  
+
+     try {  
+
+     	myDbHelper.openDataBase();  
+
+	     }catch(SQLException sqle){  
+	   
+	         throw sqle;  
+	   
+	     }  
+  
+ }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
