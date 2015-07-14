@@ -12,7 +12,11 @@ import android.database.sqlite.SQLiteDatabase;
 import weatherforecast.model.City_ID;
 import weatherforecast.util.*;
 public class CityDao {
-	
+	public static void deleteCity(int id){
+		SQLiteDatabase db=DButil.getDB();
+		String sql="delete from icity where id="+id;
+		db.execSQL(sql);
+	}
 	public static ArrayList<City_ID> showicity(){//返回收藏的城市的集合
 		SQLiteDatabase db=DButil.getDB();
 		ArrayList<City_ID> list1 =new ArrayList<City_ID>();
