@@ -3,12 +3,15 @@ package weatherforecast.view;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.baidu.mapapi.utils.i;
+
 import weatherforecast.dao.*;
 import weatherforecast.model.CityWeather;
 import weatherforecast.model.City_ID;
 import weatherforecast.util.CreateDB;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.database.SQLException;
 import android.view.Menu;
 import android.view.View;
@@ -27,6 +30,7 @@ public class MainActivity extends Activity {
 	private TextView textView2;
 	private Button button1;
 	private CityWeather cityWeather;
+	private Button button2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +62,7 @@ public class MainActivity extends Activity {
         editText1 = (EditText) findViewById(R.id.editText1);
         button1 = (Button) findViewById(R.id.button1);
         textView2 = (TextView) findViewById(R.id.textView2);
-        
+        button2=(Button) findViewById(R.id.button2);
         button1.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -76,6 +80,19 @@ public class MainActivity extends Activity {
 						+cityWeather.getWeather1()+"\n"+cityWeather.getWeek()+"\n"
 						+cityWeather.getWind1()+"\n";
 				textView2.setText(result);
+			}
+		});
+        
+        
+        
+        button2.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent i=new Intent();
+				i.setClass(MainActivity.this, AddCityActivity.class);
+				startActivity(i);
 			}
 		});
     }

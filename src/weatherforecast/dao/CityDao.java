@@ -7,11 +7,17 @@ import weatherforecast.model.City_ID;
 import weatherforecast.util.*;
 public class CityDao {
 	public static ArrayList<City_ID>  getIDByName(String name) {//Ö´ÐÐ×Ü²éÑ¯
-		ArrayList<City_ID> list1=CityDao.getIDByNameEN(name);
-		ArrayList<City_ID> list2=CityDao.getIDByNameCN(name);
-		ArrayList<City_ID> list=new ArrayList<City_ID>();
+		ArrayList<City_ID> list1 =new ArrayList<City_ID>();
+		if(!name.equals(""))
+		{
+			list1=CityDao.getIDByNameEN(name);
+			ArrayList<City_ID> list2=CityDao.getIDByNameCN(name);
+			//ArrayList<City_ID> list=new ArrayList<City_ID>();
+			
+			list1.addAll(list2);
+			
+		}
 		
-		list1.addAll(list2);
 		return list1;
 		
 	}

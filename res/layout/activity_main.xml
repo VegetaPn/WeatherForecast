@@ -38,4 +38,12 @@
         android:layout_below="@+id/button1"
         android:text="" />
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_centerVertical="true"
+        android:text="添加城市" />
+
 </RelativeLayout>
