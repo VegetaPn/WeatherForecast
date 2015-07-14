@@ -17,23 +17,22 @@ import android.widget.TextView;
 
 public class AddCityActivity  extends Activity{
 
-	private LinearLayout l;
+	private LinearLayout linearLayout;
     private EditText edit;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_city);
-		l=(LinearLayout) findViewById(R.id.l1);
+		linearLayout=(LinearLayout) findViewById(R.id.addCityL1);
         edit=(EditText) findViewById(R.id.editTextInputCityName);
         
         TextView t = new TextView(this);
         t.setText("当前定位城市");
-        l.addView(t);
+        linearLayout.addView(t);
         t = new TextView(this);
         t.setText("热门城市列表");
-        l.addView(t);
-        
+        linearLayout.addView(t);    
         
         edit.setOnClickListener(new OnClickListener() {
 			
@@ -41,7 +40,7 @@ public class AddCityActivity  extends Activity{
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				
-				l.removeAllViews();
+				linearLayout.removeAllViews();
 				
 			}
 		});
@@ -51,7 +50,7 @@ public class AddCityActivity  extends Activity{
 		@Override
 		public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 			// TODO Auto-generated method stub
-			l.removeAllViews();
+			linearLayout.removeAllViews();
 		    TextView tv = new TextView(AddCityActivity.this);
 		    @SuppressWarnings("unused")
 			CityDao cityDao=new CityDao();
@@ -76,7 +75,7 @@ public class AddCityActivity  extends Activity{
 	 				}
 	 			});
 	        	 
-	         l.addView(tv);
+	        	 linearLayout.addView(tv);
 	        }
 		    
 			

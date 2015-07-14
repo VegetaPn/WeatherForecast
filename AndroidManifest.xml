@@ -52,8 +52,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="weatherforecast.view.AddCityActivity"></activity>
-        <activity android:name="weatherforecast.view.testSucceed"></activity>
+        <activity android:name="weatherforecast.view.AddCityActivity"></activity>       
+        <activity android:name="weatherforecast.view.testSucceed" ></activity>
     </application>
 
 </manifest>
