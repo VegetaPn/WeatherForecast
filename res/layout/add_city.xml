@@ -24,22 +24,23 @@
 
             <requestFocus />
         </EditText>
-    </LinearLayout>>
-    
-    <ScrollView        
-    android:layout_width="fill_parent"    
-    android:layout_height="fill_parent"
-    android:layout_below="@id/addCityL2"    
-    android:scrollbars="vertical"    
-    android:fadingEdge="vertical">  
-   
-        
+    </LinearLayout>
+       
     <LinearLayout
         android:orientation="vertical"
+        android:layout_below="@id/addCityL2"   
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/addCityL1">
+        
+       <ListView 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listViewshowcity"
+        >
+           
+           
+       </ListView>
     </LinearLayout>
   
-    </ScrollView>
-</RelativeLayout>
+  </RelativeLayout>
