@@ -15,7 +15,6 @@ import weatherforecast.util.CreateDB;
 
 public class WeatherHomeFragment extends Fragment {
 
-	private int index;
 	private int cityId;
 	CreateDB myDbHelper;
 	
@@ -24,7 +23,7 @@ public class WeatherHomeFragment extends Fragment {
 	}
 
 	public WeatherHomeFragment(int i,CreateDB db){
-		this.index=i;
+		this.cityId=i;
 		this.myDbHelper=db;
 	}
 
@@ -33,7 +32,7 @@ public class WeatherHomeFragment extends Fragment {
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		if (savedInstanceState != null)
-			index = savedInstanceState.getInt("index");
+			cityId = savedInstanceState.getInt("index");
 		View v = inflater.inflate(R.layout.weather_home_fragment, container, false);
 		initView(v);
 		return v;
@@ -43,14 +42,6 @@ public class WeatherHomeFragment extends Fragment {
 		TextView t;
 		CityWeather cityWeather;
 		t = (TextView)v.findViewById(R.id.text_weather);
-		//cityId = getCityIdByIndex();
-		switch(index){
-		case 0:
-			cityId = 101010100;
-			break;
-		case 1:
-			cityId = 101090101;
-		}
 		cityWeather = JsonDao.getCityWeatherbyCityID(cityId+"");
 		String result = cityWeather.getCity()+"\n"+cityWeather.getCityid()+"\n"
 				+cityWeather.getDate_y()+"\n"+cityWeather.getIndex()+"\n"

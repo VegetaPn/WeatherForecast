@@ -26,11 +26,13 @@ public class AddCityActivity  extends Activity{
     private EditText edit;
     private ListView listView;
     private ArrayList<City_ID> list;
+    private AddCityActivity activity;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_city);
+		activity = this;
 		linearLayout=(LinearLayout) findViewById(R.id.addCityL1);
         edit=(EditText) findViewById(R.id.editTextInputCityName);
         listView=(ListView) findViewById(R.id.listViewshowcity);
@@ -44,9 +46,7 @@ public class AddCityActivity  extends Activity{
 				
 				CityDao.insertCity(list.get(arg2));//加入到收藏城市列表
 				System.out.println("dianji"+list.get(arg2).getNamecn());
-				Intent i=new Intent();
-			    i.setClass(AddCityActivity.this, testSucceed.class);
-				startActivity(i);
+				activity.finish();
 			}
 		});
         
