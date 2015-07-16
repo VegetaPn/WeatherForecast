@@ -61,7 +61,11 @@
         <activity android:name="weatherforecast.view.testSucceed" ></activity>
         
         <activity
-            android:name="com.example.weather.TripActivity" >
+            android:name="com.example.weather.ScheduleActivity" >
+        </activity>
+        
+        <activity
+            android:name="com.example.weather.AddScheduleActivity" >
         </activity>
     </application>
 

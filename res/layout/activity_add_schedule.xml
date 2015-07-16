@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+     
+    <Button 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ret"
+        android:text="取消"
+        android:textSize="15dp"
+        android:layout_alignParentLeft="true"
+        android:background="@android:color/transparent" />
+    
+    <Button 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/add"
+        android:text="添加"
+        android:textSize="15dp"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/transparent" />
+
+     <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/newSche"
+        android:text="新的行程"
+        android:textSize="22dp"
+        android:layout_alignBottom="@id/ret"
+        android:layout_centerHorizontal="true" />
+     
+     <TextView
+         android:layout_width="match_parent"
+         android:layout_height="25dp"
+         android:layout_below="@id/newSche"
+         android:id="@+id/white" />
+     
+     <!-- <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/title"
+         android:layout_below="@id/white"
+         android:text="内容"
+         android:textSize="16dp" />
+     
+     <EditText 
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:id="@+id/inputTitle"
+         android:layout_below="@id/white"
+         android:layout_alignBottom="@id/title"
+         android:layout_toRightOf="@id/title" /> -->
+     <LinearLayout 
+         android:id="@+id/content"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/white"
+         android:orientation="horizontal">
+         <TextView
+             android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:id="@+id/title"
+	         android:text="内容"
+         	 android:textSize="16dp" />
+         <EditText 
+             android:layout_width="match_parent"
+	         android:layout_height="wrap_content"
+	         android:id="@+id/inputTitle" />
+     </LinearLayout>
+     
+     <View 
+        android:id="@+id/straight"
+        android:layout_width="match_parent"
+        android:layout_height="2px" 
+        android:background="#000000"
+        android:layout_below="@id/content" />
+     
+     <LinearLayout 
+         android:id="@+id/site"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/content"
+         android:orientation="horizontal">
+	     <!-- <EditText
+	         android:id="@+id/inputPlace"
+	         android:layout_width="match_parent"
+	         android:layout_height="wrap_content"
+	         android:layout_alignLeft="@id/inputTitle"
+	         android:layout_below="@id/straight" />
+	     
+	     <TextView
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:id="@+id/place"
+	         android:text="地点"
+	         android:textSize="16dp"
+	         android:layout_toLeftOf="@id/inputPlace"
+	         android:layout_alignBottom="@id/inputPlace"
+	         android:layout_below="@id/straight" /> -->
+
+		 <TextView
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:text="地点"
+	         android:textSize="16dp" />
+		
+	     <EditText
+	         android:layout_width="match_parent"
+	         android:layout_height="wrap_content"
+	         android:id="@+id/inputPlace" />
+	     
+     </LinearLayout>
+     
+     <View 
+        android:id="@+id/strai"
+        android:layout_width="match_parent"
+        android:layout_height="2px" 
+        android:background="#000000"
+        android:layout_below="@id/site" />
+     
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/time"
+         android:text="时间"
+         android:textSize="16dp"
+         android:layout_below="@id/strai" />
+     
+     <TimePicker
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/timePiker"
+         android:layout_toRightOf="@id/time"
+         android:layout_below="@id/strai"
+         android:layout_alignParentRight="true" />
+     
+     <View 
+        android:id="@+id/stra"
+        android:layout_width="match_parent"
+        android:layout_height="2px" 
+        android:background="#000000"
+        android:layout_below="@id/timePiker" />
+     
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/remind"
+         android:text="是否提醒"
+         android:textSize="16dp"
+         android:layout_below="@id/stra" />
+     
+     <com.example.weather.SwitchButton  
+        android:id="@+id/wiperSwitch"  
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"  
+        android:layout_toRightOf="@id/remind"
+        android:layout_marginLeft="150dp"
+        android:layout_below="@id/stra" />  
+     
+</RelativeLayout>
