@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AddCityActivity  extends Activity{
 
@@ -44,9 +45,15 @@ public class AddCityActivity  extends Activity{
 					long arg3) {
 				// TODO Auto-generated method stub
 				
-				CityDao.insertCity(list.get(arg2));//加入到收藏城市列表
-				System.out.println("dianji"+list.get(arg2).getNamecn());
-				activity.finish();
+				if(CityDao.insertCity(list.get(arg2))){//加入到收藏城市列表
+					activity.finish();//插入成功
+				}else{
+					Toast toast=Toast.makeText(AddCityActivity.this, "该城市已经被添加到收藏列表，无需再次添加",Toast.LENGTH_SHORT);
+					toast.show();
+					
+				}
+				//System.out.println("dianji"+list.get(arg2).getNamecn());
+				
 			}
 		});
         
