@@ -59,7 +59,15 @@
         </activity>
         <activity android:name="weatherforecast.view.AddCityActivity" ></activity>   
         <activity android:name="weatherforecast.view.testSucceed" ></activity>
-        <activity android:name="weatherforecast.service.NotiService" ></activity>e
+        <activity android:name="weatherforecast.service.NotiService" ></activity>
+        
+        <activity
+            android:name="com.example.weather.ScheduleActivity" >
+        </activity>
+        
+        <activity
+            android:name="com.example.weather.AddScheduleActivity" >
+        </activity>
     </application>
 
 </manifest>

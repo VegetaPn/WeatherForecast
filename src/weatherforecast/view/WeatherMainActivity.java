@@ -1,8 +1,11 @@
 package weatherforecast.view;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import weatherforecast.dao.CityDao;
+import weatherforecast.model.City_ID;
 import weatherforecast.util.CreateDB;
 
 import android.database.SQLException;
@@ -28,6 +31,7 @@ public class WeatherMainActivity extends BaseActivity {
 		vp = new ViewPager(this);
 		vp.setId("VP".hashCode());
 		vp.setAdapter(new WeatherPagerAdapter(getSupportFragmentManager()));
+	//	setViewPagerScrollSpeed(vp);
 		setContentView(vp);
 
 		vp.setOnPageChangeListener(new OnPageChangeListener() {
@@ -61,21 +65,32 @@ public class WeatherMainActivity extends BaseActivity {
 		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 	}
 	
-
+	private void setViewPagerScrollSpeed(ViewPager vp){  
+        try {  
+            Field mScroller = null;  
+            mScroller = ViewPager.class.getDeclaredField("mScroller");  
+            mScroller.setAccessible(true);   
+            FixedSpeedScroller scroller = new FixedSpeedScroller( vp.getContext( ) );  
+            mScroller.set( vp, scroller);  
+        }catch(NoSuchFieldException e){  
+              
+        }catch (IllegalArgumentException e){  
+              
+        }catch (IllegalAccessException e){  
+              
+        }  
+    }
+	
 	public class WeatherPagerAdapter extends FragmentPagerAdapter {
 		
 		private ArrayList<Fragment> mFragments;
-
-		private final int[] cities = new int[] {
-				0,
-				1
-		};
+		ArrayList<City_ID> list=CityDao.showicity();
 		
 		public WeatherPagerAdapter(FragmentManager fm) {
 			super(fm);
 			mFragments = new ArrayList<Fragment>();
-			for (int citiId : cities)
-				mFragments.add(new WeatherHomeFragment(citiId,myDbHelper));
+			for (City_ID city : list)
+				mFragments.add(new WeatherHomeFragment(city.getId(),myDbHelper));
 		}
 
 		@Override
