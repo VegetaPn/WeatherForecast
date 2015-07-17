@@ -1,23 +1,23 @@
 package weatherforecast.service;
 
-import java.io.File;
-
-import weatherforecast.view.MainActivity;
 import weatherforecast.view.WeatherMainActivity;
 
 import android.R;
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
+/**
+ * 通知栏服务需要用到的类
+ * @author 延昊南
+ *
+ */
 public class NotiService {
 	
-	static final int NOTIFICATION_ID = 0x123;
+	static final int NOTIFICATION_ID = 0x123;			// 通知ID
 	NotificationManager nm;
 	private Context m_context;
 	
@@ -25,13 +25,12 @@ public class NotiService {
 		m_context = context;
 		nm = (NotificationManager)context.getSystemService(context.NOTIFICATION_SERVICE);
 	}
-
-	private void initNotify(){
-		
-		
-	}
 	
-	/** 显示通知栏 */
+	/**
+	 * 显示通知，点击跳转到主界面
+	 * @param title 通知栏的标题
+	 * @param msg	通知栏的消息字符串
+	 */
 	public void showNotify(String title, String msg){
 		
 		Intent intent = new Intent(m_context, WeatherMainActivity.class);
