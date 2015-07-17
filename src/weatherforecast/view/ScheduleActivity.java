@@ -20,7 +20,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class TripActivity extends Activity {
+public class ScheduleActivity extends Activity {
 
 	private TextView textView1;
 	private TextView textView2;
@@ -37,7 +37,7 @@ public class TripActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_trip);
+		setContentView(R.layout.activity_schedule);
 		textView1 = (TextView) findViewById(R.id.date);
 		textView2 = (TextView) findViewById(R.id.time);
 		textView1.setText(stringDate());

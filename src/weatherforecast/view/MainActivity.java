@@ -15,6 +15,7 @@ import com.baidu.location.LocationClientOption;
 import weatherforecast.dao.*;
 import weatherforecast.model.CityWeather;
 import weatherforecast.service.MyLocationListener;
+import weatherforecast.service.NotiService;
 import weatherforecast.model.City_ID;
 import weatherforecast.util.CreateDB;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RemoteViews.RemoteView;
 import android.widget.TextView;
 
 /*
@@ -92,8 +94,22 @@ public class MainActivity extends Activity {
         btn_addCity.setOnClickListener(new AddCityButtonListener());
     }
 
+    
+    
+    /* (non-Javadoc)
+	 * @see android.app.Activity#onResume()
+	 */
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		NotiService noti = new NotiService(MainActivity.this);
+		noti.showNotify("消息标题", "消息内容啦啦啦啦啦啦啦");
+	}
 
-    @Override
+
+
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -124,6 +140,8 @@ public class MainActivity extends Activity {
 						+cityWeather.getWeather1()+"\n"+cityWeather.getWeek()+"\n"
 						+cityWeather.getWind1()+"\n";
 				textViewShowMessage.setText(result);
+				
+				
 				
 			}
 			
