@@ -1,27 +1,53 @@
 package weatherforecast.view;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import com.umeng.analytics.MobclickAgent;
-
 import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.View.OnClickListener;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import weatherforecast.util.ScheduleDBHelper;
 import weatherforecast.view.SwitchButton.OnChangeListener;  
 
 
 public class AddScheduleActivity extends Activity {
 
+	private ScheduleDBHelper dbHelper = new ScheduleDBHelper(AddScheduleActivity.this,"ScheduleDB");
+	private SQLiteDatabase db;
+	private static String mYear;
+	private static String mMonth;
+	private static String mDay;
+	public Integer pickerHour = 0;
+	public Integer pickerMinute = 0;
+	public String time = "";
+	public String schedule = "";
+	public String place = "";
 	private TimePicker timePicker;
 	private int hour;
 	private int minute;
+	private EditText contentText;
+	private EditText placeText;
+	private Button cancelButton;
+	private Button OKButton;
+	private int id = 0;
+	private String remind = "";
+	private String dateTime = "";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +72,80 @@ public class AddScheduleActivity extends Activity {
 		minute = cal.get(Calendar.MINUTE);
         timePicker.setCurrentHour(hour);
         timePicker.setCurrentMinute(minute);
+        
+        contentText = (EditText) findViewById(R.id.inputTitle);
+        placeText = (EditText) findViewById(R.id.inputPlace);
+        cancelButton = (Button) findViewById(R.id.ret);
+        OKButton = (Button) findViewById(R.id.add);
+        dbHelper.getReadableDatabase();
+        
+        cancelButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent();
+				i.setClass(AddScheduleActivity.this,ScheduleActivity.class);
+				startActivity(i);
+			}
+		});
+        OKButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				pickerHour = timePicker.getCurrentHour();
+				pickerMinute = timePicker.getCurrentMinute();
+				String pHour = pickerHour.toString();
+				String pMinute = pickerMinute.toString();
+				if(pHour.length() == 1)
+					pHour = "0" + pHour;
+				if(pMinute.length() == 1)
+					pMinute = "0" + pMinute;
+				time = pHour + ":" + pMinute;
+				schedule = contentText.getText().toString();
+		        place = placeText.getText().toString();
+		
+				//向数据库中存储数据
+				final Calendar cal = Calendar.getInstance();
+				cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+				mYear = String.valueOf(cal.get(Calendar.YEAR));
+				mMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
+				mDay = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+				if(mMonth.length() == 1)
+					mMonth = "0" + mMonth;
+				if(mDay.length() == 1)
+					mDay = "0" + mDay;
+				db = dbHelper.getReadableDatabase();
+				Cursor cur = db.rawQuery("select * from schedule", null);
+				if(cur.getCount() == 0)
+					id = 1;
+				else{
+					Cursor cursor = db.rawQuery("select * from schedule limit 1 offset (select count(*) - 1 from schedule)",null);
+					while(cursor.moveToNext()) {
+						id = Integer.valueOf(cursor.getString(0)) + 1;
+					}
+					cursor.close();
+				}
+				dateTime = mYear + "-" + mMonth + "-" + mDay + "-" + pHour + "-" + pMinute;
+				remind = "时间：" + pHour + ":" + pMinute + "\n" + "日程：" + schedule + "\n" + "地点：" + place;  
+				ContentValues values = new ContentValues();
+				values.put("date", dateTime);
+				values.put("content", schedule);
+				values.put("place", place);
+				db.insert("schedule ", null, values);
+				
+				//返回结果到ScheduleActivity
+		        Intent i = new Intent();
+				Bundle bundle = new Bundle();
+				bundle.putString("time", time);
+				bundle.putString("schedule", schedule);
+				bundle.putString("place", place);
+				i.putExtras(bundle);
+				setResult(-1, i);
+				finish();
+			}
+		});
     }  
 
 	@Override
@@ -54,16 +154,32 @@ public class AddScheduleActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		MobclickAgent.onResume(AddScheduleActivity.this);
-	}
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		MobclickAgent.onPause(AddScheduleActivity.this);
-	}
+	
+	public void writeFileData(String fileName,String message){ 
+		
+		try{
+			FileOutputStream fout = openFileOutput(fileName, MODE_APPEND);
+	        byte [] bytes = message.getBytes(); 
+	        fout.write(bytes); 
+	        fout.close(); 
+	    }catch(Exception e){ 
+	    	   e.printStackTrace(); 
+	    }
+	}    
+	
+	public String getSDPath() {  
+        File sdDir = null;  
+        boolean sdCardExist = Environment.getExternalStorageState().equals(  
+                android.os.Environment.MEDIA_MOUNTED);          // 判断sd卡是否存在  
+        if (sdCardExist) {
+            sdDir = Environment.getExternalStorageDirectory();  // 获取根目录  
+            return sdDir.toString();
+        }
+        else {
+        	String notExist = "There is not a SDcard!";
+        	System.out.println(notExist);
+        	return notExist;
+        }  
+    }  
+	
 }
