@@ -12,6 +12,15 @@ import android.database.sqlite.SQLiteDatabase;
 import weatherforecast.model.City_ID;
 import weatherforecast.util.*;
 public class CityDao {
+	public static City_ID getCityByID(int id){
+		SQLiteDatabase db=DButil.getDB();
+		String sql="select * from city where id="+id;
+		Cursor cursor=db.rawQuery(sql, null);
+		cursor.moveToNext();
+		City_ID city=new City_ID(cursor.getInt(0),cursor.getString(1),cursor.getString(2),
+				cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
+		return city;
+	}
 	public static City_ID getCurrentCityID(String name){//根据定位城市的名称获取实体类
 		String name1=(String) name.subSequence(0, name.length()-1);
 		return CityDao.getIDByNameCN1(name1).get(0);

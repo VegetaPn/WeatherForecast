@@ -10,6 +10,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.umeng.analytics.MobclickAgent;
 
 
 import weatherforecast.dao.*;
@@ -94,7 +95,10 @@ public class MainActivity extends Activity {
         btn_addCity.setOnClickListener(new AddCityButtonListener());
     }
 
-    
+    public void onPause() {
+    	super.onPause();
+    	MobclickAgent.onPause(this);
+    	}
     
     /* (non-Javadoc)
 	 * @see android.app.Activity#onResume()
@@ -105,6 +109,7 @@ public class MainActivity extends Activity {
 		super.onResume();
 		NotiService noti = new NotiService(MainActivity.this);
 		noti.showNotify("消息标题", "消息内容啦啦啦啦啦啦啦");
+		MobclickAgent.onResume(MainActivity.this);
 	}
 
 

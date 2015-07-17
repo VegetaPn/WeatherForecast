@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import com.umeng.analytics.MobclickAgent;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Gravity;
@@ -33,7 +35,14 @@ public class ScheduleActivity extends Activity {
 	private static String mDay;
 	private static int hour;
 	private static int minute;
-	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

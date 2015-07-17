@@ -16,16 +16,26 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.umeng.analytics.MobclickAgent;
 
 public class WeatherMainActivity extends BaseActivity {
 
 	CreateDB myDbHelper;
 	ViewPager vp;	
-
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		
+		}
+		public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		MobclickAgent.updateOnlineConfig(this);
 		initDB();
 		
 		vp = new ViewPager(this);
