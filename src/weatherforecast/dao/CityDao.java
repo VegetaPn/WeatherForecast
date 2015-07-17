@@ -12,6 +12,19 @@ import android.database.sqlite.SQLiteDatabase;
 import weatherforecast.model.City_ID;
 import weatherforecast.util.*;
 public class CityDao {
+	public static City_ID getCurrentCityID(String name){//根据定位城市的名称获取实体类
+		String name1=(String) name.subSequence(0, name.length()-1);
+		return CityDao.getIDByNameCN1(name1).get(0);
+		
+	}
+	public static boolean isExist(City_ID mycity){
+		SQLiteDatabase db=DButil.getDB();
+		String sql="select * from icity where id="+mycity.getId();
+		Cursor cursor =db.rawQuery(sql, null);
+		boolean flag;
+		flag=cursor.moveToNext();
+		return flag;
+	}
 	public static void deleteCity(int id){
 		SQLiteDatabase db=DButil.getDB();
 		String sql="delete from icity where id="+id;
@@ -30,13 +43,18 @@ public class CityDao {
 		}
 		return list1;
 	}
-	public static void insertCity(City_ID mycity){//增加城市到收藏列表
+	public static boolean insertCity(City_ID mycity){//增加城市到收藏列表
+		if(!CityDao.isExist(mycity)){
 		SQLiteDatabase db=DButil.getDB();
 		String sql="insert into icity values("+mycity.getId()+",'"
 				+mycity.getNameen()+"','"+mycity.getNamecn()+"','"
 				+mycity.getDistricten()+"','"+mycity.getDistrictcn()+"','"
 				+mycity.getProven()+"','"+mycity.getProvcn()+"')";
 		db.execSQL(sql);
+		return true;
+		}else{
+			return false;
+		}
 	}
 	public static ArrayList<City_ID>  getIDByName(String name) {//执行总查询
 		ArrayList<City_ID> list1 =new ArrayList<City_ID>();
