@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import com.umeng.analytics.MobclickAgent;
+
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -166,7 +168,18 @@ public class AddScheduleActivity extends Activity {
 	    	   e.printStackTrace(); 
 	    }
 	}    
-	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	public String getSDPath() {  
         File sdDir = null;  
         boolean sdCardExist = Environment.getExternalStorageState().equals(  

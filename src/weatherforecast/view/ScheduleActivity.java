@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import com.umeng.analytics.MobclickAgent;
+
 
 import weatherforecast.util.ScheduleDBHelper;
 
@@ -45,7 +47,18 @@ public class ScheduleActivity extends Activity {
 	private String mDay = "";
 	private int hour = 0;
 	private int minute = 0;
-	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
