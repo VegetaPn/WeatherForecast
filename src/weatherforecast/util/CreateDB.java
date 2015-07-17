@@ -110,7 +110,8 @@ public class CreateDB extends SQLiteOpenHelper{
         byte[] buffer = new byte[1024];  
         int length;  
         while ((length = myInput.read(buffer))>0){  
-            myOutput.write(buffer, 0, length);  
+            myOutput.write(buffer, 0, length); 
+        	//myOutput.write(buffer);
         }  
    
         //Close the streams  

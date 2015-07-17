@@ -41,6 +41,7 @@ public class CityDao {
 					cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
 			list1.add(city);
 		}
+		cursor.close();
 		return list1;
 	}
 	public static boolean insertCity(City_ID mycity){//增加城市到收藏列表
@@ -50,6 +51,7 @@ public class CityDao {
 				+mycity.getNameen()+"','"+mycity.getNamecn()+"','"
 				+mycity.getDistricten()+"','"+mycity.getDistrictcn()+"','"
 				+mycity.getProven()+"','"+mycity.getProvcn()+"')";
+		System.out.println(sql);
 		db.execSQL(sql);
 		return true;
 		}else{
@@ -82,9 +84,11 @@ public class CityDao {
 		while(cursor.moveToNext()){
 			City_ID city=new City_ID(cursor.getInt(0),cursor.getString(1),cursor.getString(2),
 					cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
+			System.out.println("id:"+cursor.getInt(0));
 			list.add(city);
 		}
 		
+		cursor.close();
 		return list;
 		
 	}
@@ -105,9 +109,10 @@ public class CityDao {
 		while(cursor.moveToNext()){
 			City_ID city=new City_ID(cursor.getInt(0),cursor.getString(1),cursor.getString(2),
 					cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
+			System.out.println("id:"+cursor.getInt(0));
 			list.add(city);
 		}
-		
+		cursor.close();
 		return list;
 			
 		
@@ -123,7 +128,7 @@ public class CityDao {
 					cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
 			list.add(city);
 		}
-		
+		cursor.close();
 		return list;
 			
 		
@@ -139,7 +144,7 @@ public class CityDao {
 					cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
 			list.add(city);
 		}
-		
+		cursor.close();
 		return list;
 			
 		
@@ -155,7 +160,7 @@ public class CityDao {
 					cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
 			list.add(city);
 		}
-		
+		cursor.close();
 		return list;
 			
 		
@@ -177,7 +182,7 @@ public class CityDao {
 					cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
 			list.add(city);
 		}
-		
+		cursor.close();
 		return list;
 			
 		
@@ -199,7 +204,7 @@ public class CityDao {
 					cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
 			list.add(city);
 		}
-		
+		cursor.close();
 		return list;
 			
 		
@@ -221,7 +226,7 @@ public class CityDao {
 					cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
 			list.add(city);
 		}
-		
+		cursor.close();
 		return list;
 		
 	}

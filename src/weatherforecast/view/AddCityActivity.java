@@ -44,7 +44,7 @@ public class AddCityActivity  extends Activity{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				
+				//System.out.println(list.get(arg2).getId());
 				if(CityDao.insertCity(list.get(arg2))){//加入到收藏城市列表
 					activity.finish();//插入成功
 				}else{
