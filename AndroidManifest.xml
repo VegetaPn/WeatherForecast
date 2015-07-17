@@ -63,6 +63,18 @@
         <activity
             android:name="com.example.weather.TripActivity" >
         </activity>
+        
+        <receiver 
+            android:name="weatherforecast.view.WeatherWidget">
+            <intent-filter >
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@layout/widget_provider">
+                
+            </meta-data>
+        </receiver>
     </application>
 
+  
 </manifest>

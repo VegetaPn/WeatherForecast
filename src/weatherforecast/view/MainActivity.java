@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RemoteViews.RemoteView;
 import android.widget.TextView;
 
 /*
@@ -124,6 +125,8 @@ public class MainActivity extends Activity {
 						+cityWeather.getWeather1()+"\n"+cityWeather.getWeek()+"\n"
 						+cityWeather.getWind1()+"\n";
 				textViewShowMessage.setText(result);
+				
+				
 				
 			}
 			
