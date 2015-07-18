@@ -53,11 +53,7 @@
 
         <activity 
             android:name="weatherforecast.view.WeatherMainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            
         </activity>
         
         <activity
@@ -71,6 +67,11 @@
         
         <activity
             android:name="weatherforecast.view.ScheduleActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         
         <activity
@@ -88,9 +89,9 @@
             </meta-data>
         </receiver>
         
-        <receiver android:name="com.example.alarmtest.MyReceiver" >
+        <receiver android:name="weatherforecast.service.ScheduleReceiver" >
             <intent-filter>
-                <action android:name="android.intent.action.EDIT" />
+                <action android:name="schedule" />
             </intent-filter>
         </receiver>
         <!-- 友盟统计信息配置 -->
