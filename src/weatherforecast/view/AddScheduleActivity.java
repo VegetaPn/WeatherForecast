@@ -2,6 +2,8 @@ package weatherforecast.view;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -9,6 +11,8 @@ import weatherforecast.util.ScheduleDBHelper;
 import weatherforecast.view.SwitchButton.OnChangeListener;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -143,6 +147,10 @@ public class AddScheduleActivity extends Activity {
 				bundle.putString("place", place);
 				i.putExtras(bundle);
 				setResult(-1, i);
+				
+				long timemilis = convertDate(dateTime);
+				setAlarm(remind, timemilis);
+				
 				finish();
 			}
 		});
@@ -182,4 +190,30 @@ public class AddScheduleActivity extends Activity {
         }  
     }  
 	
+	private void setAlarm(String msg, long timemilis) {
+    	final AlarmManager am = (AlarmManager)this.getSystemService(ALARM_SERVICE); 
+        Intent intent = new Intent();  
+        intent.setAction("schedule");  
+        intent.putExtra("msg", msg);  
+        final PendingIntent pi = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);  
+        final long time = System.currentTimeMillis();  
+         
+        am.set(AlarmManager.RTC_WAKEUP, timemilis, pi); 
+	}
+    
+	private void cancelAlarm() {
+    	//am.cancel(pi);
+    }
+    
+	private long convertDate(String dt) {
+    	Calendar c = Calendar.getInstance();
+    	try {
+			c.setTime(new SimpleDateFormat("yyyy-MM-dd-HH-mm").parse(dt));
+			return c.getTimeInMillis();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return 0;
+	}
 }
