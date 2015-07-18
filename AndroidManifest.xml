@@ -70,11 +70,11 @@
         <activity android:name="weatherforecast.service.NotiService" ></activity>
         
         <activity
-            android:name="com.example.weather.ScheduleActivity" >
+            android:name="weatherforecast.view.ScheduleActivity" >
         </activity>
         
         <activity
-            android:name="com.example.weather.AddScheduleActivity" >
+            android:name="weatherforecast.view.AddScheduleActivity" >
         </activity>
         
         <receiver 
