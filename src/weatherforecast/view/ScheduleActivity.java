@@ -45,8 +45,8 @@ public class ScheduleActivity extends Activity {
 	private String mYear = "";
 	private String mMonth = "";
 	private String mDay = "";
-	private int hour = 0;
-	private int minute = 0;
+	private String hour = "";
+	private String minute = "";
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -125,16 +125,24 @@ public class ScheduleActivity extends Activity {
 		mYear = String.valueOf(cal.get(Calendar.YEAR));
 		mMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
 		mDay = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
-		hour = cal.get(Calendar.HOUR_OF_DAY);
-		minute = cal.get(Calendar.MINUTE);
+		if(mMonth.length() == 1)
+			mMonth = "0" + mMonth;
+		if(mDay.length() == 1)
+			mDay = "0" + mDay;
+		
 		return mYear + "/" + mMonth + "/" + mDay;
 	}
 	
 	public String stringTime() {
 		final Calendar cal = Calendar.getInstance();
 		cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-		hour = cal.get(Calendar.HOUR_OF_DAY);
-		minute = cal.get(Calendar.MINUTE);
+		hour = String.valueOf(cal.get(Calendar.HOUR_OF_DAY));
+		minute = String.valueOf(cal.get(Calendar.MINUTE));
+		if(hour.length() == 1)
+			hour = "0" + hour;
+		if(minute.length() == 1)
+			minute = "0" + minute;
+		
 		return hour + ":" + minute;
 	}
 	

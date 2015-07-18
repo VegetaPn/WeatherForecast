@@ -180,19 +180,4 @@ public class AddScheduleActivity extends Activity {
 		super.onPause();
 		MobclickAgent.onPause(this);
 	}
-	public String getSDPath() {  
-        File sdDir = null;  
-        boolean sdCardExist = Environment.getExternalStorageState().equals(  
-                android.os.Environment.MEDIA_MOUNTED);          // 判断sd卡是否存在  
-        if (sdCardExist) {
-            sdDir = Environment.getExternalStorageDirectory();  // 获取根目录  
-            return sdDir.toString();
-        }
-        else {
-        	String notExist = "There is not a SDcard!";
-        	System.out.println(notExist);
-        	return notExist;
-        }  
-    }  
-	
 }
