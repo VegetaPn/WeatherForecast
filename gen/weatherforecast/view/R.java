@@ -1025,12 +1025,19 @@ containing a value of this type.
         public static final int abs__textfield_searchview_right_holo_dark=0x7f02006d;
         public static final int abs__textfield_searchview_right_holo_light=0x7f02006e;
         public static final int abs__toast_frame=0x7f02006f;
-        public static final int ic_launcher=0x7f020070;
-        public static final int shadow=0x7f020071;
+        public static final int add=0x7f020070;
+        public static final int ic_launcher=0x7f020071;
+        public static final int shadow=0x7f020072;
+        public static final int switch_bottom=0x7f020073;
+        public static final int switch_btn_pressed=0x7f020074;
+        public static final int switch_frame=0x7f020075;
+        public static final int switch_mask=0x7f020076;
+        public static final int widgetback=0x7f020077;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f040040;
-        public static final int RelativeLayout1=0x7f040041;
+        public static final int LinearLayout1=0x7f040058;
+        public static final int LinearLayout2=0x7f040065;
+        public static final int RelativeLayout1=0x7f040059;
         public static final int abs__action_bar=0x7f040026;
         public static final int abs__action_bar_container=0x7f040025;
         public static final int abs__action_bar_subtitle=0x7f040017;
@@ -1070,41 +1077,79 @@ containing a value of this type.
         public static final int abs__textButton=0x7f040019;
         public static final int abs__title=0x7f040021;
         public static final int abs__up=0x7f04000b;
-        public static final int action_settings=0x7f04004c;
-        public static final int addCityL1=0x7f04003f;
-        public static final int addCityL2=0x7f04003e;
-        public static final int btn_addCity=0x7f04003b;
-        public static final int btn_location=0x7f04003c;
-        public static final int btn_searchWeather=0x7f04003a;
-        public static final int button1=0x7f040047;
-        public static final int content_frame=0x7f040044;
+        public static final int action_settings=0x7f040073;
+        public static final int add=0x7f040039;
+        public static final int addCity=0x7f04005f;
+        public static final int addCityL1=0x7f040056;
+        public static final int addCityL2=0x7f040055;
+        public static final int btn_addCity=0x7f04004b;
+        public static final int btn_location=0x7f04004c;
+        public static final int btn_searchWeather=0x7f04004a;
+        public static final int content=0x7f04003c;
+        public static final int content_frame=0x7f04005c;
+        public static final int date=0x7f04004e;
         public static final int disableHome=0x7f040009;
-        public static final int editTextInputCityName=0x7f040039;
+        public static final int editTextInputCityName=0x7f040049;
         public static final int edit_query=0x7f04002c;
         public static final int fullscreen=0x7f040013;
         public static final int homeAsUp=0x7f040006;
-        public static final int imageCityinfo=0x7f040043;
-        public static final int imageView1=0x7f040046;
+        public static final int imageButton=0x7f040052;
+        public static final int imageCityinfo=0x7f04005b;
+        public static final int imageView1=0x7f04005e;
+        public static final int imageView_widget=0x7f04006d;
+        public static final int imageView_widgetlayout=0x7f04006f;
+        public static final int inputPlace=0x7f040041;
+        public static final int inputTitle=0x7f04003e;
         public static final int left=0x7f040010;
         public static final int listMode=0x7f040002;
+        public static final int listViewshowcity=0x7f040057;
         public static final int margin=0x7f040012;
-        public static final int menu_frame=0x7f040045;
+        public static final int menu_frame=0x7f04005d;
+        public static final int newSche=0x7f04003a;
         public static final int none=0x7f040014;
         public static final int normal=0x7f040001;
+        public static final int page2=0x7f040067;
+        public static final int remind=0x7f040046;
+        public static final int ret=0x7f040038;
         public static final int right=0x7f040011;
-        public static final int row_icon=0x7f040048;
-        public static final int row_title=0x7f040049;
+        public static final int row_icon=0x7f040060;
+        public static final int row_title=0x7f040061;
+        public static final int scrollView1=0x7f040064;
         public static final int selected_view=0x7f040015;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;
-        public static final int slidingmenumain=0x7f04004a;
+        public static final int site=0x7f040040;
+        public static final int slidingmenumain=0x7f040062;
+        public static final int stra=0x7f040045;
+        public static final int strai=0x7f040042;
+        public static final int straight=0x7f04003f;
         public static final int tabMode=0x7f040003;
-        public static final int textCityname=0x7f040042;
-        public static final int textViewShowMessage=0x7f04003d;
-        public static final int textViewTipForInputCityName=0x7f040038;
-        public static final int text_weather=0x7f04004b;
+        public static final int tableLayout=0x7f040050;
+        public static final int tableRow1=0x7f040051;
+        public static final int tableRow2=0x7f040053;
+        public static final int tableRow3=0x7f040054;
+        public static final int textCityname=0x7f04005a;
+        public static final int textView1=0x7f040068;
+        public static final int textView2=0x7f040069;
+        public static final int textViewShowMessage=0x7f04004d;
+        public static final int textViewTipForInputCityName=0x7f040048;
+        public static final int textViewWidgetDate=0x7f04006c;
+        public static final int textViewWidgetIndex=0x7f040072;
+        public static final int textViewWidgetTemp=0x7f040070;
+        public static final int textViewWidgetTime2=0x7f04006b;
+        public static final int textViewWidgetWeather=0x7f040071;
+        public static final int text_addcity_item=0x7f040063;
+        public static final int text_weather=0x7f040066;
+        public static final int time=0x7f040043;
+        public static final int timePiker=0x7f040044;
+        public static final int title=0x7f04003d;
         public static final int useLogo=0x7f040004;
+        public static final int weather=0x7f04004f;
+        public static final int white=0x7f04003b;
+        public static final int widgetTextviewCity=0x7f04006e;
+        public static final int widgetTextviewTime=0x7f04006a;
+        public static final int wiperSwitch=0x7f040047;
         public static final int wrap_content=0x7f040000;
     }
     public static final class integer {
@@ -1132,18 +1177,23 @@ containing a value of this type.
         public static final int abs__search_dropdown_item_icons_2line=0x7f030012;
         public static final int abs__search_view=0x7f030013;
         public static final int abs__simple_dropdown_hint=0x7f030014;
-        public static final int activity_main=0x7f030015;
-        public static final int add_city=0x7f030016;
-        public static final int city_list_item=0x7f030017;
-        public static final int content_frame=0x7f030018;
-        public static final int menu_frame=0x7f030019;
-        public static final int menu_list=0x7f03001a;
-        public static final int row=0x7f03001b;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001c;
-        public static final int sherlock_spinner_item=0x7f03001d;
-        public static final int slidingmenumain=0x7f03001e;
-        public static final int succeed=0x7f03001f;
-        public static final int weather_home_fragment=0x7f030020;
+        public static final int activity_add_schedule=0x7f030015;
+        public static final int activity_main=0x7f030016;
+        public static final int activity_schedule=0x7f030017;
+        public static final int add_city=0x7f030018;
+        public static final int city_list_item=0x7f030019;
+        public static final int content_frame=0x7f03001a;
+        public static final int menu_frame=0x7f03001b;
+        public static final int menu_list=0x7f03001c;
+        public static final int row=0x7f03001d;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001e;
+        public static final int sherlock_spinner_item=0x7f03001f;
+        public static final int slidingmenumain=0x7f030020;
+        public static final int succeed=0x7f030021;
+        public static final int viewitem=0x7f030022;
+        public static final int weather_home_fragment=0x7f030023;
+        public static final int widget_layout=0x7f030024;
+        public static final int widget_provider=0x7f030025;
     }
     public static final class menu {
         public static final int main=0x7f0b0000;
@@ -2347,7 +2397,7 @@ containing a value of this type.
          */
         public static final int[] SherlockSpinner = {
             0x010100af, 0x01010175, 0x01010176, 0x0101017b,
-            0x01010262, 0x010102ac, 0x010102ad, 0x010103ef
+            0x01010262, 0x010102ac, 0x010102ad, 0x01010411
         };
         /**
           <p>
