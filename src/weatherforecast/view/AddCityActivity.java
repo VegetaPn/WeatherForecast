@@ -1,10 +1,6 @@
 package weatherforecast.view;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
-import com.umeng.analytics.MobclickAgent;
 
 import weatherforecast.dao.CityDao;
 import weatherforecast.model.City_ID;
@@ -48,9 +44,9 @@ public class AddCityActivity  extends Activity{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				//System.out.println(list.get(arg2).getId());
-				MobclickAgent.onEvent(AddCityActivity.this,"add a city");
+				
 				if(CityDao.insertCity(list.get(arg2))){//加入到收藏城市列表
+					setResult(list.get(arg2).getId());
 					activity.finish();//插入成功
 				}else{
 					Toast toast=Toast.makeText(AddCityActivity.this, "该城市已经被添加到收藏列表，无需再次添加",Toast.LENGTH_SHORT);
@@ -86,11 +82,7 @@ public class AddCityActivity  extends Activity{
 		    @SuppressWarnings("unused")
 			CityDao cityDao=new CityDao();
 	        list=CityDao.getIDByName(edit.getText().toString());
-	        Comparator<City_ID> comparator = new Comparator<City_ID>(){  
-	            public int compare(City_ID s1, City_ID s2) {  
-	                //按id排序 
-	            return s1.getId()-s2.getId();  }};  
-	            Collections.sort(list,comparator);  
+	        
 	        String[] showCityStrings=new String[list.size()]; 
 	        for(int i=0;i<list.size();i++)
 	        {
@@ -118,17 +110,5 @@ public class AddCityActivity  extends Activity{
     
          
     }
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		MobclickAgent.onResume(AddCityActivity.this);
-	}
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		MobclickAgent.onPause(AddCityActivity.this);
-	}
 
 }

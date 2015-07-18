@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.database.SQLException;
 import java.io.IOException;
@@ -17,6 +18,7 @@ public class WeatherHomeFragment extends Fragment {
 
 	private int cityId;
 	CreateDB myDbHelper;
+	ScrollView scrl;
 	
 	public WeatherHomeFragment() {
 		
@@ -26,6 +28,7 @@ public class WeatherHomeFragment extends Fragment {
 		this.cityId=i;
 		this.myDbHelper=db;
 	}
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -40,6 +43,7 @@ public class WeatherHomeFragment extends Fragment {
 	
 	private void initView(View v){
 		TextView t;
+		TextView t1,t2;
 		CityWeather cityWeather;
 		t = (TextView)v.findViewById(R.id.text_weather);
 		cityWeather = JsonDao.getCityWeatherbyCityID(cityId+"");
@@ -51,5 +55,27 @@ public class WeatherHomeFragment extends Fragment {
 				+cityWeather.getWeather1()+"\n"+cityWeather.getWeek()+"\n"
 				+cityWeather.getWind1()+"\n";
 		t.setText(result);
+		t1=(TextView)v.findViewById(R.id.textView1);
+		t2=(TextView)v.findViewById(R.id.textView2);
+		t1.setText("这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n" +
+				"这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n" +
+				"这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n");
+		t2.setText("这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n" +
+				"这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n" +
+				"这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n");
+		
+		scrl=(ScrollView)v.findViewById(R.id.scrollView1);
+	}
+	
+	public void scrollToTop(){
+		scrl.post(new Runnable(){
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				scrl.scrollTo(0, 0);
+			}
+			
+		});
 	}
 }

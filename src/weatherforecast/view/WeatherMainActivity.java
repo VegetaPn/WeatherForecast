@@ -15,33 +15,30 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.widget.ScrollView;
+
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.umeng.analytics.MobclickAgent;
 
 public class WeatherMainActivity extends BaseActivity {
 
 	CreateDB myDbHelper;
 	ViewPager vp;	
+	ScrollView scrl;
+	ArrayList<Fragment> mFragments;
+	WeatherPagerAdapter adapter;
 	
-	public void onResume() {
-		super.onResume();
-		MobclickAgent.onResume(this);
-		
-		}
-		public void onPause() {
-		super.onPause();
-		MobclickAgent.onPause(this);
-		}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		MobclickAgent.updateOnlineConfig(this);
-		initDB();
 		
+		mFragments=new ArrayList<Fragment>();
+		initDB();
+		scrl=(ScrollView)findViewById(R.id.scrollView1);
 		vp = new ViewPager(this);
 		vp.setId("VP".hashCode());
-		vp.setAdapter(new WeatherPagerAdapter(getSupportFragmentManager()));
-	//	setViewPagerScrollSpeed(vp);
+		adapter = new WeatherPagerAdapter(getSupportFragmentManager(),mFragments);
+		vp.setAdapter(adapter);
+		setViewPagerScrollSpeed(vp);
 		setContentView(vp);
 
 		vp.setOnPageChangeListener(new OnPageChangeListener() {
@@ -61,6 +58,9 @@ public class WeatherMainActivity extends BaseActivity {
 					getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 					break;
 				}
+				WeatherHomeFragment w = (WeatherHomeFragment) vp.getAdapter().instantiateItem(vp, position);
+				w.scrollToTop();
+				
 			}
 
 		});
@@ -94,13 +94,10 @@ public class WeatherMainActivity extends BaseActivity {
 	public class WeatherPagerAdapter extends FragmentPagerAdapter {
 		
 		private ArrayList<Fragment> mFragments;
-		ArrayList<City_ID> list=CityDao.showicity();
 		
-		public WeatherPagerAdapter(FragmentManager fm) {
+		public WeatherPagerAdapter(FragmentManager fm,ArrayList<Fragment> frag) {
 			super(fm);
-			mFragments = new ArrayList<Fragment>();
-			for (City_ID city : list)
-				mFragments.add(new WeatherHomeFragment(city.getId(),myDbHelper));
+			this.mFragments=frag;
 		}
 
 		@Override
@@ -130,6 +127,10 @@ public class WeatherMainActivity extends BaseActivity {
         }catch(SQLException sqle){  
         	throw sqle;  
         }
+        
+        ArrayList<City_ID> list = CityDao.showicity();
+		for (City_ID city : list)
+			mFragments.add(new WeatherHomeFragment(city.getId(),myDbHelper));
 	}
 	
 	public ViewPager getVp(){

@@ -5,7 +5,7 @@ import android.widget.Scroller;
 import android.view.animation.Interpolator;
 
 public class FixedSpeedScroller extends Scroller {  
-    private int mDuration = 5000;  
+    private int mDuration = 400;  
   
     public FixedSpeedScroller(Context context) {  
         super(context);  

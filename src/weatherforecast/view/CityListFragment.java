@@ -25,7 +25,8 @@ import android.widget.TextView;
 public class CityListFragment extends ListFragment {
 	private CreateDB helper;
 	private Button addCity;
-	
+	private ArrayAdapter<String> listAdapter;
+	private ArrayList<String> nameList;
 	public CityListFragment(CreateDB db) {
 		super();
 		// TODO Auto-generated constructor stub
@@ -40,14 +41,14 @@ public class CityListFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		
 		ArrayList<City_ID> list=CityDao.showicity();
-		String cities[] = new String[list.size()];
+		nameList = new ArrayList<String>();
 		for(int i=0;i<list.size();i++){
-			cities[i] = list.get(i).getNamecn();
+			nameList.add(list.get(i).getNamecn());
 		}
 		
-		ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(getActivity(), 
-				R.layout.city_list_item, R.id.textCityname, cities);
-		setListAdapter(cityAdapter);
+		listAdapter = new ArrayAdapter<String>(getActivity(), 
+				R.layout.city_list_item, R.id.textCityname, nameList);
+		setListAdapter(listAdapter);
 		
 		addCity = (Button)getActivity().findViewById(R.id.addCity);
 		addCity.setOnClickListener(new OnClickListener(){
@@ -57,7 +58,7 @@ public class CityListFragment extends ListFragment {
 				// TODO Auto-generated method stub
 				Intent i=new Intent();
 				i.setClass(getActivity(), AddCityActivity.class);
-				startActivity(i);
+				startActivityForResult(i, 1);
 			}
 			
 		});
@@ -68,6 +69,15 @@ public class CityListFragment extends ListFragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode==1){
+			WeatherMainActivity mainAct= (WeatherMainActivity) getActivity();
+			WeatherHomeFragment newPage = new WeatherHomeFragment(resultCode,helper);
+			mainAct.mFragments.add(newPage);
+			mainAct.adapter.notifyDataSetChanged();
+			mainAct.getVp().setCurrentItem(mainAct.mFragments.indexOf(newPage),false);
+			nameList.add(CityDao.getCityByID(resultCode).getNamecn());
+			listAdapter.notifyDataSetChanged();
+		}
 	}
 
 	@Override
@@ -83,7 +93,7 @@ public class CityListFragment extends ListFragment {
 		
 		if (getActivity() instanceof WeatherMainActivity) {
 			WeatherMainActivity pager = (WeatherMainActivity) getActivity();
-			pager.getVp().setCurrentItem(position);
+			pager.getVp().setCurrentItem(position, false);
 			pager.getSlidingMenu().showContent();
 		}
 	}
