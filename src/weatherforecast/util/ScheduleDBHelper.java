@@ -24,7 +24,6 @@ public class ScheduleDBHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
 		db.execSQL("create table schedule(id varchar, date varchar NOT NULL, content varchar, place varchar)");
-		System.out.println("Create database!");
 	}
 
 	@Override

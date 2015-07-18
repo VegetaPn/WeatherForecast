@@ -5,7 +5,8 @@ import java.io.FileOutputStream;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import com.umeng.analytics.MobclickAgent;
+import weatherforecast.util.ScheduleDBHelper;
+import weatherforecast.view.SwitchButton.OnChangeListener;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -15,17 +16,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.View.OnClickListener;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import weatherforecast.util.ScheduleDBHelper;
-import weatherforecast.view.SwitchButton.OnChangeListener;  
 
 
 public class AddScheduleActivity extends Activity {
@@ -132,6 +129,7 @@ public class AddScheduleActivity extends Activity {
 				dateTime = mYear + "-" + mMonth + "-" + mDay + "-" + pHour + "-" + pMinute;
 				remind = "时间：" + pHour + ":" + pMinute + "\n" + "日程：" + schedule + "\n" + "地点：" + place;  
 				ContentValues values = new ContentValues();
+				values.put("id", id);
 				values.put("date", dateTime);
 				values.put("content", schedule);
 				values.put("place", place);
@@ -168,16 +166,20 @@ public class AddScheduleActivity extends Activity {
 	    	   e.printStackTrace(); 
 	    }
 	}    
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		MobclickAgent.onResume(this);
-	}
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		MobclickAgent.onPause(this);
-	}
+	
+	public String getSDPath() {  
+        File sdDir = null;  
+        boolean sdCardExist = Environment.getExternalStorageState().equals(  
+                android.os.Environment.MEDIA_MOUNTED);          // 判断sd卡是否存在  
+        if (sdCardExist) {
+            sdDir = Environment.getExternalStorageDirectory();  // 获取根目录  
+            return sdDir.toString();
+        }
+        else {
+        	String notExist = "There is not a SDcard!";
+        	System.out.println(notExist);
+        	return notExist;
+        }  
+    }  
+	
 }
