@@ -47,14 +47,19 @@ public class WeatherHomeFragment extends Fragment {
 		CityWeather cityWeather;
 		t = (TextView)v.findViewById(R.id.text_weather);
 		cityWeather = JsonDao.getCityWeatherbyCityID(cityId+"");
-		String result = cityWeather.getCity()+"\n"+cityWeather.getCityid()+"\n"
-				+cityWeather.getDate_y()+"\n"+cityWeather.getIndex()+"\n"
-				+cityWeather.getIndex_co()+"\n"+cityWeather.getIndex_d()+"\n"
-				+cityWeather.getIndex_tr()+"\n"+cityWeather.getIndex_uv()+"\n"
-				+cityWeather.getIndex_xc()+"\n"+cityWeather.getTemp1()+"\n"
-				+cityWeather.getWeather1()+"\n"+cityWeather.getWeek()+"\n"
-				+cityWeather.getWind1()+"\n";
-		t.setText(result);
+		if(cityWeather!=null)
+		{
+			String result = cityWeather.getCity()+"\n"+cityWeather.getCityid()+"\n"
+					+cityWeather.getDate_y()+"\n"+cityWeather.getIndex()+"\n"
+					+cityWeather.getIndex_co()+"\n"+cityWeather.getIndex_d()+"\n"
+					+cityWeather.getIndex_tr()+"\n"+cityWeather.getIndex_uv()+"\n"
+					+cityWeather.getIndex_xc()+"\n"+cityWeather.getTemp1()+"\n"
+					+cityWeather.getWeather1()+"\n"+cityWeather.getWeek()+"\n"
+					+cityWeather.getWind1()+"\n";
+			t.setText(result);
+			
+		}
+		
 		t1=(TextView)v.findViewById(R.id.textView1);
 		t2=(TextView)v.findViewById(R.id.textView2);
 		t1.setText("这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n" +
