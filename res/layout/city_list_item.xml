@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/RelativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp" >
 
         <TextView
             android:id="@+id/textCityname"
@@ -20,7 +20,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textSize="20dp" />
 
         <ImageView
             android:id="@+id/imageCityinfo"
@@ -29,6 +29,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/textCityname"
+            android:maxHeight="35dp"
             android:paddingRight="15dp"
             android:scaleType="fitEnd"
             android:src="@drawable/ic_launcher" />

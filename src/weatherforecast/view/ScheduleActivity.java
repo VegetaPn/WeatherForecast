@@ -1,10 +1,14 @@
 package weatherforecast.view;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.TimeZone;
 
+=======
+import com.umeng.analytics.MobclickAgent;
+>>>>>>> ab47700204f9cfc4ca5d057c647758c2db376d6b
 
 import weatherforecast.service.GetDateTime;
 import weatherforecast.util.ScheduleDBHelper;
@@ -46,6 +50,7 @@ public class ScheduleActivity extends Activity {
 	private TextView textView1;
 	private TextView textView2;
 	private ImageButton imageButton;
+<<<<<<< HEAD
 	//private TableLayout tableLayout; 
 	private ListView listView;
 	private ArrayList<HashMap<String,String>> ar;
@@ -53,6 +58,20 @@ public class ScheduleActivity extends Activity {
 	private int index = 0;
 	private SimpleAdapter adapter;
 	
+=======
+	private TableLayout tableLayout; 
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+>>>>>>> ab47700204f9cfc4ca5d057c647758c2db376d6b
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

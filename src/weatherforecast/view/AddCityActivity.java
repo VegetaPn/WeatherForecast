@@ -1,6 +1,10 @@
 package weatherforecast.view;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+import com.umeng.analytics.MobclickAgent;
 
 import weatherforecast.dao.CityDao;
 import weatherforecast.model.City_ID;
@@ -28,6 +32,17 @@ public class AddCityActivity  extends Activity{
     private ListView listView;
     private ArrayList<City_ID> list;
     private AddCityActivity activity;
+    protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -37,7 +52,7 @@ public class AddCityActivity  extends Activity{
 		linearLayout=(LinearLayout) findViewById(R.id.addCityL1);
         edit=(EditText) findViewById(R.id.editTextInputCityName);
         listView=(ListView) findViewById(R.id.listViewshowcity);
-        
+        setResult(-1);
         listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -46,6 +61,7 @@ public class AddCityActivity  extends Activity{
 				// TODO Auto-generated method stub
 				
 				if(CityDao.insertCity(list.get(arg2))){//加入到收藏城市列表
+					MobclickAgent.onEvent(AddCityActivity.this,"AddCity");
 					setResult(list.get(arg2).getId());
 					activity.finish();//插入成功
 				}else{
@@ -82,6 +98,11 @@ public class AddCityActivity  extends Activity{
 		    @SuppressWarnings("unused")
 			CityDao cityDao=new CityDao();
 	        list=CityDao.getIDByName(edit.getText().toString());
+	        Comparator<City_ID> comparator = new Comparator<City_ID>(){  
+	            public int compare(City_ID s1, City_ID s2) {  
+	                //按id排序 
+	            return s1.getId()-s2.getId();  }};  
+	            Collections.sort(list,comparator);  
 	        
 	        String[] showCityStrings=new String[list.size()]; 
 	        for(int i=0;i<list.size();i++)

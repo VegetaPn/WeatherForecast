@@ -39,10 +39,9 @@
         android:background="#aabbcc"
         />
     
-    <ListView
-        android:id="@android:id/list"
+    <com.nhaarman.listviewanimations.itemmanipulation.DynamicListView
+        android:id="@+id/android:list" 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
+        android:layout_height="match_parent" />
 
 </LinearLayout>
