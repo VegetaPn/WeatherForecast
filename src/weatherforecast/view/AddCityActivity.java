@@ -52,7 +52,7 @@ public class AddCityActivity  extends Activity{
 		linearLayout=(LinearLayout) findViewById(R.id.addCityL1);
         edit=(EditText) findViewById(R.id.editTextInputCityName);
         listView=(ListView) findViewById(R.id.listViewshowcity);
-        
+        setResult(-1);
         listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
