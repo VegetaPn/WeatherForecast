@@ -1,6 +1,8 @@
 package weatherforecast.view;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import com.umeng.analytics.MobclickAgent;
 
@@ -96,6 +98,11 @@ public class AddCityActivity  extends Activity{
 		    @SuppressWarnings("unused")
 			CityDao cityDao=new CityDao();
 	        list=CityDao.getIDByName(edit.getText().toString());
+	        Comparator<City_ID> comparator = new Comparator<City_ID>(){  
+	            public int compare(City_ID s1, City_ID s2) {  
+	                //∞¥id≈≈–Ú 
+	            return s1.getId()-s2.getId();  }};  
+	            Collections.sort(list,comparator);  
 	        
 	        String[] showCityStrings=new String[list.size()]; 
 	        for(int i=0;i<list.size();i++)
