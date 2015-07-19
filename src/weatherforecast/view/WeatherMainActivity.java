@@ -13,8 +13,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ScrollView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -51,10 +55,10 @@ public class WeatherMainActivity extends BaseActivity {
 			@Override
 			public void onPageSelected(int position) {
 				switch (position) {
-				case 0://Ò³ÃæÔÚµÚÒ»¸öµÄÊ±ºò²à»¬²Ëµ¥µÄÊôĞÔ
+				case 0://é¡µé¢åœ¨ç¬¬ä¸€ä¸ªçš„æ—¶å€™ä¾§æ»‘èœå•çš„å±æ€§
 					getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 					break;
-				default://Ò³Ãæ²»ÔÚµÚÒ»¸öÒ³ÃæµÄÊ±ºòÉèÖÃ²à»¬²Ëµ¥µÄÊôĞÔ
+				default://é¡µé¢ä¸åœ¨ç¬¬ä¸€ä¸ªé¡µé¢çš„æ—¶å€™è®¾ç½®ä¾§æ»‘èœå•çš„å±æ€§
 					getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 					break;
 				}
@@ -71,7 +75,7 @@ public class WeatherMainActivity extends BaseActivity {
 		.beginTransaction()
 		.replace(R.id.menu_frame, new CityListFragment(myDbHelper))
 		.commit();
-		vp.setCurrentItem(0);//ÉèÖÃÆô¶¯Ò³Ãæ
+		vp.setCurrentItem(0);//è®¾ç½®å¯åŠ¨é¡µé¢
 		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 	}
 	
@@ -90,27 +94,6 @@ public class WeatherMainActivity extends BaseActivity {
               
         }  
     }
-	
-	public class WeatherPagerAdapter extends FragmentPagerAdapter {
-		
-		private ArrayList<Fragment> mFragments;
-		
-		public WeatherPagerAdapter(FragmentManager fm,ArrayList<Fragment> frag) {
-			super(fm);
-			this.mFragments=frag;
-		}
-
-		@Override
-		public int getCount() {
-			return mFragments.size();
-		}
-
-		@Override
-		public Fragment getItem(int position) {
-			return mFragments.get(position);
-		}
-
-	}
 	
 	public void initDB() {
 		// TODO Auto-generated constructor stub
@@ -136,5 +119,99 @@ public class WeatherMainActivity extends BaseActivity {
 	public ViewPager getVp(){
 		return this.vp;
 	}
+	
+	public class WeatherPagerAdapter extends FragmentPagerAdapter {
+		
+		private ArrayList<Fragment> mFragments;
+		private FragmentManager fm;
+		
+		public WeatherPagerAdapter(FragmentManager fm,ArrayList<Fragment> frag) {
+			super(fm);
+			this.mFragments=frag;
+			this.fm=fm;
+		}
 
+		@Override
+		public int getCount() {
+			return mFragments.size();
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			return mFragments.get(position);
+		}
+		
+		@Override
+		public int getItemPosition(Object object) {
+			// TODO Auto-generated method stub
+			return PagerAdapter.POSITION_NONE;
+		}
+/*
+		@Override
+		public void destroyItem(ViewGroup container, int position, Object object) {
+			// TODO Auto-generated method stub
+			((ViewPager) container).removeView(((ViewPager) container).getChildAt(position)); 
+		//	super.destroyItem(container, position, object);
+		}
+*/
+		@Override
+
+		public Object instantiateItem(ViewGroup container,int position) {
+
+			//å¾—åˆ°ç¼“å­˜çš„fragment
+
+		    Fragment fragment = (Fragment)super.instantiateItem(container,position);
+		    
+		    if(fragment != mFragments.get(position)){
+		    	System.out.println("1111");
+			    FragmentTransaction ft =fm.beginTransaction();
+			    
+			    String preTag = fragment.getTag(); 
+			    
+			    //ç§»é™¤æ—§çš„fragment
+
+			    ft.remove(fragment);
+			    //æ¢æˆæ–°çš„fragment
+			    fragment=mFragments.get(position);
+			    
+			    ft.remove(fragment);
+			    ft.commit();
+			    fm.executePendingTransactions();
+			    ft=fm.beginTransaction();
+			    ft.add(container.getId(), fragment, preTag);
+
+			    ft.attach(fragment);
+
+			    ft.commit();
+		    }
+		    return fragment;
+
+		}
+		
+		public void remove(int index){
+			mFragments.remove(index);
+			notifyDataSetChanged();
+		//	setFragments(mFragments);
+		}
+		
+		public int getIdAt(int index){
+			WeatherHomeFragment w = (WeatherHomeFragment) mFragments.get(index);
+			return w.getCityId();
+		}
+		
+		public void setFragments(ArrayList fragments) {
+			   if(this.mFragments != null){
+			      FragmentTransaction ft = fm.beginTransaction();
+			      for(Fragment f:this.mFragments){
+	    			  ft.remove(f);
+			      }
+			      ft.commit();
+			      ft=null;
+			      fm.executePendingTransactions();
+			   }
+			  this.mFragments = fragments;
+			  notifyDataSetChanged();
+			}
+
+	}
 }
