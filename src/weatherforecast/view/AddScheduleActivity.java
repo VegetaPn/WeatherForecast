@@ -2,12 +2,19 @@ package weatherforecast.view;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
 import com.umeng.analytics.MobclickAgent;
 
+import weatherforecast.util.ScheduleDBHelper;
+import weatherforecast.view.SwitchButton.OnChangeListener;
+
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,17 +22,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.View.OnClickListener;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import weatherforecast.util.ScheduleDBHelper;
-import weatherforecast.view.SwitchButton.OnChangeListener;  
 
 
 public class AddScheduleActivity extends Activity {
@@ -132,6 +135,7 @@ public class AddScheduleActivity extends Activity {
 				dateTime = mYear + "-" + mMonth + "-" + mDay + "-" + pHour + "-" + pMinute;
 				remind = "时间：" + pHour + ":" + pMinute + "\n" + "日程：" + schedule + "\n" + "地点：" + place;  
 				ContentValues values = new ContentValues();
+				values.put("id", id);
 				values.put("date", dateTime);
 				values.put("content", schedule);
 				values.put("place", place);
@@ -145,6 +149,10 @@ public class AddScheduleActivity extends Activity {
 				bundle.putString("place", place);
 				i.putExtras(bundle);
 				setResult(-1, i);
+				
+				long timemilis = convertDate(dateTime);
+				setAlarm(remind, timemilis);
+				
 				finish();
 			}
 		});
@@ -168,18 +176,7 @@ public class AddScheduleActivity extends Activity {
 	    	   e.printStackTrace(); 
 	    }
 	}    
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		MobclickAgent.onResume(this);
-	}
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		MobclickAgent.onPause(this);
-	}
+	
 	public String getSDPath() {  
         File sdDir = null;  
         boolean sdCardExist = Environment.getExternalStorageState().equals(  
@@ -195,4 +192,40 @@ public class AddScheduleActivity extends Activity {
         }  
     }  
 	
+	private void setAlarm(String msg, long timemilis) {
+    	final AlarmManager am = (AlarmManager)this.getSystemService(ALARM_SERVICE); 
+        Intent intent = new Intent();  
+        intent.setAction("schedule");  
+        intent.putExtra("msg", msg);  
+        final PendingIntent pi = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);  
+        final long time = System.currentTimeMillis();  
+         
+        am.set(AlarmManager.RTC_WAKEUP, timemilis, pi); 
+	}
+    
+	private void cancelAlarm() {
+    	//am.cancel(pi);
+    }
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	private long convertDate(String dt) {
+    	Calendar c = Calendar.getInstance();
+    	try {
+			c.setTime(new SimpleDateFormat("yyyy-MM-dd-HH-mm").parse(dt));
+			return c.getTimeInMillis();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return 0;
+	}
 }

@@ -2,6 +2,8 @@ package weatherforecast.view;
 
 import java.util.ArrayList;
 
+import com.umeng.analytics.MobclickAgent;
+
 import weatherforecast.dao.CityDao;
 import weatherforecast.model.City_ID;
 import android.app.Activity;
@@ -28,6 +30,17 @@ public class AddCityActivity  extends Activity{
     private ListView listView;
     private ArrayList<City_ID> list;
     private AddCityActivity activity;
+    protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -46,6 +59,7 @@ public class AddCityActivity  extends Activity{
 				// TODO Auto-generated method stub
 				
 				if(CityDao.insertCity(list.get(arg2))){//加入到收藏城市列表
+					MobclickAgent.onEvent(AddCityActivity.this,"AddCity");
 					setResult(list.get(arg2).getId());
 					activity.finish();//插入成功
 				}else{

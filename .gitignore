@@ -1,3 +1,6 @@
 bin/
 *.properties
 gen/
+.classpath
+.project
+.settings

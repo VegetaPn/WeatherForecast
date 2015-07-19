@@ -62,11 +62,14 @@ public class WeatherWidget extends AppWidgetProvider{
 		CityWeather cityWeather = JsonDao.getCityWeatherbyCityID(list.get(0).getId()+"");
 		//设置remoteVeiw
 		RemoteViews rViews=new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-		rViews.setTextViewText(R.id.textViewWidgetTemp, cityWeather.getTemp1());
-		rViews.setTextViewText(R.id.widgetTextviewCity,cityWeather.getCity());
-		rViews.setTextViewText(R.id.textViewWidgetWeather,cityWeather.getWeather1());
-		rViews.setTextViewText(R.id.textViewWidgetIndex,cityWeather.getIndex());
-		
+		if(cityWeather!=null)
+		{
+			rViews.setTextViewText(R.id.textViewWidgetTemp, cityWeather.getTemp1());
+			rViews.setTextViewText(R.id.widgetTextviewCity,cityWeather.getCity());
+			rViews.setTextViewText(R.id.textViewWidgetWeather,cityWeather.getWeather1());
+			rViews.setTextViewText(R.id.textViewWidgetIndex,cityWeather.getIndex());
+			
+		}
 				
 		Date now = new Date(); 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");//获得当前时间

@@ -39,12 +39,13 @@ public class JsonDao {
      * @return CityWeather∂‘œÛ
      */
 	public static CityWeather getCityWeatherbyCityID(String cityID) {
-		connServerForResult(cityID);
 		try {
+			connServerForResult(cityID);
 			thread.join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
 		return parseJson(strResult);
 	}
@@ -80,8 +81,10 @@ public class JsonDao {
 					}
                 } catch (ClientProtocolException e) {   
                     e.printStackTrace();   
+                    return;
                 } catch (IOException e) { 
-                    e.printStackTrace();   
+                    e.printStackTrace();
+                    return;
                 } 
             }  
         });  
@@ -139,7 +142,8 @@ public class JsonDao {
             		temp4, weather4, wind4, temp5, weather5, wind5, temp6, weather6, wind6);
             
         } catch (JSONException e) {   
-            e.printStackTrace();   
+            e.printStackTrace();  
+            return null;
         }   
         return cityWeather;
     }   

@@ -1,37 +1,25 @@
 package weatherforecast.view;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
-
 import com.umeng.analytics.MobclickAgent;
 
-
+import weatherforecast.service.GetDateTime;
 import weatherforecast.util.ScheduleDBHelper;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.view.Gravity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.SimpleAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.TimePicker;
+
 
 public class ScheduleActivity extends Activity {
 
@@ -42,12 +30,6 @@ public class ScheduleActivity extends Activity {
 	private GridView gridView;
 	private ImageButton imageButton;
 	private TableLayout tableLayout; 
-	private String mYear = "";
-	private String mMonth = "";
-	private String mDay = "";
-	private int hour = 0;
-	private int minute = 0;
-	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
@@ -63,12 +45,26 @@ public class ScheduleActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schedule);
-		textView1 = (TextView) findViewById(R.id.date);
+		textView1 = (TextView) findViewById(R.id.nowDate);
 		textView2 = (TextView) findViewById(R.id.time);
-		textView1.setText(stringDate());
-		textView2.setText(stringTime());
+		GetDateTime gdt = new GetDateTime();
+		textView1.setText(gdt.stringDate());
+		textView2.setText(gdt.stringTime());
 		imageButton = (ImageButton) findViewById(R.id.imageButton);
 		tableLayout = (TableLayout) findViewById(R.id.tableLayout);
+		dbHelper.getReadableDatabase();
+		db = dbHelper.getReadableDatabase();
+		Cursor cursor = db.rawQuery("select * from schedule", null);
+		while(cursor.moveToNext()) {
+			String sTime = cursor.getString(1);
+			sTime = sTime.substring(sTime.length()-5,sTime.length());
+			sTime = sTime.replaceAll("-",":");
+			String time = sTime;
+			String schedule = cursor.getString(2);
+			String place = cursor.getString(3);
+			addRow(schedule, place, time);
+		}
+		cursor.close();
 		
 		/*
 		//准备要向GridView中添加的数据条目
@@ -86,19 +82,6 @@ public class ScheduleActivity extends Activity {
 		//为GridView设置适配器
 		gridView.setAdapter(adapter);
 		*/
-		dbHelper.getReadableDatabase();
-		db = dbHelper.getReadableDatabase();
-		Cursor cursor = db.rawQuery("select * from schedule", null);
-		while(cursor.moveToNext()) {
-			String sTime = cursor.getString(1);
-			sTime = sTime.substring(sTime.length()-5,sTime.length());
-			sTime = sTime.replaceAll("-",":");
-			String time = sTime;
-			String schedule = cursor.getString(2);
-			String place = cursor.getString(3);
-			addRow(schedule, place, time);
-		}
-		cursor.close();
 		
 		imageButton.setOnClickListener(new OnClickListener() {
 			
@@ -107,7 +90,7 @@ public class ScheduleActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent i = new Intent();
 				i.setClass(ScheduleActivity.this, AddScheduleActivity.class);
-				startActivity(i);
+				startActivityForResult(i, 101);  
 			}
 		});
 	}
@@ -117,25 +100,6 @@ public class ScheduleActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
-	}
-
-	public String stringDate() {
-		final Calendar cal = Calendar.getInstance();
-		cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-		mYear = String.valueOf(cal.get(Calendar.YEAR));
-		mMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
-		mDay = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
-		hour = cal.get(Calendar.HOUR_OF_DAY);
-		minute = cal.get(Calendar.MINUTE);
-		return mYear + "/" + mMonth + "/" + mDay;
-	}
-	
-	public String stringTime() {
-		final Calendar cal = Calendar.getInstance();
-		cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-		hour = cal.get(Calendar.HOUR_OF_DAY);
-		minute = cal.get(Calendar.MINUTE);
-		return hour + ":" + minute;
 	}
 	
 	//向TableLayout中添加一行
@@ -169,17 +133,20 @@ public class ScheduleActivity extends Activity {
 		tableLayout.addView(tableRow);
 
 	}
-	
 	// 回调方法，从第二个页面回来的时候会执行这个方法  
     @Override  
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
     	super.onActivityResult(requestCode, resultCode, data); 
-    	Bundle bundle = data.getExtras();
-    	String time = bundle.getString("time");
-    	String schedule = bundle.getString("schedule");
-    	String place = bundle.getString("place");
-  
-    	addRow(schedule, place, time);
+    	try {
+			Bundle bundle = data.getExtras();
+			String time = bundle.getString("time");
+			String schedule = bundle.getString("schedule");
+			String place = bundle.getString("place");
+			addRow(schedule, place, time);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			// do nothing
+		}
     }  
 }
 
