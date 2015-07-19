@@ -94,10 +94,19 @@
                 <action android:name="schedule" />
             </intent-filter>
         </receiver>
-        <!-- 友盟统计信息配置 -->
-        <meta-data android:value="55a8c46967e58e2199003d0e" android:name="UMENG_APPKEY"></meta-data>
-        <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
+        <!-- 友盟统计信息配置 ,社会化分享-->
+        <meta-data android:name="UMENG_APPKEY" android:value="55a8c46967e58e2199003d0e"/>
+        <meta-data android:name="UMENG_CHANNEL" android:value="Channel ID"/>
+    <activity android:configChanges="orientation|keyboard" android:launchMode="singleTask" android:name="com.umeng.socialize.view.ShareActivity" android:noHistory="true" android:theme="@style/Theme.UMDialog" android:windowSoftInputMode="stateVisible|adjustResize"/>
+<activity android:configChanges="keyboardHidden|orientation|screenSize" android:exported="true" android:name=".wxapi.WXEntryActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+<activity android:configChanges="orientation|keyboard" android:name="com.umeng.socialize.view.CommentActivity" android:theme="@style/Theme.UMDefault"/>
+<activity android:configChanges="orientation|keyboard" android:name="com.umeng.socialize.view.CommentDetail" android:noHistory="true" android:theme="@style/Theme.UMDefault"/>
+<activity android:configChanges="orientation|keyboard" android:name="com.umeng.socialize.view.CommentDetailNoMap" android:noHistory="true" android:theme="@style/Theme.UMDefault"/>
     </application>
 
-  
+  <uses-permission android:name="android.permission.GET_TASKS"/>
+<uses-permission android:name="android.permission.SET_DEBUG_APP"/>
+<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+<uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+<uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
 </manifest>
