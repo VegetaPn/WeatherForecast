@@ -51,6 +51,8 @@ public class AddScheduleActivity extends Activity {
 	private int id = 0;
 	private String remind = "";
 	private String dateTime = "";
+	private int nowHour = 0;
+	private int nowMin = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class AddScheduleActivity extends Activity {
 		cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
 		hour = cal.get(Calendar.HOUR_OF_DAY);
 		minute = cal.get(Calendar.MINUTE);
+		//时间选择器初始化为当前时间
         timePicker.setCurrentHour(hour);
         timePicker.setCurrentMinute(minute);
         
@@ -82,6 +85,7 @@ public class AddScheduleActivity extends Activity {
         OKButton = (Button) findViewById(R.id.add);
         dbHelper.getReadableDatabase();
         
+        //点击返回按钮退回日程界面
         cancelButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -92,6 +96,8 @@ public class AddScheduleActivity extends Activity {
 				startActivity(i);
 			}
 		});
+        
+        //点击确认按钮时向ListView和数据库中添加日程信息
         OKButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -99,60 +105,73 @@ public class AddScheduleActivity extends Activity {
 				// TODO Auto-generated method stub
 				pickerHour = timePicker.getCurrentHour();
 				pickerMinute = timePicker.getCurrentMinute();
-				String pHour = pickerHour.toString();
-				String pMinute = pickerMinute.toString();
-				if(pHour.length() == 1)
-					pHour = "0" + pHour;
-				if(pMinute.length() == 1)
-					pMinute = "0" + pMinute;
-				time = pHour + ":" + pMinute;
-				schedule = contentText.getText().toString();
-		        place = placeText.getText().toString();
-		
-				//向数据库中存储数据
+				//与当前时间进行比较
 				final Calendar cal = Calendar.getInstance();
 				cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-				mYear = String.valueOf(cal.get(Calendar.YEAR));
-				mMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
-				mDay = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
-				if(mMonth.length() == 1)
-					mMonth = "0" + mMonth;
-				if(mDay.length() == 1)
-					mDay = "0" + mDay;
-				db = dbHelper.getReadableDatabase();
-				Cursor cur = db.rawQuery("select * from schedule", null);
-				if(cur.getCount() == 0)
-					id = 1;
-				else{
-					Cursor cursor = db.rawQuery("select * from schedule limit 1 offset (select count(*) - 1 from schedule)",null);
-					while(cursor.moveToNext()) {
-						id = Integer.valueOf(cursor.getString(0)) + 1;
-					}
-					cursor.close();
+				//nowHour = cal.get(Calendar.HOUR_OF_DAY);
+				//nowMin = cal.get(Calendar.MINUTE);
+				/*if(nowHour == pickerHour){
+					if(nowMin >= pickerMinute)
+						Toast.makeText(AddScheduleActivity.this, "请选择有效的提醒时间！", Toast.LENGTH_LONG).show();
 				}
-				dateTime = mYear + "-" + mMonth + "-" + mDay + "-" + pHour + "-" + pMinute;
-				remind = "时间：" + pHour + ":" + pMinute + "\n" + "日程：" + schedule + "\n" + "地点：" + place;  
-				ContentValues values = new ContentValues();
-				values.put("id", id);
-				values.put("date", dateTime);
-				values.put("content", schedule);
-				values.put("place", place);
-				db.insert("schedule ", null, values);
-				
-				//返回结果到ScheduleActivity
-		        Intent i = new Intent();
-				Bundle bundle = new Bundle();
-				bundle.putString("time", time);
-				bundle.putString("schedule", schedule);
-				bundle.putString("place", place);
-				i.putExtras(bundle);
-				setResult(-1, i);
-				
-				long timemilis = convertDate(dateTime);
-				setAlarm(remind, timemilis);
-				
-				finish();
-			}
+				else if(nowHour > pickerHour)
+					Toast.makeText(AddScheduleActivity.this, "请选择有效的提醒时间！", Toast.LENGTH_LONG).show();
+				else{*/
+					String pHour = pickerHour.toString();
+					String pMinute = pickerMinute.toString();
+					if(pHour.length() == 1)
+						pHour = "0" + pHour;
+					if(pMinute.length() == 1)
+						pMinute = "0" + pMinute;
+					time = pHour + ":" + pMinute;
+					schedule = contentText.getText().toString();
+			        place = placeText.getText().toString();
+			
+					//向数据库中存储数据
+					mYear = String.valueOf(cal.get(Calendar.YEAR));
+					mMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
+					mDay = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+					if(mMonth.length() == 1)
+						mMonth = "0" + mMonth;
+					if(mDay.length() == 1)
+						mDay = "0" + mDay;
+					db = dbHelper.getReadableDatabase();
+					Cursor cur = db.rawQuery("select * from schedule", null);
+					if(cur.getCount() == 0)
+						id = 1;
+					else{
+						Cursor cursor = db.rawQuery("select * from schedule limit 1 offset (select count(*) - 1 from schedule)",null);
+						while(cursor.moveToNext()) {
+							id = Integer.valueOf(cursor.getString(0)) + 1;
+						}
+						cursor.close();
+					}
+					cur.close();
+					dateTime = mYear + "-" + mMonth + "-" + mDay + "-" + pHour + "-" + pMinute;
+					remind = "时间：" + pHour + ":" + pMinute + "\n" + "日程：" + schedule + "\n" + "地点：" + place;  
+					ContentValues values = new ContentValues();
+					values.put("id", id);
+					values.put("date", dateTime);
+					values.put("content", schedule);
+					values.put("place", place);
+					db.insert("schedule ", null, values);
+					
+					//返回结果到ScheduleActivity
+			        Intent i = new Intent();
+					Bundle bundle = new Bundle();
+					bundle.putString("id", id + "");
+					bundle.putString("time", time);
+					bundle.putString("schedule", schedule);
+					bundle.putString("place", place);
+					i.putExtras(bundle);
+					setResult(-1, i);
+					
+					long timemilis = convertDate(dateTime);
+					setAlarm(remind, timemilis);
+					
+					finish();
+				}
+			//}
 		});
     }  
 
@@ -161,34 +180,7 @@ public class AddScheduleActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
-	}
-	
-	public void writeFileData(String fileName,String message){ 
-		
-		try{
-			FileOutputStream fout = openFileOutput(fileName, MODE_APPEND);
-	        byte [] bytes = message.getBytes(); 
-	        fout.write(bytes); 
-	        fout.close(); 
-	    }catch(Exception e){ 
-	    	   e.printStackTrace(); 
-	    }
-	}    
-	
-	public String getSDPath() {  
-        File sdDir = null;  
-        boolean sdCardExist = Environment.getExternalStorageState().equals(  
-                android.os.Environment.MEDIA_MOUNTED);          // 判断sd卡是否存在  
-        if (sdCardExist) {
-            sdDir = Environment.getExternalStorageDirectory();  // 获取根目录  
-            return sdDir.toString();
-        }
-        else {
-        	String notExist = "There is not a SDcard!";
-        	System.out.println(notExist);
-        	return notExist;
-        }  
-    }  
+	} 
 	
 	private void setAlarm(String msg, long timemilis) {
     	final AlarmManager am = (AlarmManager)this.getSystemService(ALARM_SERVICE); 
