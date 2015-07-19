@@ -163,26 +163,23 @@ public class WeatherMainActivity extends BaseActivity {
 		    Fragment fragment = (Fragment)super.instantiateItem(container,position);
 		    
 		    if(fragment != mFragments.get(position)){
-		    	System.out.println("1111");
 			    FragmentTransaction ft =fm.beginTransaction();
 			    
 			    String preTag = fragment.getTag(); 
 			    
 			    //移除旧的fragment
-
 			    ft.remove(fragment);
-			    //换成新的fragment
 			    fragment=mFragments.get(position);
-			    
 			    ft.remove(fragment);
 			    ft.commit();
 			    fm.executePendingTransactions();
+
+			    //换成新的fragment
 			    ft=fm.beginTransaction();
 			    ft.add(container.getId(), fragment, preTag);
-
 			    ft.attach(fragment);
-
 			    ft.commit();
+			    fm.executePendingTransactions();
 		    }
 		    return fragment;
 
