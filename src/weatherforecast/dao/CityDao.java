@@ -118,7 +118,7 @@ public class CityDao {
 		while(cursor.moveToNext()){
 			City_ID city=new City_ID(cursor.getInt(0),cursor.getString(1),cursor.getString(2),
 					cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
-			System.out.println("id:"+cursor.getInt(0));
+		//	System.out.println("id:"+cursor.getInt(0));
 			list.add(city);
 		}
 		cursor.close();
