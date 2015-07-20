@@ -1,14 +1,12 @@
 package weatherforecast.view;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.TimeZone;
 
-=======
 import com.umeng.analytics.MobclickAgent;
->>>>>>> ab47700204f9cfc4ca5d057c647758c2db376d6b
+
 
 import weatherforecast.service.GetDateTime;
 import weatherforecast.util.ScheduleDBHelper;
@@ -50,15 +48,13 @@ public class ScheduleActivity extends Activity {
 	private TextView textView1;
 	private TextView textView2;
 	private ImageButton imageButton;
-<<<<<<< HEAD
 	//private TableLayout tableLayout; 
 	private ListView listView;
 	private ArrayList<HashMap<String,String>> ar;
 	//得到ListView选中条目的行数，默认从0开始
-	private int index = 0;
+	//private int index = 0;
 	private SimpleAdapter adapter;
 	
-=======
 	private TableLayout tableLayout; 
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -71,7 +67,7 @@ public class ScheduleActivity extends Activity {
 		super.onPause();
 		MobclickAgent.onPause(this);
 	}
->>>>>>> ab47700204f9cfc4ca5d057c647758c2db376d6b
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
