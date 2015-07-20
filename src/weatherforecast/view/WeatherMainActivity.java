@@ -8,13 +8,19 @@ import weatherforecast.dao.CityDao;
 import weatherforecast.model.City_ID;
 import weatherforecast.util.CreateDB;
 
+import android.content.Context;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ScrollView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -33,11 +39,11 @@ public class WeatherMainActivity extends BaseActivity {
 		
 		mFragments=new ArrayList<Fragment>();
 		initDB();
-		scrl=(ScrollView)findViewById(R.id.scrollView1);
 		vp = new ViewPager(this);
 		vp.setId("VP".hashCode());
 		adapter = new WeatherPagerAdapter(getSupportFragmentManager(),mFragments);
 		vp.setAdapter(adapter);
+		vp.setOffscreenPageLimit(2);
 		setViewPagerScrollSpeed(vp);
 		setContentView(vp);
 
@@ -51,15 +57,16 @@ public class WeatherMainActivity extends BaseActivity {
 			@Override
 			public void onPageSelected(int position) {
 				switch (position) {
-				case 0://Ò³ÃæÔÚµÚÒ»¸öµÄÊ±ºò²à»¬²Ëµ¥µÄÊôĞÔ
+				case 0://é¡µé¢åœ¨ç¬¬ä¸€ä¸ªçš„æ—¶å€™ä¾§æ»‘èœå•çš„å±æ€§
 					getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 					break;
-				default://Ò³Ãæ²»ÔÚµÚÒ»¸öÒ³ÃæµÄÊ±ºòÉèÖÃ²à»¬²Ëµ¥µÄÊôĞÔ
+				default://é¡µé¢ä¸åœ¨ç¬¬ä¸€ä¸ªé¡µé¢çš„æ—¶å€™è®¾ç½®ä¾§æ»‘èœå•çš„å±æ€§
 					getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 					break;
 				}
-				WeatherHomeFragment w = (WeatherHomeFragment) vp.getAdapter().instantiateItem(vp, position);
-				w.scrollToTop();
+				WeatherPagerAdapter w = (WeatherPagerAdapter) vp.getAdapter();
+				WeatherHomeFragment wf = (WeatherHomeFragment)w.getItem(position);
+			//	wf.scrollToTop();
 				
 			}
 
@@ -71,7 +78,7 @@ public class WeatherMainActivity extends BaseActivity {
 		.beginTransaction()
 		.replace(R.id.menu_frame, new CityListFragment(myDbHelper))
 		.commit();
-		vp.setCurrentItem(0);//ÉèÖÃÆô¶¯Ò³Ãæ
+		vp.setCurrentItem(0);//è®¾ç½®å¯åŠ¨é¡µé¢
 		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 	}
 	
@@ -91,31 +98,9 @@ public class WeatherMainActivity extends BaseActivity {
         }  
     }
 	
-	public class WeatherPagerAdapter extends FragmentPagerAdapter {
-		
-		private ArrayList<Fragment> mFragments;
-		
-		public WeatherPagerAdapter(FragmentManager fm,ArrayList<Fragment> frag) {
-			super(fm);
-			this.mFragments=frag;
-		}
-
-		@Override
-		public int getCount() {
-			return mFragments.size();
-		}
-
-		@Override
-		public Fragment getItem(int position) {
-			return mFragments.get(position);
-		}
-
-	}
-	
 	public void initDB() {
 		// TODO Auto-generated constructor stub
 		CreateDB myDbHelper = new CreateDB(this);  
-		// myDbHelper = new CreateDB(this);  
    
         try { 
         	myDbHelper.createDataBase();  
@@ -136,5 +121,105 @@ public class WeatherMainActivity extends BaseActivity {
 	public ViewPager getVp(){
 		return this.vp;
 	}
+	
+	public class WeatherPagerAdapter extends FragmentPagerAdapter {
+		
+		private ArrayList<Fragment> mFragments;
+		private FragmentManager fm;
+		
+		public WeatherPagerAdapter(FragmentManager fm,ArrayList<Fragment> frag) {
+			super(fm);
+			this.mFragments=frag;
+			this.fm=fm;
+		}
 
+		@Override
+		public int getCount() {
+			return mFragments.size();
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			return mFragments.get(position);
+		}
+		
+		@Override
+		public int getItemPosition(Object object) {
+			// TODO Auto-generated method stub
+			return PagerAdapter.POSITION_NONE;
+		}
+
+		@Override
+		public Object instantiateItem(ViewGroup container,int position) {
+
+			//å¾—åˆ°ç¼“å­˜çš„fragment
+		    Fragment fragment = (Fragment)super.instantiateItem(container,position);
+		    System.out.println("instantiate:"+fragment.getTag());
+		    if(fragment.getTag() != mFragments.get(position).getTag()){
+			    FragmentTransaction ft =fm.beginTransaction();
+			    
+			    String preTag = fragment.getTag(); 
+			    
+			    //ç§»é™¤æ—§çš„fragment
+			    ft.remove(fragment);
+			    fragment=mFragments.get(position);
+			    //æ¢æˆæ–°çš„fragment
+			    ft.add(container.getId(), fragment, preTag);
+			    ft.attach(fragment);
+			    ft.commit();
+			    fm.executePendingTransactions();
+		    }
+		    return fragment;
+
+		}
+		
+		public void remove(int index){
+			FragmentTransaction ft =fm.beginTransaction();
+			mFragments.remove(index);
+			ArrayList<Fragment> newFragments = new ArrayList<Fragment>();
+			for(Fragment f : mFragments){
+				WeatherHomeFragment ff=(WeatherHomeFragment)f;
+				WeatherHomeFragment newF=new WeatherHomeFragment(ff.getCityId(),myDbHelper);
+				newFragments.add(newF);
+				System.out.println("remove run:oldtag-"+ff.getTag()+"newtag-"+newF.getTag());
+			}
+			mFragments.clear();
+			mFragments.addAll(newFragments);
+			notifyDataSetChanged();
+		}
+		
+		public int getIdAt(int index){
+			WeatherHomeFragment w = (WeatherHomeFragment) mFragments.get(index);
+			return w.getCityId();
+		}
+	}
+	
+	public class MyViewPager extends ViewPager{
+
+	    float preX;
+		public MyViewPager(Context context) {
+			super(context);
+			preX = 0;
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+		public boolean onInterceptTouchEvent(MotionEvent event) {
+			// TODO Auto-generated method stub
+			boolean res = super.onInterceptTouchEvent(event);
+			if(event.getAction() == MotionEvent.ACTION_DOWN) {  
+		        preX = event.getX();  
+		    } else {  
+		        if( Math.abs(event.getX() - preX)> 2 ) {  
+		            return true;  
+		        } else {  
+		            preX = event.getX();  
+		        }  
+		    }  
+		    return res; 
+		}
+		
+		
+		
+	}
 }

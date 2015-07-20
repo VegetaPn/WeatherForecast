@@ -106,9 +106,9 @@ public class CityDao {
 		SQLiteDatabase db=DButil.getDB();//ªÒ»°ø‚
 		String str1 = "";
 		for(int i=0;i<name.length();i++){
-			str1=str1+"%"+name.charAt(i);
+			str1=str1+name.charAt(i)+"%";
 		}
-		str1=str1+"%";
+		
 		
 		String sql="select * from  city where districten like '"+str1+"' or " +
 				"nameen like'"+str1+"' or proven like'"+str1+"'";
@@ -118,7 +118,7 @@ public class CityDao {
 		while(cursor.moveToNext()){
 			City_ID city=new City_ID(cursor.getInt(0),cursor.getString(1),cursor.getString(2),
 					cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
-			System.out.println("id:"+cursor.getInt(0));
+		//	System.out.println("id:"+cursor.getInt(0));
 			list.add(city);
 		}
 		cursor.close();

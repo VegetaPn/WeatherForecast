@@ -53,13 +53,25 @@
         android:background="#000000"
         android:layout_below="@id/weather" />
     
-    <!-- <ListView 
+
+    <ListView 
         android:id="@+id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:layout_below="@id/strai">  
-    </ListView> -->
-    
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/strai" >  
+   	</ListView>
+    	
+    <ImageButton 
+            android:id="@+id/imageButton"
+            android:layout_width="20dp"
+            android:layout_height="20dp" 
+            android:src="@drawable/addd"
+            android:layout_below="@id/strai"
+            android:layout_toRightOf="@id/list"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:layout_marginRight="15dp"/>
+
     <!-- <GridView 
         android:id="@+id/gridview"
         android:layout_width="fill_parent"
@@ -78,7 +90,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" >
-    <TableLayout
+    <!-- <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -117,7 +129,7 @@
                 android:padding="4dp" />
         </TableRow>
 
-        <!-- <TableRow
+        <TableRow
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center" >
@@ -127,9 +139,9 @@
 		        android:background="#000000"
 		        android:layout_span="3"
 		        android:padding="3dp" />
-        </TableRow> -->
+        </TableRow>
         
-    </TableLayout>
+    </TableLayout> -->
     </LinearLayout>
     </ScrollView>
 </RelativeLayout>

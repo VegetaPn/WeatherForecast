@@ -21,15 +21,20 @@ public class WeatherHomeFragment extends Fragment {
 	ScrollView scrl;
 	
 	public WeatherHomeFragment() {
-		
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public WeatherHomeFragment(int i,CreateDB db){
+		super();
 		this.cityId=i;
 		this.myDbHelper=db;
 	}
 	
-
+	public int getCityId(){
+		return cityId;
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
