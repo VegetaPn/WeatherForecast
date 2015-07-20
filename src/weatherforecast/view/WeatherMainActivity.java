@@ -8,6 +8,7 @@ import weatherforecast.dao.CityDao;
 import weatherforecast.model.City_ID;
 import weatherforecast.util.CreateDB;
 
+import android.content.Context;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
@@ -37,11 +39,11 @@ public class WeatherMainActivity extends BaseActivity {
 		
 		mFragments=new ArrayList<Fragment>();
 		initDB();
-		scrl=(ScrollView)findViewById(R.id.scrollView1);
 		vp = new ViewPager(this);
 		vp.setId("VP".hashCode());
 		adapter = new WeatherPagerAdapter(getSupportFragmentManager(),mFragments);
 		vp.setAdapter(adapter);
+		vp.setOffscreenPageLimit(2);
 		setViewPagerScrollSpeed(vp);
 		setContentView(vp);
 
@@ -62,8 +64,9 @@ public class WeatherMainActivity extends BaseActivity {
 					getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 					break;
 				}
-				WeatherHomeFragment w = (WeatherHomeFragment) vp.getAdapter().instantiateItem(vp, position);
-				w.scrollToTop();
+				WeatherPagerAdapter w = (WeatherPagerAdapter) vp.getAdapter();
+				WeatherHomeFragment wf = (WeatherHomeFragment)w.getItem(position);
+			//	wf.scrollToTop();
 				
 			}
 
@@ -98,7 +101,6 @@ public class WeatherMainActivity extends BaseActivity {
 	public void initDB() {
 		// TODO Auto-generated constructor stub
 		CreateDB myDbHelper = new CreateDB(this);  
-		// myDbHelper = new CreateDB(this);  
    
         try { 
         	myDbHelper.createDataBase();  
@@ -146,23 +148,14 @@ public class WeatherMainActivity extends BaseActivity {
 			// TODO Auto-generated method stub
 			return PagerAdapter.POSITION_NONE;
 		}
-/*
-		@Override
-		public void destroyItem(ViewGroup container, int position, Object object) {
-			// TODO Auto-generated method stub
-			((ViewPager) container).removeView(((ViewPager) container).getChildAt(position)); 
-		//	super.destroyItem(container, position, object);
-		}
-*/
-		@Override
 
+		@Override
 		public Object instantiateItem(ViewGroup container,int position) {
 
 			//得到缓存的fragment
-
 		    Fragment fragment = (Fragment)super.instantiateItem(container,position);
-		    
-		    if(fragment != mFragments.get(position)){
+		    System.out.println("instantiate:"+fragment.getTag());
+		    if(fragment.getTag() != mFragments.get(position).getTag()){
 			    FragmentTransaction ft =fm.beginTransaction();
 			    
 			    String preTag = fragment.getTag(); 
@@ -170,12 +163,7 @@ public class WeatherMainActivity extends BaseActivity {
 			    //移除旧的fragment
 			    ft.remove(fragment);
 			    fragment=mFragments.get(position);
-			    ft.remove(fragment);
-			    ft.commit();
-			    fm.executePendingTransactions();
-
 			    //换成新的fragment
-			    ft=fm.beginTransaction();
 			    ft.add(container.getId(), fragment, preTag);
 			    ft.attach(fragment);
 			    ft.commit();
@@ -186,29 +174,52 @@ public class WeatherMainActivity extends BaseActivity {
 		}
 		
 		public void remove(int index){
+			FragmentTransaction ft =fm.beginTransaction();
 			mFragments.remove(index);
+			ArrayList<Fragment> newFragments = new ArrayList<Fragment>();
+			for(Fragment f : mFragments){
+				WeatherHomeFragment ff=(WeatherHomeFragment)f;
+				WeatherHomeFragment newF=new WeatherHomeFragment(ff.getCityId(),myDbHelper);
+				newFragments.add(newF);
+				System.out.println("remove run:oldtag-"+ff.getTag()+"newtag-"+newF.getTag());
+			}
+			mFragments.clear();
+			mFragments.addAll(newFragments);
 			notifyDataSetChanged();
-		//	setFragments(mFragments);
 		}
 		
 		public int getIdAt(int index){
 			WeatherHomeFragment w = (WeatherHomeFragment) mFragments.get(index);
 			return w.getCityId();
 		}
-		
-		public void setFragments(ArrayList fragments) {
-			   if(this.mFragments != null){
-			      FragmentTransaction ft = fm.beginTransaction();
-			      for(Fragment f:this.mFragments){
-	    			  ft.remove(f);
-			      }
-			      ft.commit();
-			      ft=null;
-			      fm.executePendingTransactions();
-			   }
-			  this.mFragments = fragments;
-			  notifyDataSetChanged();
-			}
+	}
+	
+	public class MyViewPager extends ViewPager{
 
+	    float preX;
+		public MyViewPager(Context context) {
+			super(context);
+			preX = 0;
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+		public boolean onInterceptTouchEvent(MotionEvent event) {
+			// TODO Auto-generated method stub
+			boolean res = super.onInterceptTouchEvent(event);
+			if(event.getAction() == MotionEvent.ACTION_DOWN) {  
+		        preX = event.getX();  
+		    } else {  
+		        if( Math.abs(event.getX() - preX)> 2 ) {  
+		            return true;  
+		        } else {  
+		            preX = event.getX();  
+		        }  
+		    }  
+		    return res; 
+		}
+		
+		
+		
 	}
 }

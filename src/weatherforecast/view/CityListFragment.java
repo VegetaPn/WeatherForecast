@@ -64,7 +64,6 @@ public class CityListFragment extends ListFragment {
 		listAdapter = new MyListAdapter<String>(getActivity(), 
 				R.layout.city_list_item, R.id.textCityname, nameList);
 		final DynamicListView dyList = (DynamicListView) getListView();
-		AnimationAdapter  animationAdapter = new AlphaInAnimationAdapter(listAdapter);
 		
 		dyList.enableSwipeToDismiss(
 			    new OnDismissCallback() {
