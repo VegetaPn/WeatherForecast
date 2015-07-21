@@ -11,7 +11,9 @@ import com.umeng.analytics.MobclickAgent;
 import weatherforecast.service.GetDateTime;
 import weatherforecast.util.ScheduleDBHelper;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.AlertDialog.Builder;
 import android.content.ContentValues;
 import android.content.Context;
@@ -223,6 +225,9 @@ public class ScheduleActivity extends Activity {
 					ar.remove(delID);
 					adapter.notifyDataSetChanged();
 					listView.invalidate();
+					
+					/* 新增删除日程代码：删除日程后取消提醒 */
+					cancelAlarm(delID);
 				}
             });
             builder.setNegativeButton("取消", new DialogInterface.OnClickListener(){
@@ -240,6 +245,15 @@ public class ScheduleActivity extends Activity {
         }
 	}
 
+	private void cancelAlarm(int id) {
+    	//am.cancel(pi);
+		Intent intent = new Intent();  
+        intent.setAction("schedule");
+		final AlarmManager am = (AlarmManager)this.getSystemService(ALARM_SERVICE); 
+		final PendingIntent pi = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		am.cancel(pi);
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
