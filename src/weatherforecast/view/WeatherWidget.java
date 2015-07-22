@@ -42,6 +42,7 @@ public class WeatherWidget extends AppWidgetProvider{
 	private  Timer timer;
 	private Context context;//用于handler
 	private String oldtime;
+	private LocationClient mLocationClient;
 	@SuppressLint("SimpleDateFormat") @Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
@@ -49,15 +50,34 @@ public class WeatherWidget extends AppWidgetProvider{
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 		this.context=context;
 		
-		
-//		 MyLocationListener myListener = new MyLocationListener();
-//		 LocationClient mLocationClient = new LocationClient(context);     	//声明LocationClient类
-//	     LocationClientOption option = new LocationClientOption();
-//	     option.setIsNeedAddress(true);
-//	     mLocationClient.setLocOption(option);
-//	     mLocationClient.registerLocationListener( myListener );				//注册监听函数
-//	     mLocationClient.start(); 
-//	     mLocationClient.requestLocation();
+			 
+		 new Thread() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				super.run();
+				MyLocationListener myListener = new MyLocationListener();
+				LocationClientOption option = new LocationClientOption(); 
+			     option.setIsNeedAddress(true);
+			     mLocationClient.setLocOption(option);
+			     mLocationClient.registerLocationListener( myListener );				//注册监听函数
+			     mLocationClient.start(); 
+			     mLocationClient.requestLocation();
+			     
+//			     while(myListener.getErrcode()==-1)
+//			     {
+//			    	 //mLocationClient.start(); 
+//				     //mLocationClient.requestLocation();
+			    	System.out.println("你丫等会");
+//			     };
+			     //System.out.println("妥了");
+			     System.out.println(myListener.getErrcode());
+			}
+			 
+		 }.start();
+		 
+	     
 		ArrayList<City_ID> list=CityDao.getIDByName("海淀");
 		CityWeather cityWeather = JsonDao.getCityWeatherbyCityID(list.get(0).getId()+"");
 		//设置remoteVeiw
@@ -164,11 +184,7 @@ public class WeatherWidget extends AppWidgetProvider{
 	@Override
 	public void onEnabled(Context context) {
 		// TODO Auto-generated method stub
-		/*以下为定位客户端的生成代码*/
-        /*不要删*/
-       
-        /*以上*/
-		
+
 		super.onEnabled(context);
 	}
 
