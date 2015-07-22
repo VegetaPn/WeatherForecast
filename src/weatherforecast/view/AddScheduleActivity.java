@@ -55,6 +55,7 @@ public class AddScheduleActivity extends Activity {
 	private String dateTime = "";
 	private int nowHour = 0;
 	private int nowMin = 0;
+	private SwitchButton swibtn;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,7 @@ public class AddScheduleActivity extends Activity {
         placeText = (EditText) findViewById(R.id.inputPlace);
         cancelButton = (Button) findViewById(R.id.ret);
         OKButton = (Button) findViewById(R.id.add);
+        swibtn = (SwitchButton) findViewById(R.id.wiperSwitch);
         dbHelper.getReadableDatabase();
         
         //点击返回按钮退回日程界面
@@ -105,75 +107,29 @@ public class AddScheduleActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
+				//所选时间
 				pickerHour = timePicker.getCurrentHour();
 				pickerMinute = timePicker.getCurrentMinute();
 				//与当前时间进行比较
 				final Calendar cal = Calendar.getInstance();
 				cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-				//nowHour = cal.get(Calendar.HOUR_OF_DAY);
-				//nowMin = cal.get(Calendar.MINUTE);
-				/*if(nowHour == pickerHour){
-					if(nowMin >= pickerMinute)
+				nowHour = cal.get(Calendar.HOUR_OF_DAY);
+				nowMin = cal.get(Calendar.MINUTE);
+				if(nowHour == pickerHour){
+					if(nowMin >= pickerMinute){
 						Toast.makeText(AddScheduleActivity.this, "请选择有效的提醒时间！", Toast.LENGTH_LONG).show();
-				}
-				else if(nowHour > pickerHour)
-					Toast.makeText(AddScheduleActivity.this, "请选择有效的提醒时间！", Toast.LENGTH_LONG).show();
-				else{*/
-					String pHour = pickerHour.toString();
-					String pMinute = pickerMinute.toString();
-					if(pHour.length() == 1)
-						pHour = "0" + pHour;
-					if(pMinute.length() == 1)
-						pMinute = "0" + pMinute;
-					time = pHour + ":" + pMinute;
-					schedule = contentText.getText().toString();
-			        place = placeText.getText().toString();
-			
-					//向数据库中存储数据
-					mYear = String.valueOf(cal.get(Calendar.YEAR));
-					mMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
-					mDay = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
-					if(mMonth.length() == 1)
-						mMonth = "0" + mMonth;
-					if(mDay.length() == 1)
-						mDay = "0" + mDay;
-					db = dbHelper.getReadableDatabase();
-					Cursor cur = db.rawQuery("select * from schedule", null);
-					if(cur.getCount() == 0)
-						id = 1;
-					else{
-						Cursor cursor = db.rawQuery("select * from schedule limit 1 offset (select count(*) - 1 from schedule)",null);
-						while(cursor.moveToNext()) {
-							id = Integer.valueOf(cursor.getString(0)) + 1;
-						}
-						cursor.close();
 					}
-					cur.close();
-					dateTime = mYear + "-" + mMonth + "-" + mDay + "-" + pHour + "-" + pMinute;
-					remind = "时间：" + pHour + ":" + pMinute + "\n" + "日程：" + schedule + "\n" + "地点：" + place;  
-					ContentValues values = new ContentValues();
-					values.put("id", id);
-					values.put("date", dateTime);
-					values.put("content", schedule);
-					values.put("place", place);
-					db.insert("schedule ", null, values);
-					
-					//返回结果到ScheduleActivity
-			        Intent i = new Intent();
-					Bundle bundle = new Bundle();
-					bundle.putString("id", id + "");
-					bundle.putString("time", time);
-					bundle.putString("schedule", schedule);
-					bundle.putString("place", place);
-					i.putExtras(bundle);
-					setResult(-1, i);
-					
-					long timemilis = convertDate(dateTime);
-					setAlarm(remind, timemilis);
-					
-					finish();
+					else{
+						addSchedule();
+					}
 				}
-			//}
+				else if(nowHour > pickerHour){
+					Toast.makeText(AddScheduleActivity.this, "请选择有效的提醒时间！", Toast.LENGTH_LONG).show();
+				}
+				else{
+					addSchedule();
+				}
+			}
 		});
     }  
 
@@ -183,6 +139,76 @@ public class AddScheduleActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	} 
+    
+	private void addSchedule(){
+		final Calendar cal = Calendar.getInstance();
+		cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+		pickerHour = timePicker.getCurrentHour();
+		pickerMinute = timePicker.getCurrentMinute();
+		String pHour = pickerHour.toString();
+		String pMinute = pickerMinute.toString();
+		if(pHour.length() == 1)
+			pHour = "0" + pHour;
+		if(pMinute.length() == 1)
+			pMinute = "0" + pMinute;
+		time = pHour + ":" + pMinute;
+		schedule = contentText.getText().toString();
+        place = placeText.getText().toString();
+        
+        if((schedule.equals("")) && (place.equals(""))){
+        	Toast.makeText(AddScheduleActivity.this, "请输入日程信息！", Toast.LENGTH_LONG).show();
+        }
+        else{
+			//向数据库中存储数据
+			mYear = String.valueOf(cal.get(Calendar.YEAR));
+			mMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
+			mDay = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+			if(mMonth.length() == 1)
+				mMonth = "0" + mMonth;
+			if(mDay.length() == 1)
+				mDay = "0" + mDay;
+			db = dbHelper.getReadableDatabase();
+			Cursor cur = db.rawQuery("select * from schedule", null);
+			if(cur.getCount() == 0)
+				id = 1;
+			else{
+				Cursor cursor = db.rawQuery("select * from schedule limit 1 offset (select count(*) - 1 from schedule)",null);
+				while(cursor.moveToNext()) {
+					id = Integer.valueOf(cursor.getString(0)) + 1;
+				}
+				cursor.close();
+			}
+			cur.close();
+			dateTime = mYear + "-" + mMonth + "-" + mDay + "-" + pHour + "-" + pMinute;
+			remind = "时间：" + pHour + ":" + pMinute + "\n" + "日程：" + schedule + "\n" + "地点：" + place;  
+			ContentValues values = new ContentValues();
+			values.put("id", id);
+			values.put("date", dateTime);
+			values.put("content", schedule);
+			values.put("place", place);
+			db.insert("schedule ", null, values);
+			
+			//返回结果到ScheduleActivity
+	        Intent i = new Intent();
+			Bundle bundle = new Bundle();
+			bundle.putString("id", id + "");
+			bundle.putString("time", time);
+			bundle.putString("schedule", schedule);
+			bundle.putString("place", place);
+			i.putExtras(bundle);
+			setResult(-1, i);
+			
+			long timemilis = convertDate(dateTime);
+			
+			if (swibtn.getmSwitchOn()) {
+				setAlarm(remind, timemilis);
+			} else {
+
+			}
+			
+			finish();
+        }
+	}
 	
 	private void setAlarm(String msg, long timemilis) {
     	final AlarmManager am = (AlarmManager)this.getSystemService(ALARM_SERVICE); 
@@ -194,7 +220,7 @@ public class AddScheduleActivity extends Activity {
          
         am.set(AlarmManager.RTC_WAKEUP, timemilis, pi); 
 	}
-    
+	
 	private void cancelAlarm() {
     	//am.cancel(pi);
     }

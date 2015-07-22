@@ -249,18 +249,18 @@ public class ScheduleActivity extends Activity {
 	
 	//向ListView中添加一项
 	private void addRow(String id, String schedule, String place, String time){
-		if((schedule != "") || (place != "")){
-			HashMap<String,String> map = new HashMap();
-			map.put("id", id);
-			map.put("时间", time);
-			map.put("日程", schedule);
-			map.put("地点", place);
-			ar.add(map);
-			
-			//将ar与R.layout.item中的参数进行适配，最后两个参数指定数据一一对应的关系
-			adapter = new SimpleAdapter(ScheduleActivity.this, ar, R.layout.item, new String[]{"id","时间","日程","地点"}, new int[]{R.id.scheID,R.id.time,R.id.content,R.id.place});
-			listView.setAdapter(adapter);
-		}
+		//if((schedule != "") || (place != "")){
+		HashMap<String,String> map = new HashMap();
+		map.put("id", id);
+		map.put("时间", time);
+		map.put("日程", schedule);
+		map.put("地点", place);
+		ar.add(map);
+		
+		//将ar与R.layout.item中的参数进行适配，最后两个参数指定数据一一对应的关系
+		adapter = new SimpleAdapter(ScheduleActivity.this, ar, R.layout.item, new String[]{"id","时间","日程","地点"}, new int[]{R.id.scheID,R.id.time,R.id.content,R.id.place});
+		listView.setAdapter(adapter);
+		//}
 	}
 		
 	// 回调方法，从AddScheduleActivity回来的时候会执行这个方法  
