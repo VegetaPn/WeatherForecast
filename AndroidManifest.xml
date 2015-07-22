@@ -96,6 +96,17 @@
             </meta-data>
         </receiver>
         
+        <receiver 
+            android:name="weatherforecast.view.WeatherWidgetB">
+            <intent-filter >
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@layout/widget_provider_big">
+                
+            </meta-data>
+        </receiver>
+        
         <receiver android:name="weatherforecast.service.ScheduleReceiver" >
             <intent-filter>
                 <action android:name="schedule" />
