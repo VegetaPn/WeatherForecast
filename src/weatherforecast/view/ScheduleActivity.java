@@ -127,7 +127,8 @@ public class ScheduleActivity extends Activity {
 			//长按条目弹出菜单
 			public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
                 menu.setHeaderTitle("选择操作");
-                menu.add(0, 0, 0, "删除该日程");
+                //menu.add(0, 0, 0, "修改日程");
+                menu.add(0, 1, 1, "删除日程");
 			}
         });
 		
@@ -203,9 +204,18 @@ public class ScheduleActivity extends Activity {
         final String delid = ar.get(position).get("id").toString();
         System.out.println(delID);
         switch (item.getItemId()) {
-        case 0:
-            //System.out.println("删除"+info.id);
-			
+        /*case 0:
+        	System.out.println("修改日程");
+        	String scheContent = ar.get(position).get("日程").toString();
+        	String schePlace = ar.get(position).get("地点").toString();
+        	Intent it = new Intent();
+        	it.setClass(ScheduleActivity.this, AddScheduleActivity.class);
+        	Bundle bundle = new Bundle();
+			bundle.putString("Schedule", scheContent);
+			bundle.putString("Place", scheContent);
+			it.putExtras(bundle);
+			startActivity(it);*/
+        case 1:
 			//弹出AlertDialog
 			AlertDialog.Builder builder = new Builder(ScheduleActivity.this);
             builder.setMessage("是否删除此日程？");

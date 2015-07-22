@@ -12,6 +12,7 @@ import com.umeng.analytics.MobclickAgent;
 import weatherforecast.util.ScheduleDBHelper;
 import weatherforecast.view.SwitchButton.OnChangeListener;
 
+import android.R.integer;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -56,6 +57,7 @@ public class AddScheduleActivity extends Activity {
 	private int nowHour = 0;
 	private int nowMin = 0;
 	private SwitchButton swibtn;
+	private int totalSchedule = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +86,10 @@ public class AddScheduleActivity extends Activity {
         
         contentText = (EditText) findViewById(R.id.inputTitle);
         placeText = (EditText) findViewById(R.id.inputPlace);
+        /*Intent it = getIntent();
+        contentText.setText(it.getStringExtra("Schedule"));
+        placeText.setText(it.getStringExtra("Place"));*/
+        
         cancelButton = (Button) findViewById(R.id.ret);
         OKButton = (Button) findViewById(R.id.add);
         swibtn = (SwitchButton) findViewById(R.id.wiperSwitch);
@@ -100,7 +106,7 @@ public class AddScheduleActivity extends Activity {
 				startActivity(i);
 			}
 		});
-        
+
         //点击确认按钮时向ListView和数据库中添加日程信息
         OKButton.setOnClickListener(new OnClickListener() {
 			
@@ -160,6 +166,7 @@ public class AddScheduleActivity extends Activity {
         }
         else{
 			//向数据库中存储数据
+        	totalSchedule++;
 			mYear = String.valueOf(cal.get(Calendar.YEAR));
 			mMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
 			mDay = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
@@ -245,5 +252,9 @@ public class AddScheduleActivity extends Activity {
 			e.printStackTrace();
 		}
     	return 0;
+	}
+	
+	private int getTotalSchedule(){
+		return totalSchedule;
 	}
 }
