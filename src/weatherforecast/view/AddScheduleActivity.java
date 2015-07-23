@@ -57,7 +57,6 @@ public class AddScheduleActivity extends Activity {
 	private int nowHour = 0;
 	private int nowMin = 0;
 	private SwitchButton swibtn;
-	private int totalSchedule = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -166,7 +165,6 @@ public class AddScheduleActivity extends Activity {
         }
         else{
 			//向数据库中存储数据
-        	totalSchedule++;
 			mYear = String.valueOf(cal.get(Calendar.YEAR));
 			mMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
 			mDay = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
@@ -252,9 +250,5 @@ public class AddScheduleActivity extends Activity {
 			e.printStackTrace();
 		}
     	return 0;
-	}
-	
-	private int getTotalSchedule(){
-		return totalSchedule;
 	}
 }
