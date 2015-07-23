@@ -43,39 +43,39 @@ public class WeatherWidget extends AppWidgetProvider{
 	private Context context;//用于handler
 	private String oldtime;
 	private LocationClient mLocationClient;
-	@SuppressLint("SimpleDateFormat") @Override
+	@SuppressLint({ "SimpleDateFormat", "InlinedApi" }) @Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
 		// TODO Auto-generated method stub
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 		this.context=context;
 		
-			 
-		 new Thread() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				super.run();
-				MyLocationListener myListener = new MyLocationListener();
-				LocationClientOption option = new LocationClientOption(); 
-			     option.setIsNeedAddress(true);
-			     mLocationClient.setLocOption(option);
-			     mLocationClient.registerLocationListener( myListener );				//注册监听函数
-			     mLocationClient.start(); 
-			     mLocationClient.requestLocation();
-			     
-//			     while(myListener.getErrcode()==-1)
-//			     {
-//			    	 //mLocationClient.start(); 
-//				     //mLocationClient.requestLocation();
-			    	System.out.println("你丫等会");
-//			     };
-			     //System.out.println("妥了");
-			     System.out.println(myListener.getErrcode());
-			}
-			 
-		 }.start();
+//			 
+//		 new Thread() {
+//
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				super.run();
+//				MyLocationListener myListener = new MyLocationListener();
+//				LocationClientOption option = new LocationClientOption(); 
+//			     option.setIsNeedAddress(true);
+//			     mLocationClient.setLocOption(option);
+//			     mLocationClient.registerLocationListener( myListener );				//注册监听函数
+//			     mLocationClient.start(); 
+//			     mLocationClient.requestLocation();
+//			     
+////			     while(myListener.getErrcode()==-1)
+////			     {
+////			    	 //mLocationClient.start(); 
+////				     //mLocationClient.requestLocation();
+//			    	System.out.println("你丫等会");
+////			     };
+//			     //System.out.println("妥了");
+//			     System.out.println(myListener.getErrcode());
+//			}
+//			 
+//		 }.start();
 		 
 	     
 		ArrayList<City_ID> list=CityDao.getIDByName("海淀");
@@ -137,6 +137,16 @@ public class WeatherWidget extends AppWidgetProvider{
 						String time = dateFormat.format( now ); 
 						oldtime=new String(time);
 						rViews.setTextViewText(R.id.widgetTextviewTime,time);
+						
+						dateFormat= new SimpleDateFormat("EEEE");//星期几
+						time = dateFormat.format( now );
+						rViews.setTextViewText(R.id.textViewWidgetTime2,time);
+						//设置日期
+						dateFormat= new SimpleDateFormat("MM");
+						String month = dateFormat.format( now );
+						dateFormat= new SimpleDateFormat("dd");
+						String day = dateFormat.format( now );
+						rViews.setTextViewText(R.id.textViewWidgetDate,month+"月"+day+"日");
 						AppWidgetManager aManager=AppWidgetManager.getInstance(WeatherWidget.this.context);
 						ComponentName cName=new ComponentName(WeatherWidget.this.context, WeatherWidget.class);
 						aManager.updateAppWidget(cName, rViews);
