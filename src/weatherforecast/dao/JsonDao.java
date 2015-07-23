@@ -136,10 +136,10 @@ public class JsonDao {
             String weather6 = jsonObj.getString("weather6"); 
             String wind6 = jsonObj.getString("wind6"); 
             
-            cityWeather = new CityWeather(city, cityid, index, index_d, 
-            		index_tr, index_xc, index_uv, index_co, date_y, week, temp1, 
-            		weather1, wind1, temp2, weather2, wind2, temp3, weather3, wind3, 
-            		temp4, weather4, wind4, temp5, weather5, wind5, temp6, weather6, wind6);
+//            cityWeather = new CityWeather(city, cityid, index, index_d, 
+//            		index_tr, index_xc, index_uv, index_co, date_y, week, temp1, 
+//            		weather1, wind1, temp2, weather2, wind2, temp3, weather3, wind3, 
+//            		temp4, weather4, wind4, temp5, weather5, wind5, temp6, weather6, wind6);
             
         } catch (JSONException e) {   
             e.printStackTrace();  

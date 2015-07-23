@@ -135,16 +135,16 @@ public class MainActivity extends Activity {
 			String city = editTextInputCityName.getEditableText().toString();
 			ArrayList<City_ID> list=CityDao.getIDByName(city);
 			if(list.size()!=0){
-				
-				cityWeather = JsonDao.getCityWeatherbyCityID(list.get(0).getId()+"");
-				String result = cityWeather.getCity()+"\n"+cityWeather.getCityid()+"\n"
-						+cityWeather.getDate_y()+"\n"+cityWeather.getIndex()+"\n"
-						+cityWeather.getIndex_co()+"\n"+cityWeather.getIndex_d()+"\n"
-						+cityWeather.getIndex_tr()+"\n"+cityWeather.getIndex_uv()+"\n"
-						+cityWeather.getIndex_xc()+"\n"+cityWeather.getTemp1()+"\n"
-						+cityWeather.getWeather1()+"\n"+cityWeather.getWeek()+"\n"
-						+cityWeather.getWind1()+"\n";
-				textViewShowMessage.setText(result);
+				JsonDaoPro.getWeatherJSON(list.get(0).getId()+"");
+//				cityWeather = JsonDao.getCityWeatherbyCityID(list.get(0).getId()+"");
+//				String result = cityWeather.getCity()+"\n"+cityWeather.getCityid()+"\n"
+//						+cityWeather.getDate_y()+"\n"+cityWeather.getIndex()+"\n"
+//						+cityWeather.getIndex_co()+"\n"+cityWeather.getIndex_d()+"\n"
+//						+cityWeather.getIndex_tr()+"\n"+cityWeather.getIndex_uv()+"\n"
+//						+cityWeather.getIndex_xc()+"\n"+cityWeather.getTemp1()+"\n"
+//						+cityWeather.getWeather1()+"\n"+cityWeather.getWeek()+"\n"
+//						+cityWeather.getWind1()+"\n";
+//				textViewShowMessage.setText(result);
 				
 				
 				
