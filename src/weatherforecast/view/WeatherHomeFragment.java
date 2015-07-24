@@ -10,6 +10,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.database.SQLException;
 import java.io.IOException;
+
+import com.baoyz.widget.PullRefreshLayout;
+
 import weatherforecast.dao.*;
 import weatherforecast.model.CityWeather;
 import weatherforecast.util.CreateDB;
@@ -19,6 +22,7 @@ public class WeatherHomeFragment extends Fragment {
 	private int cityId;
 	CreateDB myDbHelper;
 	ScrollView scrl;
+	PullRefreshLayout layout;
 	
 	public WeatherHomeFragment() {
 		super();
@@ -42,6 +46,18 @@ public class WeatherHomeFragment extends Fragment {
 		if (savedInstanceState != null)
 			cityId = savedInstanceState.getInt("index");
 		View v = inflater.inflate(R.layout.weather_home_fragment, container, false);
+		layout = (PullRefreshLayout)v.findViewById(R.id.swipeRefreshLayout);
+		layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                layout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        layout.setRefreshing(false);
+                    }
+                }, 1500);
+            }
+        });
 		initView(v);
 		return v;
 	}
@@ -50,6 +66,8 @@ public class WeatherHomeFragment extends Fragment {
 		TextView t;
 		TextView t1,t2;
 		CityWeather cityWeather;
+		layout = (PullRefreshLayout) v.findViewById(R.id.swipeRefreshLayout);
+		layout.setRefreshStyle(PullRefreshLayout.STYLE_WATER_DROP);
 		t = (TextView)v.findViewById(R.id.text_weather);
 		cityWeather = JsonDao.getCityWeatherbyCityID(cityId+"");
 		if(cityWeather!=null)
@@ -64,16 +82,6 @@ public class WeatherHomeFragment extends Fragment {
 			t.setText(result);
 			
 		}
-		
-		t1=(TextView)v.findViewById(R.id.textView1);
-		t2=(TextView)v.findViewById(R.id.textView2);
-		t1.setText("这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n" +
-				"这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n" +
-				"这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n这里是一些二级信息\n");
-		t2.setText("这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n" +
-				"这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n" +
-				"这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n这里是一些三级信息\n");
-		
 		scrl=(ScrollView)v.findViewById(R.id.scrollView1);
 	}
 	

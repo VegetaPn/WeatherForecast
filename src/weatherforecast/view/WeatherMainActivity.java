@@ -39,6 +39,7 @@ public class WeatherMainActivity extends BaseActivity {
 		
 		mFragments=new ArrayList<Fragment>();
 		initDB();
+		getSupportActionBar().hide();
 		vp = new ViewPager(this);
 		vp.setId("VP".hashCode());
 		adapter = new WeatherPagerAdapter(getSupportFragmentManager(),mFragments);
@@ -46,32 +47,7 @@ public class WeatherMainActivity extends BaseActivity {
 		vp.setOffscreenPageLimit(2);
 		setViewPagerScrollSpeed(vp);
 		setContentView(vp);
-
-		vp.setOnPageChangeListener(new OnPageChangeListener() {
-			@Override
-			public void onPageScrollStateChanged(int arg0) { }
-
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) { }
-
-			@Override
-			public void onPageSelected(int position) {
-				switch (position) {
-				case 0://页面在第一个的时候侧滑菜单的属性
-					getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-					break;
-				default://页面不在第一个页面的时候设置侧滑菜单的属性
-					getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-					break;
-				}
-				WeatherPagerAdapter w = (WeatherPagerAdapter) vp.getAdapter();
-				WeatherHomeFragment wf = (WeatherHomeFragment)w.getItem(position);
-			//	wf.scrollToTop();
-				
-			}
-
-		});
-		
+	
 		// set the Behind View
 		setBehindContentView(R.layout.menu_frame);
 		getSupportFragmentManager()
