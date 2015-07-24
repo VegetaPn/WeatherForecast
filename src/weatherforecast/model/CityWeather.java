@@ -52,8 +52,17 @@ public class CityWeather {
     private String sr5, ss5, code_n5, txt_n5, date5, hum5, pcpn5, pop5, pres5, max5, min5, vis5, deg5, dir5, sc5, spd5;
     private String sr6, ss6, code_n6, txt_n6, date6, hum6, pcpn6, pop6, pres6, max6, min6, vis6, deg6, dir6, sc6, spd6;
     private String sr7, ss7, code_n7, txt_n7, date7, hum7, pcpn7, pop7, pres7, max7, min7, vis7, deg7, dir7, sc7, spd7;
+    private String hdate1, hhum1, hpop1, hpres1, htmp1, hdeg1, hdir1, hsc1, hspd1;
+    private String hdate2, hhum2, hpop2, hpres2, htmp2, hdeg2, hdir2, hsc2, hspd2;
+    private String hdate3, hhum3, hpop3, hpres3, htmp3, hdeg3, hdir3, hsc3, hspd3;
+    private String ncode, ntxt, nfl, nhum, npcpn, npres, ntmp, nvis, ndeg, ndir, nsc, nspd;
+    private String status;
+    private String brf1, txt1, brf2, txt2, brf3, txt3, brf4, txt4, brf5, txt5, brf6, txt6, brf7, txt7;
     
     
+	
+	
+	
 	public CityWeather(String aqi, String pm10, String pm25, String qlty,
 			String city, String cnty, String id, String lat, String lon,
 			String loc, String utc, String sr1, String ss1, String code_n1,
@@ -79,7 +88,19 @@ public class CityWeather {
 			String sc6, String spd6, String sr7, String ss7, String code_n7,
 			String txt_n7, String date7, String hum7, String pcpn7,
 			String pop7, String pres7, String max7, String min7, String vis7,
-			String deg7, String dir7, String sc7, String spd7) {
+			String deg7, String dir7, String sc7, String spd7, String hdate1,
+			String hhum1, String hpop1, String hpres1, String htmp1,
+			String hdeg1, String hdir1, String hsc1, String hspd1,
+			String hdate2, String hhum2, String hpop2, String hpres2,
+			String htmp2, String hdeg2, String hdir2, String hsc2,
+			String hspd2, String hdate3, String hhum3, String hpop3,
+			String hpres3, String htmp3, String hdeg3, String hdir3,
+			String hsc3, String hspd3, String ncode, String ntxt, String nfl,
+			String nhum, String npcpn, String npres, String ntmp, String nvis,
+			String ndeg, String ndir, String nsc, String nspd, String status,
+			String brf1, String txt1, String brf2, String txt2, String brf3,
+			String txt3, String brf4, String txt4, String brf5, String txt5,
+			String brf6, String txt6, String brf7, String txt7) {
 		super();
 		this.aqi = aqi;
 		this.pm10 = pm10;
@@ -204,9 +225,67 @@ public class CityWeather {
 		this.dir7 = dir7;
 		this.sc7 = sc7;
 		this.spd7 = spd7;
+		this.hdate1 = hdate1;
+		this.hhum1 = hhum1;
+		this.hpop1 = hpop1;
+		this.hpres1 = hpres1;
+		this.htmp1 = htmp1;
+		this.hdeg1 = hdeg1;
+		this.hdir1 = hdir1;
+		this.hsc1 = hsc1;
+		this.hspd1 = hspd1;
+		this.hdate2 = hdate2;
+		this.hhum2 = hhum2;
+		this.hpop2 = hpop2;
+		this.hpres2 = hpres2;
+		this.htmp2 = htmp2;
+		this.hdeg2 = hdeg2;
+		this.hdir2 = hdir2;
+		this.hsc2 = hsc2;
+		this.hspd2 = hspd2;
+		this.hdate3 = hdate3;
+		this.hhum3 = hhum3;
+		this.hpop3 = hpop3;
+		this.hpres3 = hpres3;
+		this.htmp3 = htmp3;
+		this.hdeg3 = hdeg3;
+		this.hdir3 = hdir3;
+		this.hsc3 = hsc3;
+		this.hspd3 = hspd3;
+		this.ncode = ncode;
+		this.ntxt = ntxt;
+		this.nfl = nfl;
+		this.nhum = nhum;
+		this.npcpn = npcpn;
+		this.npres = npres;
+		this.ntmp = ntmp;
+		this.nvis = nvis;
+		this.ndeg = ndeg;
+		this.ndir = ndir;
+		this.nsc = nsc;
+		this.nspd = nspd;
+		this.status = status;
+		this.brf1 = brf1;
+		this.txt1 = txt1;
+		this.brf2 = brf2;
+		this.txt2 = txt2;
+		this.brf3 = brf3;
+		this.txt3 = txt3;
+		this.brf4 = brf4;
+		this.txt4 = txt4;
+		this.brf5 = brf5;
+		this.txt5 = txt5;
+		this.brf6 = brf6;
+		this.txt6 = txt6;
+		this.brf7 = brf7;
+		this.txt7 = txt7;
 	}
-	
-	
+
+
+
+
+
+
 	public CityWeather(String city, String cityid, String index,
 	String index_d, String index_tr, String index_xc, String index_uv,
 	String index_co, String date_y, String week, String temp1,
