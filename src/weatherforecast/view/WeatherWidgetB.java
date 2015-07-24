@@ -18,6 +18,7 @@ import weatherforecast.dao.CityDao;
 import weatherforecast.dao.JsonDao;
 import weatherforecast.model.CityWeather;
 import weatherforecast.model.City_ID;
+import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -74,6 +75,17 @@ public class WeatherWidgetB extends AppWidgetProvider{
 		String date = month+"月"+day+"日  "+dateFormat.format( now );
 		rViews.setTextViewText(R.id.bigwidgetTextviewdate,date);
 		
+		
+		dateFormat= new SimpleDateFormat("yyyy-mm-dd");
+		String scheduleString=dateFormat.format( now );
+		int scheduledate=ScheduleActivity.getTotalSchedule(context, scheduleString);
+		if(scheduledate!=0)
+		{
+		rViews.setTextViewText(R.id.bigwidgetTextviewschedule, "今日您有"+scheduledate+"个行程");
+		}else
+		{
+			rViews.setTextViewText(R.id.bigwidgetTextviewschedule, "您今日暂无行程");
+		}
 		
 		//后三天的星期数
 		
@@ -136,6 +148,17 @@ public class WeatherWidgetB extends AppWidgetProvider{
 					dateFormat= new SimpleDateFormat("EEEE");//星期几
 					String date = month+"月"+day+"日  "+dateFormat.format( now );
 					rViews.setTextViewText(R.id.bigwidgetTextviewdate,date);
+					
+					dateFormat= new SimpleDateFormat("yyyy-mm-dd");
+					String scheduleString=dateFormat.format( now );
+					int scheduledate=ScheduleActivity.getTotalSchedule(WeatherWidgetB.this.context, scheduleString);
+					if(scheduledate!=0)
+					{
+					rViews.setTextViewText(R.id.bigwidgetTextviewschedule, "今日您有"+scheduledate+"个行程");
+					}else
+					{
+						rViews.setTextViewText(R.id.bigwidgetTextviewschedule, "您今日暂无行程");
+					}
 										
 					//后三天的星期数					
 					Calendar cal = Calendar.getInstance();
