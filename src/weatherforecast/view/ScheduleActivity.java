@@ -2,6 +2,7 @@ package weatherforecast.view;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
@@ -10,6 +11,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import weatherforecast.service.GetDateTime;
 import weatherforecast.util.ScheduleDBHelper;
+import android.R.integer;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -22,6 +24,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.ContactsContract.Contacts.Data;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -127,71 +130,12 @@ public class ScheduleActivity extends Activity {
 			//长按条目弹出菜单
 			public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
                 menu.setHeaderTitle("选择操作");
-                menu.add(0, 0, 0, "删除该日程");
+                //menu.add(0, 0, 0, "修改日程");
+                menu.add(0, 1, 1, "删除日程");
 			}
-        });
-		
-		/*listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				// TODO Auto-generated method stub
-				//Toast.makeText(ScheduleActivity.this, "删除", Toast.LENGTH_LONG).show();
-				index = arg2;
-				
-				//弹出AlertDialog
-				AlertDialog.Builder builder = new Builder(ScheduleActivity.this);
-                builder.setMessage("是否删除此日程？");
-                builder.setTitle("删除提示");
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener(){
-
-					@Override
-					public void onClick(DialogInterface arg0, int arg1) {
-						// TODO Auto-generated method stub
-						String delID = ar.get(index).get("id").toString();
-						String delID = index + "";
-						String delTime = ar.get(index).get("时间").toString();
-						delTime = delTime.replaceAll(":","-");
-						
-						//得到数据库中存储的时间
-						final Calendar cal = Calendar.getInstance();
-						cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-						String mYear = String.valueOf(cal.get(Calendar.YEAR));
-						String mMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
-						String mDay = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
-						if(mMonth.length() == 1)
-							mMonth = "0" + mMonth;
-						if(mDay.length() == 1)
-							mDay = "0" + mDay;
-						delTime = mYear + "-" + mMonth + "-" + mDay + "-" + delTime;
-						String delSchedule = ar.get(index).get("日程").toString();
-						String delPlace = ar.get(index).get("地点").toString();
-						SQLiteDatabase db = dbHelper.getReadableDatabase();  
-				
-					    //从表中删除指定的一条数据  
-						db.delete("schedule","id = ?",new String[]{delID});
-						db.close();
-						//从ListView中删除相应日程并更新ListView
-						ar.remove(index);
-						adapter.notifyDataSetChanged();
-						listView.invalidate();
-					}
-                });
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener(){
-
-					@Override
-					public void onClick(DialogInterface arg0, int arg1) {
-						// TODO Auto-generated method stub
-						arg0.dismiss();
-					}
-                });
-                builder.create().show();
-				return true;
-			}
-		});*/
+        });	
 	}
-
+	
 	//删除日程时选中菜单选项后弹出AlertDialog
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
@@ -203,9 +147,18 @@ public class ScheduleActivity extends Activity {
         final String delid = ar.get(position).get("id").toString();
         System.out.println(delID);
         switch (item.getItemId()) {
-        case 0:
-            //System.out.println("删除"+info.id);
-			
+        /*case 0:
+        	System.out.println("修改日程");
+        	String scheContent = ar.get(position).get("日程").toString();
+        	String schePlace = ar.get(position).get("地点").toString();
+        	Intent it = new Intent();
+        	it.setClass(ScheduleActivity.this, AddScheduleActivity.class);
+        	Bundle bundle = new Bundle();
+			bundle.putString("Schedule", scheContent);
+			bundle.putString("Place", scheContent);
+			it.putExtras(bundle);
+			startActivity(it);*/
+        case 1:
 			//弹出AlertDialog
 			AlertDialog.Builder builder = new Builder(ScheduleActivity.this);
             builder.setMessage("是否删除此日程？");
@@ -263,18 +216,18 @@ public class ScheduleActivity extends Activity {
 	
 	//向ListView中添加一项
 	private void addRow(String id, String schedule, String place, String time){
-		if((schedule != "") || (place != "")){
-			HashMap<String,String> map = new HashMap();
-			map.put("id", id);
-			map.put("时间", time);
-			map.put("日程", schedule);
-			map.put("地点", place);
-			ar.add(map);
-			
-			//将ar与R.layout.item中的参数进行适配，最后两个参数指定数据一一对应的关系
-			adapter = new SimpleAdapter(ScheduleActivity.this, ar, R.layout.item, new String[]{"id","时间","日程","地点"}, new int[]{R.id.scheID,R.id.time,R.id.content,R.id.place});
-			listView.setAdapter(adapter);
-		}
+		//if((schedule != "") || (place != "")){
+		HashMap<String,String> map = new HashMap();
+		map.put("id", id);
+		map.put("时间", time);
+		map.put("日程", schedule);
+		map.put("地点", place);
+		ar.add(map);
+		
+		//将ar与R.layout.item中的参数进行适配，最后两个参数指定数据一一对应的关系
+		adapter = new SimpleAdapter(ScheduleActivity.this, ar, R.layout.item, new String[]{"id","时间","日程","地点"}, new int[]{R.id.scheID,R.id.time,R.id.content,R.id.place});
+		listView.setAdapter(adapter);
+		//}
 	}
 		
 	// 回调方法，从AddScheduleActivity回来的时候会执行这个方法  
@@ -292,6 +245,20 @@ public class ScheduleActivity extends Activity {
 			// TODO Auto-generated catch block
 			// do nothing
 		}
-    }  
+    }
+    
+    //查询当天的日程数，第一个参数为Activity，第二个参数为日期，格式为yyyy-mm-dd
+    public static int getTotalSchedule(Context context, String str) {
+    	int count = 0;
+    	ScheduleDBHelper dbHelper = new ScheduleDBHelper(context, "ScheduleDB");
+    	SQLiteDatabase db = dbHelper.getReadableDatabase();  
+    	Cursor cursor = db.rawQuery("select * from schedule where date LIKE '%" + str + "%'", null);
+    	while(cursor.moveToNext()){
+    		count++;
+    	}
+    	cursor.close();
+
+    	return count;
+    }
 }
 

@@ -42,22 +42,42 @@ public class WeatherWidget extends AppWidgetProvider{
 	private  Timer timer;
 	private Context context;//用于handler
 	private String oldtime;
-	@SuppressLint("SimpleDateFormat") @Override
+	private LocationClient mLocationClient;
+	@SuppressLint({ "SimpleDateFormat", "InlinedApi" }) @Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
 		// TODO Auto-generated method stub
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 		this.context=context;
 		
-		
-//		 MyLocationListener myListener = new MyLocationListener();
-//		 LocationClient mLocationClient = new LocationClient(context);     	//声明LocationClient类
-//	     LocationClientOption option = new LocationClientOption();
-//	     option.setIsNeedAddress(true);
-//	     mLocationClient.setLocOption(option);
-//	     mLocationClient.registerLocationListener( myListener );				//注册监听函数
-//	     mLocationClient.start(); 
-//	     mLocationClient.requestLocation();
+//			 
+//		 new Thread() {
+//
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				super.run();
+//				MyLocationListener myListener = new MyLocationListener();
+//				LocationClientOption option = new LocationClientOption(); 
+//			     option.setIsNeedAddress(true);
+//			     mLocationClient.setLocOption(option);
+//			     mLocationClient.registerLocationListener( myListener );				//注册监听函数
+//			     mLocationClient.start(); 
+//			     mLocationClient.requestLocation();
+//			     
+////			     while(myListener.getErrcode()==-1)
+////			     {
+////			    	 //mLocationClient.start(); 
+////				     //mLocationClient.requestLocation();
+//			    	System.out.println("你丫等会");
+////			     };
+//			     //System.out.println("妥了");
+//			     System.out.println(myListener.getErrcode());
+//			}
+//			 
+//		 }.start();
+		 
+	     
 		ArrayList<City_ID> list=CityDao.getIDByName("海淀");
 		CityWeather cityWeather = JsonDao.getCityWeatherbyCityID(list.get(0).getId()+"");
 		//设置remoteVeiw
@@ -117,6 +137,16 @@ public class WeatherWidget extends AppWidgetProvider{
 						String time = dateFormat.format( now ); 
 						oldtime=new String(time);
 						rViews.setTextViewText(R.id.widgetTextviewTime,time);
+						
+						dateFormat= new SimpleDateFormat("EEEE");//星期几
+						time = dateFormat.format( now );
+						rViews.setTextViewText(R.id.textViewWidgetTime2,time);
+						//设置日期
+						dateFormat= new SimpleDateFormat("MM");
+						String month = dateFormat.format( now );
+						dateFormat= new SimpleDateFormat("dd");
+						String day = dateFormat.format( now );
+						rViews.setTextViewText(R.id.textViewWidgetDate,month+"月"+day+"日");
 						AppWidgetManager aManager=AppWidgetManager.getInstance(WeatherWidget.this.context);
 						ComponentName cName=new ComponentName(WeatherWidget.this.context, WeatherWidget.class);
 						aManager.updateAppWidget(cName, rViews);
@@ -164,11 +194,7 @@ public class WeatherWidget extends AppWidgetProvider{
 	@Override
 	public void onEnabled(Context context) {
 		// TODO Auto-generated method stub
-		/*以下为定位客户端的生成代码*/
-        /*不要删*/
-       
-        /*以上*/
-		
+
 		super.onEnabled(context);
 	}
 
