@@ -164,7 +164,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-			mLocationClient.requestLocation();
+			// mLocationClient.requestLocation();
 			textViewShowMessage.setText("城市名："+myListener.getCityName()
 					+"\n区县名："+myListener.getDistrictName()
 					+"\nErrcode: "+myListener.getErrcode());
