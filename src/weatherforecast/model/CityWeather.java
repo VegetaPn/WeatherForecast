@@ -1195,4 +1195,660 @@ public class CityWeather {
 		return wind6;
 	}
 
+
+	/**
+	 * @return the city_old
+	 */
+	public String getCity_old() {
+		return city_old;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hdate1
+	 */
+	public String getHdate1() {
+		return hdate1;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hhum1
+	 */
+	public String getHhum1() {
+		return hhum1;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hpop1
+	 */
+	public String getHpop1() {
+		return hpop1;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hpres1
+	 */
+	public String getHpres1() {
+		return hpres1;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the htmp1
+	 */
+	public String getHtmp1() {
+		return htmp1;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hdeg1
+	 */
+	public String getHdeg1() {
+		return hdeg1;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hdir1
+	 */
+	public String getHdir1() {
+		return hdir1;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hsc1
+	 */
+	public String getHsc1() {
+		return hsc1;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hspd1
+	 */
+	public String getHspd1() {
+		return hspd1;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hdate2
+	 */
+	public String getHdate2() {
+		return hdate2;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hhum2
+	 */
+	public String getHhum2() {
+		return hhum2;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hpop2
+	 */
+	public String getHpop2() {
+		return hpop2;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hpres2
+	 */
+	public String getHpres2() {
+		return hpres2;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the htmp2
+	 */
+	public String getHtmp2() {
+		return htmp2;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hdeg2
+	 */
+	public String getHdeg2() {
+		return hdeg2;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hdir2
+	 */
+	public String getHdir2() {
+		return hdir2;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hsc2
+	 */
+	public String getHsc2() {
+		return hsc2;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hspd2
+	 */
+	public String getHspd2() {
+		return hspd2;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hdate3
+	 */
+	public String getHdate3() {
+		return hdate3;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hhum3
+	 */
+	public String getHhum3() {
+		return hhum3;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hpop3
+	 */
+	public String getHpop3() {
+		return hpop3;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hpres3
+	 */
+	public String getHpres3() {
+		return hpres3;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the htmp3
+	 */
+	public String getHtmp3() {
+		return htmp3;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hdeg3
+	 */
+	public String getHdeg3() {
+		return hdeg3;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hdir3
+	 */
+	public String getHdir3() {
+		return hdir3;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hsc3
+	 */
+	public String getHsc3() {
+		return hsc3;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the hspd3
+	 */
+	public String getHspd3() {
+		return hspd3;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the ncode
+	 */
+	public String getNcode() {
+		return ncode;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the ntxt
+	 */
+	public String getNtxt() {
+		return ntxt;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the nfl
+	 */
+	public String getNfl() {
+		return nfl;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the nhum
+	 */
+	public String getNhum() {
+		return nhum;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the npcpn
+	 */
+	public String getNpcpn() {
+		return npcpn;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the npres
+	 */
+	public String getNpres() {
+		return npres;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the ntmp
+	 */
+	public String getNtmp() {
+		return ntmp;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the nvis
+	 */
+	public String getNvis() {
+		return nvis;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the ndeg
+	 */
+	public String getNdeg() {
+		return ndeg;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the ndir
+	 */
+	public String getNdir() {
+		return ndir;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the nsc
+	 */
+	public String getNsc() {
+		return nsc;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the nspd
+	 */
+	public String getNspd() {
+		return nspd;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the brf1
+	 */
+	public String getBrf1() {
+		return brf1;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the txt1
+	 */
+	public String getTxt1() {
+		return txt1;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the brf2
+	 */
+	public String getBrf2() {
+		return brf2;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the txt2
+	 */
+	public String getTxt2() {
+		return txt2;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the brf3
+	 */
+	public String getBrf3() {
+		return brf3;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the txt3
+	 */
+	public String getTxt3() {
+		return txt3;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the brf4
+	 */
+	public String getBrf4() {
+		return brf4;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the txt4
+	 */
+	public String getTxt4() {
+		return txt4;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the brf5
+	 */
+	public String getBrf5() {
+		return brf5;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the txt5
+	 */
+	public String getTxt5() {
+		return txt5;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the brf6
+	 */
+	public String getBrf6() {
+		return brf6;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the txt6
+	 */
+	public String getTxt6() {
+		return txt6;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the brf7
+	 */
+	public String getBrf7() {
+		return brf7;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the txt7
+	 */
+	public String getTxt7() {
+		return txt7;
+	}
+
 }
