@@ -19,6 +19,7 @@ import com.baidu.location.LocationClientOption;
 
 import weatherforecast.dao.CityDao;
 import weatherforecast.dao.JsonDao;
+import weatherforecast.dao.JsonDaoPro;
 import weatherforecast.model.CityWeather;
 import weatherforecast.model.City_ID;
 import weatherforecast.service.MyLocationListener;
@@ -79,15 +80,16 @@ public class WeatherWidget extends AppWidgetProvider{
 		 
 	     
 		ArrayList<City_ID> list=CityDao.getIDByName("海淀");
-		CityWeather cityWeather = JsonDao.getCityWeatherbyCityID(list.get(0).getId()+"");
+		CityWeather cityWeather = JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(list.get(0).getId()+""));
 		//设置remoteVeiw
 		RemoteViews rViews=new RemoteViews(context.getPackageName(), R.layout.widget_layout);
 		if(cityWeather!=null)
 		{
-			rViews.setTextViewText(R.id.textViewWidgetTemp, cityWeather.getTemp1());
+			rViews.setTextViewText(R.id.textViewWidgetTempNow, cityWeather.getNtmp()+"℃ ");
+			rViews.setTextViewText(R.id.textViewWidgetTemp, cityWeather.getMax1()+"℃/"+cityWeather.getMin1()+"℃");
 			rViews.setTextViewText(R.id.widgetTextviewCity,cityWeather.getCity());
-			rViews.setTextViewText(R.id.textViewWidgetWeather,cityWeather.getWeather1());
-			rViews.setTextViewText(R.id.textViewWidgetIndex,cityWeather.getIndex());
+			rViews.setTextViewText(R.id.textViewWidgetWeather,cityWeather.getNtxt());
+			rViews.setTextViewText(R.id.textViewWidgetIndex,"穿衣指数："+cityWeather.getBrf1()+"\n运动指数："+cityWeather.getBrf7());
 			
 		}
 				

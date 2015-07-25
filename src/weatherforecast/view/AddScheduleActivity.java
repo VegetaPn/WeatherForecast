@@ -165,13 +165,13 @@ public class AddScheduleActivity extends Activity {
         }
         else{
 			//向数据库中存储数据
-			mYear = String.valueOf(cal.get(Calendar.YEAR));
+			/*mYear = String.valueOf(cal.get(Calendar.YEAR));
 			mMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
 			mDay = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
 			if(mMonth.length() == 1)
 				mMonth = "0" + mMonth;
 			if(mDay.length() == 1)
-				mDay = "0" + mDay;
+				mDay = "0" + mDay;*/
 			db = dbHelper.getReadableDatabase();
 			Cursor cur = db.rawQuery("select * from schedule", null);
 			if(cur.getCount() == 0)
@@ -184,7 +184,10 @@ public class AddScheduleActivity extends Activity {
 				cursor.close();
 			}
 			cur.close();
-			dateTime = mYear + "-" + mMonth + "-" + mDay + "-" + pHour + "-" + pMinute;
+			Intent it = getIntent();
+			String nowDateString = it.getStringExtra("dateStr");
+			dateTime = nowDateString + "-" + pHour + "-" + pMinute;
+			//dateTime = mYear + "-" + mMonth + "-" + mDay + "-" + pHour + "-" + pMinute;
 			remind = "时间：" + pHour + ":" + pMinute + "\n" + "日程：" + schedule + "\n" + "地点：" + place;  
 			ContentValues values = new ContentValues();
 			values.put("id", id);
