@@ -98,21 +98,11 @@ public class ScheduleActivity extends Activity {
 		adapter = new SimpleAdapter(ScheduleActivity.this, ar, R.layout.item, new String[]{"id","时间","日程","地点"}, new int[]{R.id.scheID,R.id.time,R.id.content,R.id.place});
 		listView.setAdapter(adapter);
 		
-		//将数据库中已有日程数据读取出来并显示在ListView中
-		dbHelper.getReadableDatabase();
-		db = dbHelper.getReadableDatabase();
-		Cursor cursor = db.rawQuery("select * from schedule", null);
-		while(cursor.moveToNext()) {
-			String sTime = cursor.getString(1);
-			sTime = sTime.substring(sTime.length()-5,sTime.length());
-			sTime = sTime.replaceAll("-",":");
-			String id = cursor.getString(0);
-			String time = sTime;
-			String schedule = cursor.getString(2);
-			String place = cursor.getString(3);
-			addRow(id, schedule, place, time);
-		}
-		cursor.close();
+		Intent it = getIntent();
+		final String nowDate = it.getStringExtra("dateString");
+		
+		//根据传入日期将数据库中已有日程数据读取出来并显示在ListView中
+		initListView(nowDate);
 		
 		//添加新的日程信息，跳转到AddScheduleActivity
 		imageButton.setOnClickListener(new OnClickListener() {
@@ -122,6 +112,7 @@ public class ScheduleActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent i = new Intent();
 				i.setClass(ScheduleActivity.this, AddScheduleActivity.class);
+				i.putExtra("dateStr", nowDate);
 				startActivityForResult(i, 101);  
 			}
 		});
@@ -134,6 +125,24 @@ public class ScheduleActivity extends Activity {
                 menu.add(0, 1, 1, "删除日程");
 			}
         });	
+	}
+	
+	//根据传入日期将数据库中已有日程数据读取出来并显示在ListView中
+	public void initListView(String dateStr) {
+		dbHelper.getReadableDatabase();
+		db = dbHelper.getReadableDatabase();
+		Cursor cursor = db.rawQuery("select * from schedule where date LIKE '%" + dateStr + "%'", null);
+		while(cursor.moveToNext()) {
+			String sTime = cursor.getString(1);
+			sTime = sTime.substring(sTime.length()-5,sTime.length());
+			sTime = sTime.replaceAll("-",":");
+			String id = cursor.getString(0);
+			String time = sTime;
+			String schedule = cursor.getString(2);
+			String place = cursor.getString(3);
+			addRow(id, schedule, place, time);
+		}
+		cursor.close();
 	}
 	
 	//删除日程时选中菜单选项后弹出AlertDialog

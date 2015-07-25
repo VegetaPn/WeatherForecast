@@ -104,7 +104,7 @@ public class JsonDaoPro {
         thread.start();
     }   
 	
-	private static CityWeather parseJson(String strResult) {
+	public static CityWeather parseJson(String strResult) {
 //		System.out.println(strResult);
         try {   
             JSONObject jsonObj = new JSONObject(strResult);//.getJSONObject("weatherinfo");  
