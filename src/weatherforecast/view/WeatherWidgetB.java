@@ -52,7 +52,7 @@ public class WeatherWidgetB extends AppWidgetProvider{
 		if(cityWeather!=null)
 		{
 			rViews.setTextViewText(R.id.bigwidgetTextviewtemp, cityWeather.getTemp1());
-			rViews.setTextViewText(R.id.bigwidgetTextviewtempdes, cityWeather.getWeather1());
+			//rViews.setTextViewText(R.id.bigwidgetTextviewtempdes, cityWeather.getWeather1());
 			rViews.setTextViewText(R.id.bigwidgetTextviewlocation, cityWeather.getCity());
 			rViews.setTextViewText(R.id.bigwidgetTextviewtomorrowtemp, cityWeather.getTemp2());
 			rViews.setTextViewText(R.id.bigwidgetTextviewtomorrowtemp2, cityWeather.getTemp3());
@@ -76,12 +76,13 @@ public class WeatherWidgetB extends AppWidgetProvider{
 		rViews.setTextViewText(R.id.bigwidgetTextviewdate,date);
 		
 		
-		dateFormat= new SimpleDateFormat("yyyy-mm-dd");
+		dateFormat= new SimpleDateFormat("yyyy-MM-dd");
 		String scheduleString=dateFormat.format( now );
 		int scheduledate=ScheduleActivity.getTotalSchedule(context, scheduleString);
+		
 		if(scheduledate!=0)
 		{
-		rViews.setTextViewText(R.id.bigwidgetTextviewschedule, "今日您有"+scheduledate+"个行程");
+		     rViews.setTextViewText(R.id.bigwidgetTextviewschedule, "今日您有"+scheduledate+"个行程");
 		}else
 		{
 			rViews.setTextViewText(R.id.bigwidgetTextviewschedule, "您今日暂无行程");
@@ -118,6 +119,10 @@ public class WeatherWidgetB extends AppWidgetProvider{
 		rViews.setOnClickPendingIntent(R.id.bigwidgetTextviewtomorrowtemp2, pIntent);
 		rViews.setOnClickPendingIntent(R.id.bigwidgetTextviewtomorrow3, pIntent);
 		rViews.setOnClickPendingIntent(R.id.bigwidgetTextviewtomorrowtemp3, pIntent);
+		
+		intent.setClass(context, ScheduleActivity.class);
+		pIntent=PendingIntent.getActivity(context, 0, intent, 0);
+		rViews.setOnClickPendingIntent(R.id.bigwidgetTextviewschedule, pIntent);
 				
 		pIntent=PendingIntent.getActivity(context, 0, new Intent(AlarmClock.ACTION_SET_ALARM), 0);
 		rViews.setOnClickPendingIntent(R.id.bigwidgetTextviewtime, pIntent);
@@ -131,11 +136,26 @@ public class WeatherWidgetB extends AppWidgetProvider{
 			public void handleMessage(Message msg) {
 				// TODO Auto-generated method stub
 				super.handleMessage(msg);
+				RemoteViews rViews=new RemoteViews(WeatherWidgetB.this.context.getPackageName(), R.layout.widget_layout_big);
+				Date now = new Date(); 
+				
+				SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
+				String scheduleString=dateFormat.format( now );
+				
+				int scheduledate=ScheduleActivity.getTotalSchedule(WeatherWidgetB.this.context, scheduleString);
+				if(scheduledate!=0)
+				{
+				    rViews.setTextViewText(R.id.bigwidgetTextviewschedule, "今日您有"+scheduledate+"个行程");
+				}else
+				{
+					rViews.setTextViewText(R.id.bigwidgetTextviewschedule, "您今日暂无行程");
+				}
+				
 				if(msg.what==0x123)
 				{
-					RemoteViews rViews=new RemoteViews(WeatherWidgetB.this.context.getPackageName(), R.layout.widget_layout_big);
-					Date now = new Date(); 
-					SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");//获得当前时间
+					
+					
+					dateFormat = new SimpleDateFormat("HH:mm");//获得当前时间
 					String time = dateFormat.format( now ); 
 					oldtime=new String(time);
 					rViews.setTextViewText(R.id.bigwidgetTextviewtime,time);
@@ -148,18 +168,7 @@ public class WeatherWidgetB extends AppWidgetProvider{
 					dateFormat= new SimpleDateFormat("EEEE");//星期几
 					String date = month+"月"+day+"日  "+dateFormat.format( now );
 					rViews.setTextViewText(R.id.bigwidgetTextviewdate,date);
-					
-					dateFormat= new SimpleDateFormat("yyyy-mm-dd");
-					String scheduleString=dateFormat.format( now );
-					int scheduledate=ScheduleActivity.getTotalSchedule(WeatherWidgetB.this.context, scheduleString);
-					if(scheduledate!=0)
-					{
-					rViews.setTextViewText(R.id.bigwidgetTextviewschedule, "今日您有"+scheduledate+"个行程");
-					}else
-					{
-						rViews.setTextViewText(R.id.bigwidgetTextviewschedule, "您今日暂无行程");
-					}
-										
+															
 					//后三天的星期数					
 					Calendar cal = Calendar.getInstance();
 					cal.add(Calendar.DATE, 2);
@@ -169,12 +178,13 @@ public class WeatherWidgetB extends AppWidgetProvider{
 					cal.add(Calendar.DATE, 3);
 					String week3 = new DateFormatSymbols().getShortWeekdays()[cal.get(Calendar.DAY_OF_WEEK)];
 					rViews.setTextViewText(R.id.bigwidgetTextviewtomorrow3, week3);
-					AppWidgetManager aManager=AppWidgetManager.getInstance(WeatherWidgetB.this.context);
-					ComponentName cName=new ComponentName(WeatherWidgetB.this.context, WeatherWidgetB.class);
-					aManager.updateAppWidget(cName, rViews);
+					
 					
 				}
 				
+				AppWidgetManager aManager=AppWidgetManager.getInstance(WeatherWidgetB.this.context);
+				ComponentName cName=new ComponentName(WeatherWidgetB.this.context, WeatherWidgetB.class);
+				aManager.updateAppWidget(cName, rViews);
 			}
 			
 		};
@@ -193,6 +203,10 @@ public class WeatherWidgetB extends AppWidgetProvider{
 				{
 					
 					handler.sendEmptyMessage(0x123);
+				}else
+				{
+					handler.sendEmptyMessage(0);
+					
 				}
 				
 				
