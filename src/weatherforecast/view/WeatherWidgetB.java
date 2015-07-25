@@ -16,6 +16,7 @@ import java.util.TimerTask;
 
 import weatherforecast.dao.CityDao;
 import weatherforecast.dao.JsonDao;
+import weatherforecast.dao.JsonDaoPro;
 import weatherforecast.model.CityWeather;
 import weatherforecast.model.City_ID;
 import android.R.integer;
@@ -47,16 +48,40 @@ public class WeatherWidgetB extends AppWidgetProvider{
 		RemoteViews  rViews=new RemoteViews(context.getPackageName(), R.layout.widget_layout_big);
 		
 		ArrayList<City_ID> list=CityDao.getIDByName("海淀");
-		CityWeather cityWeather = JsonDao.getCityWeatherbyCityID(list.get(0).getId()+"");
+		CityWeather cityWeather = JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(list.get(0).getId()+""));
 		
 		if(cityWeather!=null)
 		{
-			rViews.setTextViewText(R.id.bigwidgetTextviewtemp, cityWeather.getTemp1());
-			//rViews.setTextViewText(R.id.bigwidgetTextviewtempdes, cityWeather.getWeather1());
+			Calendar cal = Calendar.getInstance();
+			int nowID,tomorrowID,tomorrowID2,tomorrowID3;
+			System.out.println("小时数："+cal.get(Calendar.HOUR_OF_DAY));
+			if(5<cal.get(Calendar.HOUR_OF_DAY)&&cal.get(Calendar.HOUR_OF_DAY)<21)
+			{
+				nowID=context.getResources().getIdentifier("d"+cityWeather.getCode_n1(),"drawable", context.getPackageName());
+				tomorrowID=context.getResources().getIdentifier("d"+cityWeather.getCode_n2(),"drawable", context.getPackageName());
+				tomorrowID2=context.getResources().getIdentifier("d"+cityWeather.getCode_n3(),"drawable", context.getPackageName());
+				tomorrowID3=context.getResources().getIdentifier("d"+cityWeather.getCode_n4(),"drawable", context.getPackageName());
+			}else
+			{
+				
+				nowID=context.getResources().getIdentifier("n"+cityWeather.getCode_n1(),"drawable", context.getPackageName());
+				tomorrowID=context.getResources().getIdentifier("n"+cityWeather.getCode_n2(),"drawable", context.getPackageName());
+				tomorrowID2=context.getResources().getIdentifier("n"+cityWeather.getCode_n3(),"drawable", context.getPackageName());
+				tomorrowID3=context.getResources().getIdentifier("n"+cityWeather.getCode_n4(),"drawable", context.getPackageName());
+			}
+			
+			rViews.setImageViewResource(R.id.imageViewwidgetbigtoday, nowID);
+			rViews.setImageViewResource(R.id.imageViewwidgetbigtomorrow, tomorrowID);
+			rViews.setImageViewResource(R.id.imageViewwidgetbigtomorrow2, tomorrowID2);
+			rViews.setImageViewResource(R.id.imageViewwidgetbigtomorrow3, tomorrowID3);
+			
+			rViews.setTextViewText(R.id.bigwidgetTextviewtempNow, cityWeather.getNtmp()+"° ");
+			rViews.setTextViewText(R.id.bigwidgetTextviewtemp, cityWeather.getMax1()+"°/"+cityWeather.getMin1()+"°");
+			rViews.setTextViewText(R.id.bigwidgetTextviewtempdes, cityWeather.getNtxt());
 			rViews.setTextViewText(R.id.bigwidgetTextviewlocation, cityWeather.getCity());
-			rViews.setTextViewText(R.id.bigwidgetTextviewtomorrowtemp, cityWeather.getTemp2());
-			rViews.setTextViewText(R.id.bigwidgetTextviewtomorrowtemp2, cityWeather.getTemp3());
-			rViews.setTextViewText(R.id.bigwidgetTextviewtomorrowtemp3, cityWeather.getTemp4());
+			rViews.setTextViewText(R.id.bigwidgetTextviewtomorrowtemp, cityWeather.getMax2()+"°/"+cityWeather.getMin2()+"°");
+			rViews.setTextViewText(R.id.bigwidgetTextviewtomorrowtemp2, cityWeather.getMax3()+"°/"+cityWeather.getMin3()+"°");
+			rViews.setTextViewText(R.id.bigwidgetTextviewtomorrowtemp3, cityWeather.getMax4()+"°/"+cityWeather.getMin4()+"°");
 			
 		}
 		
@@ -95,7 +120,7 @@ public class WeatherWidgetB extends AppWidgetProvider{
 		String week2 = new DateFormatSymbols().getShortWeekdays()[cal.get(Calendar.DAY_OF_WEEK)];
 		rViews.setTextViewText(R.id.bigwidgetTextviewtomorrow2, week2);
 		
-		cal.add(Calendar.DATE, 3);
+		cal.add(Calendar.DATE, 1);
 		String week3 = new DateFormatSymbols().getShortWeekdays()[cal.get(Calendar.DAY_OF_WEEK)];
 		rViews.setTextViewText(R.id.bigwidgetTextviewtomorrow3, week3);
 		
@@ -121,6 +146,8 @@ public class WeatherWidgetB extends AppWidgetProvider{
 		rViews.setOnClickPendingIntent(R.id.bigwidgetTextviewtomorrowtemp3, pIntent);
 		
 		intent.setClass(context, ScheduleActivity.class);
+		intent.putExtra("dateStr", scheduleString);
+		System.out.println(scheduleString);
 		pIntent=PendingIntent.getActivity(context, 0, intent, 0);
 		rViews.setOnClickPendingIntent(R.id.bigwidgetTextviewschedule, pIntent);
 				
@@ -175,7 +202,7 @@ public class WeatherWidgetB extends AppWidgetProvider{
 					String week2 = new DateFormatSymbols().getShortWeekdays()[cal.get(Calendar.DAY_OF_WEEK)];
 					rViews.setTextViewText(R.id.bigwidgetTextviewtomorrow2, week2);
 					
-					cal.add(Calendar.DATE, 3);
+					cal.add(Calendar.DATE, 1);
 					String week3 = new DateFormatSymbols().getShortWeekdays()[cal.get(Calendar.DAY_OF_WEEK)];
 					rViews.setTextViewText(R.id.bigwidgetTextviewtomorrow3, week3);
 					

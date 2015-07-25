@@ -7,6 +7,7 @@ package weatherforecast.view;
  */
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -85,11 +86,22 @@ public class WeatherWidget extends AppWidgetProvider{
 		RemoteViews rViews=new RemoteViews(context.getPackageName(), R.layout.widget_layout);
 		if(cityWeather!=null)
 		{
-			rViews.setTextViewText(R.id.textViewWidgetTempNow, cityWeather.getNtmp()+"℃ ");
-			rViews.setTextViewText(R.id.textViewWidgetTemp, cityWeather.getMax1()+"℃/"+cityWeather.getMin1()+"℃");
+			Calendar cal = Calendar.getInstance();
+			int nowID;
+			if(5<cal.get(Calendar.HOUR_OF_DAY)&&cal.get(Calendar.HOUR_OF_DAY)<21)
+			{
+				nowID=context.getResources().getIdentifier("d"+cityWeather.getCode_n1(),"drawable", context.getPackageName());	
+			}else
+			{
+				
+				nowID=context.getResources().getIdentifier("n"+cityWeather.getCode_n1(),"drawable", context.getPackageName());
+			}
+			rViews.setImageViewResource(R.id.imageView_widgetlayout, nowID);
+			rViews.setTextViewText(R.id.textViewWidgetTempNow, cityWeather.getNtmp()+"° ");
+			rViews.setTextViewText(R.id.textViewWidgetTemp, cityWeather.getMax1()+"°/"+cityWeather.getMin1()+"°");
 			rViews.setTextViewText(R.id.widgetTextviewCity,cityWeather.getCity());
 			rViews.setTextViewText(R.id.textViewWidgetWeather,cityWeather.getNtxt());
-			rViews.setTextViewText(R.id.textViewWidgetIndex,"穿衣指数："+cityWeather.getBrf1()+"\n运动指数："+cityWeather.getBrf7());
+			rViews.setTextViewText(R.id.textViewWidgetIndex,"空气质量指数:"+cityWeather.getAqi()+"\nPM2.5:"+cityWeather.getPm25());
 			
 		}
 				
@@ -116,7 +128,10 @@ public class WeatherWidget extends AppWidgetProvider{
 		Intent intent=new Intent( );
 		intent.setClass(context, WeatherMainActivity.class);
 		PendingIntent pIntent=PendingIntent.getActivity(context, 0, intent, 0);
-		rViews.setOnClickPendingIntent(R.id.imageView_widgetlayout, pIntent);
+		rViews.setOnClickPendingIntent(R.id.textViewWidgetTemp, pIntent);
+		rViews.setOnClickPendingIntent(R.id.textViewWidgetTempNow, pIntent);
+		rViews.setOnClickPendingIntent(R.id.textViewWidgetWeather, pIntent);
+		rViews.setOnClickPendingIntent(R.id.textViewWidgetIndex, pIntent);
 		
 		pIntent=PendingIntent.getActivity(context, 0, new Intent(AlarmClock.ACTION_SET_ALARM), 0);
 		rViews.setOnClickPendingIntent(R.id.widgetTextviewTime, pIntent);
