@@ -68,12 +68,25 @@
        
        >
 
+        <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"       
+       >
+            
+        <TextView
+            android:id="@+id/textViewWidgetTempNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:textSize="26dp"
+            android:text="30 " />
         <TextView
             android:id="@+id/textViewWidgetTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
              android:textSize="24dp"
             android:text="20-30" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textViewWidgetWeather"
