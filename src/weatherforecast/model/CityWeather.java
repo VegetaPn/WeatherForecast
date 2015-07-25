@@ -45,13 +45,13 @@ public class CityWeather {
     private String aqi, pm10, pm25, qlty;
     private String city, cnty, id, lat, lon;
     private String loc, utc;
-    private String sr1, ss1, code_n1, txt_n1, date1, hum1, pcpn1, pop1, pres1, max1, min1, vis1, deg1, dir1, sc1, spd1;
-    private String sr2, ss2, code_n2, txt_n2, date2, hum2, pcpn2, pop2, pres2, max2, min2, vis2, deg2, dir2, sc2, spd2;
-    private String sr3, ss3, code_n3, txt_n3, date3, hum3, pcpn3, pop3, pres3, max3, min3, vis3, deg3, dir3, sc3, spd3;
-    private String sr4, ss4, code_n4, txt_n4, date4, hum4, pcpn4, pop4, pres4, max4, min4, vis4, deg4, dir4, sc4, spd4;
-    private String sr5, ss5, code_n5, txt_n5, date5, hum5, pcpn5, pop5, pres5, max5, min5, vis5, deg5, dir5, sc5, spd5;
-    private String sr6, ss6, code_n6, txt_n6, date6, hum6, pcpn6, pop6, pres6, max6, min6, vis6, deg6, dir6, sc6, spd6;
-    private String sr7, ss7, code_n7, txt_n7, date7, hum7, pcpn7, pop7, pres7, max7, min7, vis7, deg7, dir7, sc7, spd7;
+    private String sr1, ss1, code_d1, code_n1, txt_d1, txt_n1, date1, hum1, pcpn1, pop1, pres1, max1, min1, vis1, deg1, dir1, sc1, spd1;
+    private String sr2, ss2, code_d2, code_n2, txt_d2, txt_n2, date2, hum2, pcpn2, pop2, pres2, max2, min2, vis2, deg2, dir2, sc2, spd2;
+    private String sr3, ss3, code_d3, code_n3, txt_d3, txt_n3, date3, hum3, pcpn3, pop3, pres3, max3, min3, vis3, deg3, dir3, sc3, spd3;
+    private String sr4, ss4, code_d4, code_n4, txt_d4, txt_n4, date4, hum4, pcpn4, pop4, pres4, max4, min4, vis4, deg4, dir4, sc4, spd4;
+    private String sr5, ss5, code_d5, code_n5, txt_d5, txt_n5, date5, hum5, pcpn5, pop5, pres5, max5, min5, vis5, deg5, dir5, sc5, spd5;
+    private String sr6, ss6, code_d6, code_n6, txt_d6, txt_n6, date6, hum6, pcpn6, pop6, pres6, max6, min6, vis6, deg6, dir6, sc6, spd6;
+    private String sr7, ss7, code_d7, code_n7, txt_d7, txt_n7, date7, hum7, pcpn7, pop7, pres7, max7, min7, vis7, deg7, dir7, sc7, spd7;
     private String hdate1, hhum1, hpop1, hpres1, htmp1, hdeg1, hdir1, hsc1, hspd1;
     private String hdate2, hhum2, hpop2, hpres2, htmp2, hdeg2, hdir2, hsc2, hspd2;
     private String hdate3, hhum3, hpop3, hpres3, htmp3, hdeg3, hdir3, hsc3, hspd3;
@@ -60,47 +60,52 @@ public class CityWeather {
     private String brf1, txt1, brf2, txt2, brf3, txt3, brf4, txt4, brf5, txt5, brf6, txt6, brf7, txt7;
     
     
-	
-	
-	
+    
+
+
 	public CityWeather(String aqi, String pm10, String pm25, String qlty,
 			String city, String cnty, String id, String lat, String lon,
-			String loc, String utc, String sr1, String ss1, String code_n1,
-			String txt_n1, String date1, String hum1, String pcpn1,
-			String pop1, String pres1, String max1, String min1, String vis1,
-			String deg1, String dir1, String sc1, String spd1, String sr2,
-			String ss2, String code_n2, String txt_n2, String date2,
+			String loc, String utc, String sr1, String ss1, String code_d1,
+			String code_n1, String txt_d1, String txt_n1, String date1,
+			String hum1, String pcpn1, String pop1, String pres1, String max1,
+			String min1, String vis1, String deg1, String dir1, String sc1,
+			String spd1, String sr2, String ss2, String code_d2,
+			String code_n2, String txt_d2, String txt_n2, String date2,
 			String hum2, String pcpn2, String pop2, String pres2, String max2,
 			String min2, String vis2, String deg2, String dir2, String sc2,
-			String spd2, String sr3, String ss3, String code_n3, String txt_n3,
-			String date3, String hum3, String pcpn3, String pop3, String pres3,
-			String max3, String min3, String vis3, String deg3, String dir3,
-			String sc3, String spd3, String sr4, String ss4, String code_n4,
-			String txt_n4, String date4, String hum4, String pcpn4,
-			String pop4, String pres4, String max4, String min4, String vis4,
-			String deg4, String dir4, String sc4, String spd4, String sr5,
-			String ss5, String code_n5, String txt_n5, String date5,
+			String spd2, String sr3, String ss3, String code_d3,
+			String code_n3, String txt_d3, String txt_n3, String date3,
+			String hum3, String pcpn3, String pop3, String pres3, String max3,
+			String min3, String vis3, String deg3, String dir3, String sc3,
+			String spd3, String sr4, String ss4, String code_d4,
+			String code_n4, String txt_d4, String txt_n4, String date4,
+			String hum4, String pcpn4, String pop4, String pres4, String max4,
+			String min4, String vis4, String deg4, String dir4, String sc4,
+			String spd4, String sr5, String ss5, String code_d5,
+			String code_n5, String txt_d5, String txt_n5, String date5,
 			String hum5, String pcpn5, String pop5, String pres5, String max5,
 			String min5, String vis5, String deg5, String dir5, String sc5,
-			String spd5, String sr6, String ss6, String code_n6, String txt_n6,
-			String date6, String hum6, String pcpn6, String pop6, String pres6,
-			String max6, String min6, String vis6, String deg6, String dir6,
-			String sc6, String spd6, String sr7, String ss7, String code_n7,
-			String txt_n7, String date7, String hum7, String pcpn7,
-			String pop7, String pres7, String max7, String min7, String vis7,
-			String deg7, String dir7, String sc7, String spd7, String hdate1,
-			String hhum1, String hpop1, String hpres1, String htmp1,
-			String hdeg1, String hdir1, String hsc1, String hspd1,
-			String hdate2, String hhum2, String hpop2, String hpres2,
-			String htmp2, String hdeg2, String hdir2, String hsc2,
-			String hspd2, String hdate3, String hhum3, String hpop3,
-			String hpres3, String htmp3, String hdeg3, String hdir3,
-			String hsc3, String hspd3, String ncode, String ntxt, String nfl,
-			String nhum, String npcpn, String npres, String ntmp, String nvis,
-			String ndeg, String ndir, String nsc, String nspd, String status,
-			String brf1, String txt1, String brf2, String txt2, String brf3,
-			String txt3, String brf4, String txt4, String brf5, String txt5,
-			String brf6, String txt6, String brf7, String txt7) {
+			String spd5, String sr6, String ss6, String code_d6,
+			String code_n6, String txt_d6, String txt_n6, String date6,
+			String hum6, String pcpn6, String pop6, String pres6, String max6,
+			String min6, String vis6, String deg6, String dir6, String sc6,
+			String spd6, String sr7, String ss7, String code_d7,
+			String code_n7, String txt_d7, String txt_n7, String date7,
+			String hum7, String pcpn7, String pop7, String pres7, String max7,
+			String min7, String vis7, String deg7, String dir7, String sc7,
+			String spd7, String hdate1, String hhum1, String hpop1,
+			String hpres1, String htmp1, String hdeg1, String hdir1,
+			String hsc1, String hspd1, String hdate2, String hhum2,
+			String hpop2, String hpres2, String htmp2, String hdeg2,
+			String hdir2, String hsc2, String hspd2, String hdate3,
+			String hhum3, String hpop3, String hpres3, String htmp3,
+			String hdeg3, String hdir3, String hsc3, String hspd3,
+			String ncode, String ntxt, String nfl, String nhum, String npcpn,
+			String npres, String ntmp, String nvis, String ndeg, String ndir,
+			String nsc, String nspd, String status, String brf1, String txt1,
+			String brf2, String txt2, String brf3, String txt3, String brf4,
+			String txt4, String brf5, String txt5, String brf6, String txt6,
+			String brf7, String txt7) {
 		super();
 		this.aqi = aqi;
 		this.pm10 = pm10;
@@ -115,7 +120,9 @@ public class CityWeather {
 		this.utc = utc;
 		this.sr1 = sr1;
 		this.ss1 = ss1;
+		this.code_d1 = code_d1;
 		this.code_n1 = code_n1;
+		this.txt_d1 = txt_d1;
 		this.txt_n1 = txt_n1;
 		this.date1 = date1;
 		this.hum1 = hum1;
@@ -131,7 +138,9 @@ public class CityWeather {
 		this.spd1 = spd1;
 		this.sr2 = sr2;
 		this.ss2 = ss2;
+		this.code_d2 = code_d2;
 		this.code_n2 = code_n2;
+		this.txt_d2 = txt_d2;
 		this.txt_n2 = txt_n2;
 		this.date2 = date2;
 		this.hum2 = hum2;
@@ -147,7 +156,9 @@ public class CityWeather {
 		this.spd2 = spd2;
 		this.sr3 = sr3;
 		this.ss3 = ss3;
+		this.code_d3 = code_d3;
 		this.code_n3 = code_n3;
+		this.txt_d3 = txt_d3;
 		this.txt_n3 = txt_n3;
 		this.date3 = date3;
 		this.hum3 = hum3;
@@ -163,7 +174,9 @@ public class CityWeather {
 		this.spd3 = spd3;
 		this.sr4 = sr4;
 		this.ss4 = ss4;
+		this.code_d4 = code_d4;
 		this.code_n4 = code_n4;
+		this.txt_d4 = txt_d4;
 		this.txt_n4 = txt_n4;
 		this.date4 = date4;
 		this.hum4 = hum4;
@@ -179,7 +192,9 @@ public class CityWeather {
 		this.spd4 = spd4;
 		this.sr5 = sr5;
 		this.ss5 = ss5;
+		this.code_d5 = code_d5;
 		this.code_n5 = code_n5;
+		this.txt_d5 = txt_d5;
 		this.txt_n5 = txt_n5;
 		this.date5 = date5;
 		this.hum5 = hum5;
@@ -195,7 +210,9 @@ public class CityWeather {
 		this.spd5 = spd5;
 		this.sr6 = sr6;
 		this.ss6 = ss6;
+		this.code_d6 = code_d6;
 		this.code_n6 = code_n6;
+		this.txt_d6 = txt_d6;
 		this.txt_n6 = txt_n6;
 		this.date6 = date6;
 		this.hum6 = hum6;
@@ -211,7 +228,9 @@ public class CityWeather {
 		this.spd6 = spd6;
 		this.sr7 = sr7;
 		this.ss7 = ss7;
+		this.code_d7 = code_d7;
 		this.code_n7 = code_n7;
+		this.txt_d7 = txt_d7;
 		this.txt_n7 = txt_n7;
 		this.date7 = date7;
 		this.hum7 = hum7;
@@ -1849,6 +1868,174 @@ public class CityWeather {
 	 */
 	public String getTxt7() {
 		return txt7;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the code_d1
+	 */
+	public String getCode_d1() {
+		return code_d1;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the txt_d1
+	 */
+	public String getTxt_d1() {
+		return txt_d1;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the code_d2
+	 */
+	public String getCode_d2() {
+		return code_d2;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the txt_d2
+	 */
+	public String getTxt_d2() {
+		return txt_d2;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the code_d3
+	 */
+	public String getCode_d3() {
+		return code_d3;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the txt_d3
+	 */
+	public String getTxt_d3() {
+		return txt_d3;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the code_d4
+	 */
+	public String getCode_d4() {
+		return code_d4;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the txt_d4
+	 */
+	public String getTxt_d4() {
+		return txt_d4;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the code_d5
+	 */
+	public String getCode_d5() {
+		return code_d5;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the txt_d5
+	 */
+	public String getTxt_d5() {
+		return txt_d5;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the code_d6
+	 */
+	public String getCode_d6() {
+		return code_d6;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the txt_d6
+	 */
+	public String getTxt_d6() {
+		return txt_d6;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the code_d7
+	 */
+	public String getCode_d7() {
+		return code_d7;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the txt_d7
+	 */
+	public String getTxt_d7() {
+		return txt_d7;
 	}
 
 }
