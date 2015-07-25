@@ -40,6 +40,9 @@
 
             <TextView
                 android:id="@+id/textLastRefresh"
+                android:scrollHorizontally="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
@@ -73,7 +76,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:text="33°"
-                android:textSize="65dp" />
+                android:textSize="65dp"
+                android:typeface="monospace" />
 
             <Space
                 android:id="@+id/Space1"
@@ -83,7 +87,7 @@
                 android:layout_gravity="fill_vertical" />
 
             <Button
-                android:id="@+id/imageButton3"
+                android:id="@+id/button_AQI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/text_now_T"
@@ -98,20 +102,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/text_now_T"
-                android:layout_marginLeft="7dp"
                 android:layout_toRightOf="@+id/text_now_T"
                 android:text="36↑"
-                android:textSize="23dp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/text_now_minT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/text_now_T"
-                android:layout_marginLeft="7dp"
                 android:layout_toRightOf="@+id/text_now_T"
                 android:text="29↓"
-                android:textSize="23dp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/text_now_weatherChinese"
@@ -124,10 +126,14 @@
 
             <TextView
                 android:id="@+id/text_now_descrip"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:singleLine="true"
                 android:layout_below="@+id/text_now_weatherChinese"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
                 android:text="今天是个晴天~"
                 android:textSize="15dp" />
 
@@ -140,7 +146,7 @@
                 android:orientation="vertical" >
 
                 <ImageView
-                    android:id="@+id/imageView1"
+                    android:id="@+id/image_now_weather"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:src="@drawable/abs__ab_share_pack_holo_light" />
@@ -160,7 +166,7 @@
                     android:layout_height="wrap_content" >
 
                     <TextView
-                        android:id="@+id/textTomorrow"
+                        android:id="@+id/text_Tomorrow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -178,7 +184,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/image_tomorrow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -191,14 +197,14 @@
                     android:layout_height="wrap_content" >
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/text_tomorrow_wind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="微风"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <TextView
-                        android:id="@+id/textView1"
+                        android:id="@+id/text_tomorrow_descrip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -226,23 +232,24 @@
                             android:id="@+id/chart1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginTop="5dp" />
+                            android:paddingTop="5dp" />
+                        
 
                     </LinearLayout>
                     
                     <LinearLayout
+                        android:id="@+id/panel_chart2"
+                        android:layout_below="@+id/panel_chart1"
                         android:layout_width="match_parent"
                         android:layout_height="75dp"
-                        android:layout_below="@+id/panel_chart1"
                         android:orientation="vertical" >
 
                         <lecho.lib.hellocharts.view.LineChartView
                             android:id="@+id/chart2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginTop="5dp" />
+                            android:paddingTop="5dp" />
+                        
 
                     </LinearLayout>
                     
