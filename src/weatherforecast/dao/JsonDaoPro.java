@@ -148,7 +148,9 @@ public class JsonDaoPro {
             
             JSONObject condObj1 = dailObj1.getJSONObject("cond");
             
+            String code_d1 = condObj1.getString("code_d");
             String code_n1 = condObj1.getString("code_n");
+            String txt_d1 = condObj1.getString("txt_d");
             String txt_n1 = condObj1.getString("txt_n");
             
             String date1 = dailObj1.getString("date");
@@ -180,7 +182,9 @@ public class JsonDaoPro {
             
             JSONObject condObj2 = dailObj2.getJSONObject("cond");
             
+            String code_d2 = condObj1.getString("code_d");
             String code_n2 = condObj2.getString("code_n");
+            String txt_d2 = condObj1.getString("txt_d");
             String txt_n2 = condObj2.getString("txt_n");
             
             String date2 = dailObj2.getString("date");
@@ -212,7 +216,9 @@ public class JsonDaoPro {
             
             JSONObject condObj3 = dailObj3.getJSONObject("cond");
             
+            String code_d3 = condObj1.getString("code_d");
             String code_n3 = condObj3.getString("code_n");
+            String txt_d3 = condObj1.getString("txt_d");
             String txt_n3 = condObj3.getString("txt_n");
             
             String date3 = dailObj3.getString("date");
@@ -244,7 +250,9 @@ public class JsonDaoPro {
             
             JSONObject condObj4 = dailObj4.getJSONObject("cond");
             
+            String code_d4 = condObj4.getString("code_d");
             String code_n4 = condObj4.getString("code_n");
+            String txt_d4 = condObj4.getString("txt_d");
             String txt_n4 = condObj4.getString("txt_n");
             
             String date4 = dailObj4.getString("date");
@@ -276,7 +284,9 @@ public class JsonDaoPro {
             
             JSONObject condObj5 = dailObj5.getJSONObject("cond");
             
+            String code_d5 = condObj5.getString("code_n");
             String code_n5 = condObj5.getString("code_n");
+            String txt_d5 = condObj5.getString("txt_n");
             String txt_n5 = condObj5.getString("txt_n");
             
             String date5 = dailObj5.getString("date");
@@ -308,7 +318,9 @@ public class JsonDaoPro {
             
             JSONObject condObj6 = dailObj6.getJSONObject("cond");
             
+            String code_d6 = condObj6.getString("code_d");
             String code_n6 = condObj6.getString("code_n");
+            String txt_d6 = condObj6.getString("txt_d");
             String txt_n6 = condObj6.getString("txt_n");
             
             String date6 = dailObj6.getString("date");
@@ -340,7 +352,9 @@ public class JsonDaoPro {
             
             JSONObject condObj7 = dailObj7.getJSONObject("cond");
             
+            String code_d7 = condObj7.getString("code_d");
             String code_n7 = condObj7.getString("code_n");
+            String txt_d7 = condObj7.getString("txt_d");
             String txt_n7 = condObj7.getString("txt_n");
             
             String date7 = dailObj7.getString("date");
@@ -476,28 +490,19 @@ public class JsonDaoPro {
 //            		weather1, wind1, temp2, weather2, wind2, temp3, weather3, wind3, 
 //            		temp4, weather4, wind4, temp5, weather5, wind5, temp6, weather6, wind6);
             
-            cityWeather = new CityWeather(aqi, pm10, pm25, qlty, 
-            		city, cnty, id, lat, lon, 
-            		loc, utc, 
-            		sr1, ss1, code_n1, txt_n1, date1, hum1, pcpn1, pop1, 
-            		pres1, max1, min1, vis1, deg1, dir1, sc1, spd1, 
-            		sr2, ss2, code_n2, txt_n2, date2, hum2, pcpn2, pop2, 
-            		pres2, max2, min2, vis2, deg2, dir2, sc2, spd2, 
-            		sr3, ss3, code_n3, txt_n3, date3, hum3, pcpn3, pop3, 
-            		pres3, max3, min3, vis3, deg3, dir3, sc3, spd3, 
-            		sr4, ss4, code_n4, txt_n4, date4, hum4, pcpn4, pop4, 
-            		pres4, max4, min4, vis4, deg4, dir4, sc4, spd4, 
-            		sr5, ss5, code_n5, txt_n5, date5, hum5, pcpn5, pop5, 
-            		pres5, max5, min5, vis5, deg5, dir5, sc5, spd5, 
-            		sr6, ss6, code_n6, txt_n6, date6, hum6, pcpn6, pop6, 
-            		pres6, max6, min6, vis6, deg6, dir6, sc6, spd6, 
-            		sr7, ss7, code_n7, txt_n7, date7, hum7, pcpn7, pop7, 
-            		pres7, max7, min7, vis7, deg7, dir7, sc7, spd7, 
+            cityWeather = new CityWeather(aqi, pm10, pm25, qlty, city, cnty, id, lat, lon, loc, utc, 
+            		sr1, ss1, code_d1, code_n1, txt_d1, txt_n1, date1, hum1, pcpn1, pop1, pres1, max1, min1, vis1, deg1, dir1, sc1, spd1, 
+            		sr2, ss2, code_d2, code_n2, txt_d2, txt_n2, date2, hum2, pcpn2, pop2, pres2, max2, min2, vis2, deg2, dir2, sc2, spd2, 
+            		sr3, ss3, code_d3, code_n3, txt_d3, txt_n3, date3, hum3, pcpn3, pop3, pres3, max3, min3, vis3, deg3, dir3, sc3, spd3, 
+            		sr4, ss4, code_d4, code_n4, txt_d4, txt_n4, date4, hum4, pcpn4, pop4, pres4, max4, min4, vis4, deg4, dir4, sc4, spd4, 
+            		sr5, ss5, code_d5, code_n5, txt_d5, txt_n5, date5, hum5, pcpn5, pop5, pres5, max5, min5, vis5, deg5, dir5, sc5, spd5, 
+            		sr6, ss6, code_d6, code_n6, txt_d6, txt_n6, date6, hum6, pcpn6, pop6, pres6, max6, min6, vis6, deg6, dir6, sc6, spd6, 
+            		sr7, ss7, code_d7, code_n7, txt_d7, txt_n7, date7, hum7, pcpn7, pop7, pres7, max7, min7, vis7, deg7, dir7, sc7, spd7, 
             		hdate1, hhum1, hpop1, hpres1, htmp1, hdeg1, hdir1, hsc1, hspd1, 
             		hdate2, hhum2, hpop2, hpres2, htmp2, hdeg2, hdir2, hsc2, hspd2, 
             		hdate3, hhum3, hpop3, hpres3, htmp3, hdeg3, hdir3, hsc3, hspd3, 
-            		ncode, ntxt, nfl, nhum, npcpn, npres, ntmp, nvis, ndeg, ndir, nsc, nspd, 
-            		status, brf1, txt1, brf2, txt2, brf3, txt3, brf4, txt4, brf5, txt5, brf6, txt6, brf7, txt7);
+            		ncode, ntxt, nfl, nhum, npcpn, npres, ntmp, nvis, ndeg, ndir, nsc, nspd, status, 
+            		brf1, txt1, brf2, txt2, brf3, txt3, brf4, txt4, brf5, txt5, brf6, txt6, brf7, txt7);
             System.out.println("parse finished");
         } catch (JSONException e) {  
         	System.out.println("parse error");
