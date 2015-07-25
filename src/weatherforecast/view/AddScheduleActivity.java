@@ -206,6 +206,7 @@ public class AddScheduleActivity extends Activity {
 			i.putExtras(bundle);
 			setResult(-1, i);
 			
+			System.out.println(dateTime);
 			long timemilis = convertDate(dateTime);
 			
 			if (swibtn.getmSwitchOn()) {

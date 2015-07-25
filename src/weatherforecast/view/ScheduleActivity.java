@@ -99,8 +99,22 @@ public class ScheduleActivity extends Activity {
 		listView.setAdapter(adapter);
 		
 		Intent it = getIntent();
-		final String nowDate = it.getStringExtra("dateString");
-		
+		final String nowDate;
+		String tmp = it.getStringExtra("dateString");
+		if(tmp == null){
+			final Calendar cal = Calendar.getInstance();
+			cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+			String mYear = String.valueOf(cal.get(Calendar.YEAR));
+			String mMonth = String.valueOf(cal.get(Calendar.MONTH) + 1);
+			String mDay = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+			if(mMonth.length() == 1)
+				mMonth = "0" + mMonth;
+			if(mDay.length() == 1)
+				mDay = "0" + mDay;
+			nowDate = mYear + "-" + mMonth + "-" + mDay;
+		} else {
+			nowDate = tmp;
+		}
 		//根据传入日期将数据库中已有日程数据读取出来并显示在ListView中
 		initListView(nowDate);
 		
