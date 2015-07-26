@@ -143,7 +143,6 @@
                 android:layout_below="@+id/text_now_weatherChinese"
                 android:ellipsize="marquee"
                 android:marqueeRepeatLimit="marquee_forever"
-                android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:text="今天是个晴天~"
                 android:textSize="15dp" />
