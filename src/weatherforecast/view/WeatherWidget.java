@@ -90,14 +90,14 @@ public class WeatherWidget extends AppWidgetProvider{
 			int nowID;
 			if(5<cal.get(Calendar.HOUR_OF_DAY)&&cal.get(Calendar.HOUR_OF_DAY)<21)
 			{
-				nowID=context.getResources().getIdentifier("d"+cityWeather.getCode_n1(),"drawable", context.getPackageName());	
+				nowID=context.getResources().getIdentifier("d"+cityWeather.getCode_d1(),"drawable", context.getPackageName());	
 			}else
 			{
 				
 				nowID=context.getResources().getIdentifier("n"+cityWeather.getCode_n1(),"drawable", context.getPackageName());
 			}
 			rViews.setImageViewResource(R.id.imageView_widgetlayout, nowID);
-			rViews.setTextViewText(R.id.textViewWidgetTempNow, cityWeather.getNtmp()+"бу ");
+			rViews.setTextViewText(R.id.textViewWidgetTempNow, cityWeather.getNtmp()+"бу");
 			rViews.setTextViewText(R.id.textViewWidgetTemp, cityWeather.getMax1()+"бу/"+cityWeather.getMin1()+"бу");
 			rViews.setTextViewText(R.id.widgetTextviewCity,cityWeather.getCity());
 			rViews.setTextViewText(R.id.textViewWidgetWeather,cityWeather.getNtxt());

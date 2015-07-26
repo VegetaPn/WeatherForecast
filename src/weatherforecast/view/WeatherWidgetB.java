@@ -57,10 +57,10 @@ public class WeatherWidgetB extends AppWidgetProvider{
 			System.out.println("Ð¡Ê±Êý£º"+cal.get(Calendar.HOUR_OF_DAY));
 			if(5<cal.get(Calendar.HOUR_OF_DAY)&&cal.get(Calendar.HOUR_OF_DAY)<21)
 			{
-				nowID=context.getResources().getIdentifier("d"+cityWeather.getCode_n1(),"drawable", context.getPackageName());
-				tomorrowID=context.getResources().getIdentifier("d"+cityWeather.getCode_n2(),"drawable", context.getPackageName());
-				tomorrowID2=context.getResources().getIdentifier("d"+cityWeather.getCode_n3(),"drawable", context.getPackageName());
-				tomorrowID3=context.getResources().getIdentifier("d"+cityWeather.getCode_n4(),"drawable", context.getPackageName());
+				nowID=context.getResources().getIdentifier("d"+cityWeather.getCode_d1(),"drawable", context.getPackageName());
+				tomorrowID=context.getResources().getIdentifier("d"+cityWeather.getCode_d2(),"drawable", context.getPackageName());
+				tomorrowID2=context.getResources().getIdentifier("d"+cityWeather.getCode_d3(),"drawable", context.getPackageName());
+				tomorrowID3=context.getResources().getIdentifier("d"+cityWeather.getCode_d4(),"drawable", context.getPackageName());
 			}else
 			{
 				
@@ -146,7 +146,6 @@ public class WeatherWidgetB extends AppWidgetProvider{
 		rViews.setOnClickPendingIntent(R.id.bigwidgetTextviewtomorrowtemp3, pIntent);
 		
 		intent.setClass(context, ScheduleActivity.class);
-		intent.putExtra("dateStr", scheduleString);
 		System.out.println(scheduleString);
 		pIntent=PendingIntent.getActivity(context, 0, intent, 0);
 		rViews.setOnClickPendingIntent(R.id.bigwidgetTextviewschedule, pIntent);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="99dp"
+    android:layout_height="105dp"
     android:layout_gravity="center_horizontal"  
     android:background="@drawable/widgetback"
     android:orientation="horizontal" >
@@ -17,18 +17,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="17:30"
-            android:textSize="32dp" />
+            android:textSize="32sp" />
 
         <TextView
             android:id="@+id/textViewWidgetTime2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp" 
             android:text="星期五" />
 
         <TextView
             android:id="@+id/textViewWidgetDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+             android:textSize="15sp"
             android:text="7月17日" />
 
         <LinearLayout
@@ -39,9 +41,9 @@
 
             <ImageView
                 android:id="@+id/imageView_widget"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/abs__ic_voice_search_api_holo_light" />
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/location" />
 
             <TextView
                 android:id="@+id/widgetTextviewCity"
@@ -49,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
+                 android:textSize="15sp"
                 android:text="思密达" />
         </LinearLayout>
 
@@ -78,13 +81,13 @@
             android:id="@+id/textViewWidgetTempNow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:textSize="26dp"
+             android:textSize="28sp"
             android:text="30 " />
         <TextView
             android:id="@+id/textViewWidgetTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:textSize="24dp"
+             android:textSize="24sp"
             android:text="20-30" />
         </LinearLayout>
 
@@ -92,13 +95,14 @@
             android:id="@+id/textViewWidgetWeather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:textSize="18dp"
+             android:textSize="20dp"
             android:text="晴朗" />
 
         <TextView
             android:id="@+id/textViewWidgetIndex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+             android:textSize="15sp"
             android:text="适合不穿衣服" />
         
     </LinearLayout>
