@@ -24,7 +24,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.ContactsContract.Contacts.Data;
+import android.text.format.DateFormat;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -35,6 +38,7 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -53,6 +57,8 @@ public class ScheduleActivity extends Activity {
 	private TextView textView1;
 	private TextView textView2;
 	private ImageButton imageButton;
+	private Button button;
+	private static final int msgKey1 = 1;
 	//private TableLayout tableLayout; 
 	private ListView listView;
 	private ArrayList<HashMap<String,String>> ar;
@@ -82,8 +88,10 @@ public class ScheduleActivity extends Activity {
 		//显示当前日期与时间
 		GetDateTime gdt = new GetDateTime();
 		textView1.setText(gdt.stringDate());
-		textView2.setText(gdt.stringTime());
+		//textView2.setText(gdt.stringTime());
+		new TimeThread().start();
 		imageButton = (ImageButton) findViewById(R.id.imageButton);
+		button = (Button) findViewById(R.id.ret);
 		//tableLayout = (TableLayout) findViewById(R.id.tableLayout);
 		listView = (ListView) findViewById(R.id.list);
 		//初始化ListView的第一条条目内容
@@ -131,6 +139,18 @@ public class ScheduleActivity extends Activity {
 			}
 		});
 		
+		//返回按钮返回到主界面
+		button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.setClass(ScheduleActivity.this, WeatherMainActivity.class);
+				startActivity(intent);
+			}
+		});
+		
 		listView.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
 			//长按条目弹出菜单
 			public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
@@ -140,6 +160,40 @@ public class ScheduleActivity extends Activity {
 			}
         });	
 	}
+	
+	//线程里面无限循环，每隔一秒发送一个消息
+	public class TimeThread extends Thread{
+		@Override
+	    public void run(){
+			do{
+				try{
+					Thread.sleep(1000);
+	                Message msg = new Message();
+	                msg.what = msgKey1;
+	                mHandler.sendMessage(msg);
+				}
+				catch(InterruptedException e){
+					e.printStackTrace();
+				}
+			}while(true);
+		}
+	}
+	
+	//通过Handler来更新TextView2的显示的时间
+	private Handler mHandler = new Handler(){
+		@Override
+        public void handleMessage(Message msg){
+    	    super.handleMessage(msg);
+            switch(msg.what){
+		        case msgKey1:
+		      	    long sysTime = System.currentTimeMillis();
+	                CharSequence sysTimeStr = DateFormat.format("hh:mm:ss", sysTime);
+	                textView2.setText(sysTimeStr); 
+	            default:
+	                break;
+            }
+        }
+    };
 	
 	//根据传入日期将数据库中已有日程数据读取出来并显示在ListView中
 	public void initListView(String dateStr) {
@@ -250,7 +304,6 @@ public class ScheduleActivity extends Activity {
 		//将ar与R.layout.item中的参数进行适配，最后两个参数指定数据一一对应的关系
 		adapter = new SimpleAdapter(ScheduleActivity.this, ar, R.layout.item, new String[]{"id","时间","日程","地点"}, new int[]{R.id.scheID,R.id.time,R.id.content,R.id.place});
 		listView.setAdapter(adapter);
-		//}
 	}
 		
 	// 回调方法，从AddScheduleActivity回来的时候会执行这个方法  
