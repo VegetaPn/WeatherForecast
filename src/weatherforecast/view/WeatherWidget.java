@@ -45,6 +45,8 @@ public class WeatherWidget extends AppWidgetProvider{
 	private Context context;//用于handler
 	private String oldtime;
 	private LocationClient mLocationClient;
+	private MyLocationListener myListener;
+	private boolean iflocate;
 	@SuppressLint({ "SimpleDateFormat", "InlinedApi" }) @Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
@@ -52,33 +54,17 @@ public class WeatherWidget extends AppWidgetProvider{
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 		this.context=context;
 		
-//			 
-//		 new Thread() {
-//
-//			@Override
-//			public void run() {
-//				// TODO Auto-generated method stub
-//				super.run();
-//				MyLocationListener myListener = new MyLocationListener();
-//				LocationClientOption option = new LocationClientOption(); 
-//			     option.setIsNeedAddress(true);
-//			     mLocationClient.setLocOption(option);
-//			     mLocationClient.registerLocationListener( myListener );				//注册监听函数
-//			     mLocationClient.start(); 
-//			     mLocationClient.requestLocation();
-//			     
-////			     while(myListener.getErrcode()==-1)
-////			     {
-////			    	 //mLocationClient.start(); 
-////				     //mLocationClient.requestLocation();
-//			    	System.out.println("你丫等会");
-////			     };
-//			     //System.out.println("妥了");
-//			     System.out.println(myListener.getErrcode());
-//			}
-//			 
-//		 }.start();
+			 
 		 
+		myListener = new MyLocationListener();
+		LocationClientOption option = new LocationClientOption(); 
+		option.setIsNeedAddress(true);
+		mLocationClient=new LocationClient(context);
+		mLocationClient.setLocOption(option);
+		mLocationClient.registerLocationListener( myListener );				//注册监听函数
+		mLocationClient.start(); 
+		mLocationClient.requestLocation();
+		iflocate=false;	     
 	     
 		ArrayList<City_ID> list=CityDao.getIDByName("海淀");
 		CityWeather cityWeather = JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(list.get(0).getId()+""));
@@ -132,6 +118,7 @@ public class WeatherWidget extends AppWidgetProvider{
 		rViews.setOnClickPendingIntent(R.id.textViewWidgetTempNow, pIntent);
 		rViews.setOnClickPendingIntent(R.id.textViewWidgetWeather, pIntent);
 		rViews.setOnClickPendingIntent(R.id.textViewWidgetIndex, pIntent);
+		rViews.setOnClickPendingIntent(R.id.imageView_widgetlayout, pIntent);
 		
 		pIntent=PendingIntent.getActivity(context, 0, new Intent(AlarmClock.ACTION_SET_ALARM), 0);
 		rViews.setOnClickPendingIntent(R.id.widgetTextviewTime, pIntent);
@@ -146,6 +133,39 @@ public class WeatherWidget extends AppWidgetProvider{
 				@Override
 				public void handleMessage(Message msg) {
 					// TODO Auto-generated method stub
+					
+					if(msg.what==0)
+					{
+						
+						City_ID list=CityDao.getCurrentCityID(myListener.getDistrictName());
+						CityWeather cityWeather = JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(list.getId()+""));
+						//设置remoteVeiw
+						RemoteViews rViews=new RemoteViews(WeatherWidget.this.context.getPackageName(), R.layout.widget_layout);
+						if(cityWeather!=null)
+						{
+							Calendar cal = Calendar.getInstance();
+							int nowID;
+							if(5<cal.get(Calendar.HOUR_OF_DAY)&&cal.get(Calendar.HOUR_OF_DAY)<21)
+							{
+								nowID=WeatherWidget.this.context.getResources().getIdentifier("d"+cityWeather.getCode_d1(),"drawable", WeatherWidget.this.context.getPackageName());	
+							}else
+							{
+								
+								nowID=WeatherWidget.this.context.getResources().getIdentifier("n"+cityWeather.getCode_n1(),"drawable", WeatherWidget.this.context.getPackageName());
+							}
+							rViews.setImageViewResource(R.id.imageView_widgetlayout, nowID);
+							rViews.setTextViewText(R.id.textViewWidgetTempNow, cityWeather.getNtmp()+"°");
+							rViews.setTextViewText(R.id.textViewWidgetTemp, cityWeather.getMax1()+"°/"+cityWeather.getMin1()+"°");
+							rViews.setTextViewText(R.id.widgetTextviewCity,cityWeather.getCity());
+							rViews.setTextViewText(R.id.textViewWidgetWeather,cityWeather.getNtxt());
+							rViews.setTextViewText(R.id.textViewWidgetIndex,"空气质量指数:"+cityWeather.getAqi()+"\nPM2.5:"+cityWeather.getPm25());
+							AppWidgetManager aManager=AppWidgetManager.getInstance(WeatherWidget.this.context);
+							ComponentName cName=new ComponentName(WeatherWidget.this.context, WeatherWidget.class);
+							aManager.updateAppWidget(cName, rViews);
+						}
+						
+						iflocate=true;
+					}
 					if(msg.what==0x123)
 					{
 						RemoteViews rViews=new RemoteViews(WeatherWidget.this.context.getPackageName(), R.layout.widget_layout);
@@ -182,11 +202,15 @@ public class WeatherWidget extends AppWidgetProvider{
 				Date now = new Date(); 
 				SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");//可以方便地修改日期格式
 				String time = dateFormat.format( now ); 
-				
+				//System.out.println("simidacode:"+myListener.getErrcode());
 				if(!oldtime.equals(time))
 				{
 					
 					handler.sendEmptyMessage(0x123);
+				}else if(myListener.getErrcode()!=-1&&iflocate==false)
+				{
+					handler.sendEmptyMessage(0);
+					
 				}
 				
 				
