@@ -456,34 +456,34 @@ public class JsonDaoPro {
             
             JSONObject cwObj = suggestionObj.getJSONObject("cw");
             
-            String brf2 = comfObj.getString("brf");
-            String txt2 = comfObj.getString("txt");
+            String brf2 = cwObj.getString("brf");
+            String txt2 = cwObj.getString("txt");
             
             JSONObject drsgObj = suggestionObj.getJSONObject("drsg");
             
-            String brf3 = comfObj.getString("brf");
-            String txt3 = comfObj.getString("txt");
+            String brf3 = drsgObj.getString("brf");
+            String txt3 = drsgObj.getString("txt");
             
             JSONObject fluObj = suggestionObj.getJSONObject("flu");
             
-            String brf4 = comfObj.getString("brf");
-            String txt4 = comfObj.getString("txt");
+            String brf4 = fluObj.getString("brf");
+            String txt4 = fluObj.getString("txt");
             
             JSONObject sportObj = suggestionObj.getJSONObject("sport");
             
-            String brf5 = comfObj.getString("brf");
-            String txt5 = comfObj.getString("txt");
+            String brf5 = sportObj.getString("brf");
+            String txt5 = sportObj.getString("txt");
             
 
             JSONObject travObj = suggestionObj.getJSONObject("trav");
             
-            String brf6 = comfObj.getString("brf");
-            String txt6 = comfObj.getString("txt");
+            String brf6 = travObj.getString("brf");
+            String txt6 = travObj.getString("txt");
             
             JSONObject uvObj = suggestionObj.getJSONObject("uv");
             
-            String brf7 = comfObj.getString("brf");
-            String txt7 = comfObj.getString("txt");
+            String brf7 = uvObj.getString("brf");
+            String txt7 = uvObj.getString("txt");
             
 //            cityWeather = new CityWeather(city, cityid, index, index_d, 
 //            		index_tr, index_xc, index_uv, index_co, date_y, week, temp1, 
