@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.TimeZone;
 
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
@@ -35,6 +38,7 @@ import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.LineChartView;
 
 import com.baoyz.widget.PullRefreshLayout;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import weatherforecast.dao.*;
 import weatherforecast.model.CityWeather;
@@ -47,16 +51,18 @@ public class WeatherHomeFragment extends Fragment {
 	ScrollView scrl;
 	PullRefreshLayout refreshView;
 	String[] weekOfDays = {"","周日", "周一", "周二", "周三", "周四", "周五", "周六"};
+	SlidingMenu slide;
 	
 	public WeatherHomeFragment() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public WeatherHomeFragment(int i,CreateDB db){
+	public WeatherHomeFragment(int i,CreateDB db,SlidingMenu slide){
 		super();
 		this.cityId=i;
 		this.myDbHelper=db;
+		this.slide=slide;
 	}
 	
 	public int getCityId(){
@@ -70,6 +76,17 @@ public class WeatherHomeFragment extends Fragment {
 		if (savedInstanceState != null)
 			cityId = savedInstanceState.getInt("index");
 		View v = inflater.inflate(R.layout.weather_home_fragment, container, false);
+		
+		ImageButton menu=(ImageButton)v.findViewById(R.id.imageButton1);
+		menu.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				slide.showMenu();
+			}
+		});
+		
 		refreshView = (PullRefreshLayout)v.findViewById(R.id.swipeRefreshLayout);
 		refreshView.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
@@ -82,6 +99,7 @@ public class WeatherHomeFragment extends Fragment {
                 }, 1500);
             }
         });
+
 		initView(v);
 		return v;
 	}
@@ -183,13 +201,16 @@ public class WeatherHomeFragment extends Fragment {
 		scrl=(ScrollView)v.findViewById(R.id.scrollView1);
 		int screenHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
 		LinearLayout imagePanel;
-		Button aqi = (Button)v.findViewById(R.id.button_AQI);
+		Button aqi = (Button)v.findViewById(R.id.button_aqi);
 		imagePanel = (LinearLayout)v.findViewById(R.id.imagePanel);
 		LayoutParams p = imagePanel.getLayoutParams();
 		LayoutParams b = aqi.getLayoutParams();
-		int position[]=new int[2];
+		int[] position=new int[2];
 		aqi.getLocationOnScreen(position);
-		p.height=screenHeight-b.height-position[1];
+		p.height=screenHeight/2;
+		System.out.println("image height:"+p.height);
+		System.out.println("btn y:"+position[1]);
+		System.out.println("btn height:"+aqi.getMeasuredHeight());
 		imagePanel.setLayoutParams(p);
 		
 		initChart(v,cityWeather);
@@ -219,42 +240,49 @@ public class WeatherHomeFragment extends Fragment {
 		TextView text7_1_max=(TextView)v.findViewById(R.id.text_7_1_max);
 		TextView text7_1_min=(TextView)v.findViewById(R.id.text_7_1_min);
 		ImageView image7_1_min=(ImageView)v.findViewById(R.id.image_7_1_min);
+		TextView text7_1_date=(TextView)v.findViewById(R.id.text_7_1_date);
 		
 		TextView text7_2_ch=(TextView)v.findViewById(R.id.text_7_2_ch);
 		ImageView image7_2_max=(ImageView)v.findViewById(R.id.image_7_2_max);
 		TextView text7_2_max=(TextView)v.findViewById(R.id.text_7_2_max);
 		TextView text7_2_min=(TextView)v.findViewById(R.id.text_7_2_min);
 		ImageView image7_2_min=(ImageView)v.findViewById(R.id.image_7_2_min);
+		TextView text7_2_date=(TextView)v.findViewById(R.id.text_7_2_date);
 		
 		TextView text7_3_ch=(TextView)v.findViewById(R.id.text_7_3_ch);
 		ImageView image7_3_max=(ImageView)v.findViewById(R.id.image_7_3_max);
 		TextView text7_3_max=(TextView)v.findViewById(R.id.text_7_3_max);
 		TextView text7_3_min=(TextView)v.findViewById(R.id.text_7_3_min);
 		ImageView image7_3_min=(ImageView)v.findViewById(R.id.image_7_3_min);
+		TextView text7_3_date=(TextView)v.findViewById(R.id.text_7_3_date);
 		
 		TextView text7_4_ch=(TextView)v.findViewById(R.id.text_7_4_ch);
 		ImageView image7_4_max=(ImageView)v.findViewById(R.id.image_7_4_max);
 		TextView text7_4_max=(TextView)v.findViewById(R.id.text_7_4_max);
 		TextView text7_4_min=(TextView)v.findViewById(R.id.text_7_4_min);
 		ImageView image7_4_min=(ImageView)v.findViewById(R.id.image_7_4_min);
+		TextView text7_4_date=(TextView)v.findViewById(R.id.text_7_4_date);
 		
 		TextView text7_5_ch=(TextView)v.findViewById(R.id.text_7_5_ch);
 		ImageView image7_5_max=(ImageView)v.findViewById(R.id.image_7_5_max);
 		TextView text7_5_max=(TextView)v.findViewById(R.id.text_7_5_max);
 		TextView text7_5_min=(TextView)v.findViewById(R.id.text_7_5_min);
 		ImageView image7_5_min=(ImageView)v.findViewById(R.id.image_7_5_min);
+		TextView text7_5_date=(TextView)v.findViewById(R.id.text_7_5_date);
 		
 		TextView text7_6_ch=(TextView)v.findViewById(R.id.text_7_6_ch);
 		ImageView image7_6_max=(ImageView)v.findViewById(R.id.image_7_6_max);
 		TextView text7_6_max=(TextView)v.findViewById(R.id.text_7_6_max);
 		TextView text7_6_min=(TextView)v.findViewById(R.id.text_7_6_min);
 		ImageView image7_6_min=(ImageView)v.findViewById(R.id.image_7_6_min);
+		TextView text7_6_date=(TextView)v.findViewById(R.id.text_7_6_date);
 		
 		TextView text7_7_ch=(TextView)v.findViewById(R.id.text_7_7_ch);
 		ImageView image7_7_max=(ImageView)v.findViewById(R.id.image_7_7_max);
 		TextView text7_7_max=(TextView)v.findViewById(R.id.text_7_7_max);
 		TextView text7_7_min=(TextView)v.findViewById(R.id.text_7_7_min);
 		ImageView image7_7_min=(ImageView)v.findViewById(R.id.image_7_7_min);
+		TextView text7_7_date=(TextView)v.findViewById(R.id.text_7_7_date);
 		
 		RelativeLayout zhishu1=(RelativeLayout)v.findViewById(R.id.zhishu1);
 		RelativeLayout zhishu2=(RelativeLayout)v.findViewById(R.id.zhishu2);
@@ -294,64 +322,71 @@ public class WeatherHomeFragment extends Fragment {
 		now_min_T.setText(cityWeather.getMin1());
 		nowChinese.setText(cityWeather.getNtxt());
 		nowDescrip.setText(cityWeather.getTxt1());
-	//	nowWeather.setImageResource(resId);
-	//	imageTomorrow.setImageResource(resId);
-		textTomorrowT.setText(cityWeather.getMax2()+"~"+cityWeather.getMin2());
-		textTomorrowWind.setText(cityWeather.getWind2());
+		nowWeather.setImageResource(getResources().getIdentifier("d"+cityWeather.getNcode(),"drawable", getActivity().getPackageName()));
+		imageTomorrow.setImageResource(getResources().getIdentifier("d"+cityWeather.getCode_d2(),"drawable", getActivity().getPackageName()));
+		textTomorrowT.setText(cityWeather.getMax2()+"°~"+cityWeather.getMin2()+"°");
+		textTomorrowWind.setText(cityWeather.getDir2()+"/"+cityWeather.getSc2());
 		textTomorrowDescrip.setText(cityWeather.getTxt_n2());
 	//	initBtnListener();
 		
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+08:00"));
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
 		try {
 			calendar.setTime(format.parse(cityWeather.getDate1()));
 			text7_1_ch.setText("今天");
-		//	image7_1_max.setImageResource(resId);
-			text7_1_max.setText(cityWeather.getMax1());
-			text7_1_min.setText(cityWeather.getMin1());
-		//	image7_1_min.setImageResource(resId);
+			image7_1_max.setImageResource(getResources().getIdentifier("d"+cityWeather.getCode_d1(),"drawable", getActivity().getPackageName()));
+			text7_1_max.setText(cityWeather.getTxt_d1());
+			text7_1_min.setText(cityWeather.getTxt_n1());
+			image7_1_min.setImageResource(getResources().getIdentifier("n"+cityWeather.getCode_n1(),"drawable", getActivity().getPackageName()));
+			text7_1_date.setText(calendar.get(Calendar.MONTH)+1+"/"+calendar.get(Calendar.DAY_OF_MONTH));
 			
 			calendar.setTime(format.parse(cityWeather.getDate2()));
 			text7_2_ch.setText(weekOfDays[calendar.get(Calendar.DAY_OF_WEEK)]);
-		//	image7_2_max.setImageResource(resId);
-			text7_2_max.setText(cityWeather.getMax2());
-			text7_2_min.setText(cityWeather.getMin2());
-		//	image7_2_min.setImageResource(resId);
+			image7_2_max.setImageResource(getResources().getIdentifier("d"+cityWeather.getCode_d2(),"drawable", getActivity().getPackageName()));
+			text7_2_max.setText(cityWeather.getTxt_d2());
+			text7_2_min.setText(cityWeather.getTxt_n2());
+			image7_2_min.setImageResource(getResources().getIdentifier("n"+cityWeather.getCode_n2(),"drawable", getActivity().getPackageName()));
+			text7_2_date.setText(calendar.get(Calendar.MONTH)+1+"/"+calendar.get(Calendar.DAY_OF_MONTH));
 			
 			calendar.setTime(format.parse(cityWeather.getDate3()));
 			text7_3_ch.setText(weekOfDays[calendar.get(Calendar.DAY_OF_WEEK)]);
-		//	image7_3_max.setImageResource(resId);
-			text7_3_max.setText(cityWeather.getMax3());
-			text7_3_min.setText(cityWeather.getMin3());
-		//	image7_3_min.setImageResource(resId);
+			image7_3_max.setImageResource(getResources().getIdentifier("d"+cityWeather.getCode_d3(),"drawable", getActivity().getPackageName()));
+			text7_3_max.setText(cityWeather.getTxt_d3());
+			text7_3_min.setText(cityWeather.getTxt_n3());
+			image7_3_min.setImageResource(getResources().getIdentifier("n"+cityWeather.getCode_n3(),"drawable", getActivity().getPackageName()));
+			text7_3_date.setText(calendar.get(Calendar.MONTH)+1+"/"+calendar.get(Calendar.DAY_OF_MONTH));
 			
 			calendar.setTime(format.parse(cityWeather.getDate4()));
 			text7_4_ch.setText(weekOfDays[calendar.get(Calendar.DAY_OF_WEEK)]);
-		//	image7_4_max.setImageResource(resId);
-			text7_4_max.setText(cityWeather.getMax4());
-			text7_4_min.setText(cityWeather.getMin4());
-		//	image7_4_min.setImageResource(resId);
+			image7_4_max.setImageResource(getResources().getIdentifier("d"+cityWeather.getCode_d4(),"drawable", getActivity().getPackageName()));
+			text7_4_max.setText(cityWeather.getTxt_d4());
+			text7_4_min.setText(cityWeather.getTxt_n4());
+			image7_4_min.setImageResource(getResources().getIdentifier("n"+cityWeather.getCode_n4(),"drawable", getActivity().getPackageName()));
+			text7_4_date.setText(calendar.get(Calendar.MONTH)+1+"/"+calendar.get(Calendar.DAY_OF_MONTH));
 		
 			calendar.setTime(format.parse(cityWeather.getDate5()));
 			text7_5_ch.setText(weekOfDays[calendar.get(Calendar.DAY_OF_WEEK)]);
-		//	image7_5_max.setImageResource(resId);
-			text7_5_max.setText(cityWeather.getMax5());
-			text7_5_min.setText(cityWeather.getMin5());
-		//	image7_5_min.setImageResource(resId);
+			image7_5_max.setImageResource(getResources().getIdentifier("d"+cityWeather.getCode_d5(),"drawable", getActivity().getPackageName()));
+			text7_5_max.setText(cityWeather.getTxt_d5());
+			text7_5_min.setText(cityWeather.getTxt_n5());
+			image7_5_min.setImageResource(getResources().getIdentifier("n"+cityWeather.getCode_n5(),"drawable", getActivity().getPackageName()));
+			text7_5_date.setText(calendar.get(Calendar.MONTH)+1+"/"+calendar.get(Calendar.DAY_OF_MONTH));
 		
 			calendar.setTime(format.parse(cityWeather.getDate6()));
 			text7_6_ch.setText(weekOfDays[calendar.get(Calendar.DAY_OF_WEEK)]);
-		//	image7_6_max.setImageResource(resId);
-			text7_6_max.setText(cityWeather.getMax6());
-			text7_6_min.setText(cityWeather.getMin6());
-		//	image7_6_min.setImageResource(resId);
+			image7_6_max.setImageResource(getResources().getIdentifier("d"+cityWeather.getCode_d6(),"drawable", getActivity().getPackageName()));
+			text7_6_max.setText(cityWeather.getTxt_d6());
+			text7_6_min.setText(cityWeather.getTxt_n6());
+			image7_6_min.setImageResource(getResources().getIdentifier("n"+cityWeather.getCode_n6(),"drawable", getActivity().getPackageName()));
+			text7_6_date.setText(calendar.get(Calendar.MONTH)+1+"/"+calendar.get(Calendar.DAY_OF_MONTH));
 		
 			calendar.setTime(format.parse(cityWeather.getDate7()));
 			text7_7_ch.setText(weekOfDays[calendar.get(Calendar.DAY_OF_WEEK)]);
-		//	image7_7_max.setImageResource(resId);
-			text7_7_max.setText(cityWeather.getMax7());
-			text7_7_min.setText(cityWeather.getMin7());
-		//	image7_7_min.setImageResource(resId);
+			image7_7_max.setImageResource(getResources().getIdentifier("d"+cityWeather.getCode_d7(),"drawable", getActivity().getPackageName()));
+			text7_7_max.setText(cityWeather.getTxt_d7());
+			text7_7_min.setText(cityWeather.getTxt_n7());
+			image7_7_min.setImageResource(getResources().getIdentifier("n"+cityWeather.getCode_n7(),"drawable", getActivity().getPackageName()));
+			text7_7_date.setText(calendar.get(Calendar.MONTH)+1+"/"+calendar.get(Calendar.DAY_OF_MONTH));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

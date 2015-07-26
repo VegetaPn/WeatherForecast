@@ -52,7 +52,7 @@ public class WeatherMainActivity extends BaseActivity {
 		setBehindContentView(R.layout.menu_frame);
 		getSupportFragmentManager()
 		.beginTransaction()
-		.replace(R.id.menu_frame, new CityListFragment(myDbHelper))
+		.replace(R.id.menu_frame, new CityListFragment(myDbHelper,getSlidingMenu()))
 		.commit();
 		vp.setCurrentItem(0);//设置启动页面
 		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
@@ -91,7 +91,7 @@ public class WeatherMainActivity extends BaseActivity {
         
         ArrayList<City_ID> list = CityDao.showicity();
 		for (City_ID city : list)
-			mFragments.add(new WeatherHomeFragment(city.getId(),myDbHelper));
+			mFragments.add(new WeatherHomeFragment(city.getId(),myDbHelper,getSlidingMenu()));
 	}
 	
 	public ViewPager getVp(){
@@ -155,7 +155,7 @@ public class WeatherMainActivity extends BaseActivity {
 			ArrayList<Fragment> newFragments = new ArrayList<Fragment>();
 			for(Fragment f : mFragments){
 				WeatherHomeFragment ff=(WeatherHomeFragment)f;
-				WeatherHomeFragment newF=new WeatherHomeFragment(ff.getCityId(),myDbHelper);
+				WeatherHomeFragment newF=new WeatherHomeFragment(ff.getCityId(),myDbHelper,getSlidingMenu());
 				newFragments.add(newF);
 				System.out.println("remove run:oldtag-"+ff.getTag()+"newtag-"+newF.getTag());
 			}

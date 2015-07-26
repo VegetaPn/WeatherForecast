@@ -23,16 +23,18 @@
     android:paddingRight="8dp"
     tools:ignore="overdraw" >
 
-    <TextView
-        android:id="@+id/undo_row_texttv"
+    <Button
+        android:id="@+id/undo_row_undobutton"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="删除"
+        android:background="@null"
+        android:drawableRight="@drawable/ic_undo"
+        android:text="撤销"
         android:textColor="@android:color/white"
         android:textSize="17dp" />
+    
 
     <View
         android:layout_width="1px"
@@ -41,16 +43,16 @@
         android:background="@android:color/white"
         tools:ignore="PxUsage" />
 
-    <Button
-        android:id="@+id/undo_row_undobutton"
+    <TextView
+        android:id="@+id/undo_row_texttv"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         android:layout_weight="1"
-        android:background="@null"
-        android:drawableLeft="@drawable/ic_undo"
-        android:text="撤销"
+        android:gravity="center"
+        android:text="再滑一次删除>>"
         android:textColor="@android:color/white"
         android:textSize="17dp" />
+    
 
 </LinearLayout>

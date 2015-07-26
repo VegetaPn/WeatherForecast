@@ -3,6 +3,7 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blueeee"
     android:paddingBottom="3dp"
     android:paddingLeft="7dp"
     android:paddingRight="7dp"
@@ -20,7 +21,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/abs__ic_ab_back_holo_light" />
+            android:background="@null"
+            android:padding="3dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/menu" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -45,7 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
-
         </LinearLayout>
 
         <ImageButton
@@ -54,7 +57,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/umeng_socialize_at_normal" />
+            android:background="@null"
+            android:padding="3dp"
+            android:scaleType="fitEnd"
+            android:src="@drawable/share" />
 
     </RelativeLayout>
     
@@ -92,7 +98,7 @@
                 android:layout_gravity="fill_vertical" />
 
             <Button
-                android:id="@+id/button_AQI"
+                android:id="@+id/button_aqi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/text_now_T"
@@ -131,14 +137,14 @@
 
             <TextView
                 android:id="@+id/text_now_descrip"
-                android:layout_width="80dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:singleLine="true"
                 android:layout_below="@+id/text_now_weatherChinese"
                 android:ellipsize="marquee"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:text="今天是个晴天~"
                 android:textSize="15dp" />
 
@@ -146,7 +152,7 @@
                 android:id="@+id/imagePanel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/imageButton3"
+                android:layout_below="@+id/button_aqi"
                 android:gravity="center"
                 android:orientation="vertical" >
 
@@ -190,8 +196,8 @@
 
                     <ImageView
                         android:id="@+id/image_tomorrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/text_tomorrow_T"
                         android:src="@drawable/abs__ic_cab_done_holo_light" />
@@ -219,7 +225,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="15dp" >
                 </LinearLayout>
 
                 <RelativeLayout
@@ -230,6 +236,8 @@
                         android:id="@+id/panel_chart1"
                         android:layout_width="match_parent"
                         android:layout_height="75dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp"
                         android:layout_marginTop="68dp"
                         android:orientation="vertical" >
 
@@ -237,16 +245,18 @@
                             android:id="@+id/chart1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
                             android:paddingTop="5dp" />
-                        
 
                     </LinearLayout>
                     
                     <LinearLayout
                         android:id="@+id/panel_chart2"
-                        android:layout_below="@+id/panel_chart1"
                         android:layout_width="match_parent"
                         android:layout_height="75dp"
+                        android:layout_below="@+id/panel_chart1"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp"
                         android:orientation="vertical" >
 
                         <lecho.lib.hellocharts.view.LineChartView
@@ -294,7 +304,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/image_7_1_max"
                                 android:layout_centerHorizontal="true"
-                                android:text="33°"
+                                android:text="多云"
                                 android:textSize="@dimen/text_7weather_T" />
 
                             <TextView
@@ -307,22 +317,31 @@
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textSize="@dimen/text_7weather_blank" />
 
-                            <TextView
-                                android:id="@+id/text_7_1_min"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/blank1"
-                                android:layout_centerHorizontal="true"
-                                android:text="27°"
-                                android:textSize="@dimen/text_7weather_T" />
-
                             <ImageView
                                 android:id="@+id/image_7_1_min"
                                 android:layout_width="@dimen/icon_7weather"
                                 android:layout_height="@dimen/icon_7weather"
-                                android:layout_below="@+id/text_7_1_min"
+                                android:layout_below="@+id/blank1"
                                 android:layout_centerHorizontal="true"
                                 android:src="@drawable/abs__ic_go" />
+                            
+                            <TextView
+                                android:id="@+id/text_7_1_min"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/image_7_1_min"
+                                android:layout_centerHorizontal="true"
+                                android:text="晴"
+                                android:textSize="@dimen/text_7weather_T" />
+                            
+                            <TextView
+                                android:id="@+id/text_7_1_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/text_7_1_min"
+                                android:layout_centerHorizontal="true"
+                                android:text="7/25"
+                                android:textSize="@dimen/text_7weather_T" />
                         </RelativeLayout>
                         
                         <RelativeLayout
@@ -356,7 +375,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/image_7_2_max"
                                 android:layout_centerHorizontal="true"
-                                android:text="33°"
+                                android:text="多云"
                                 android:textSize="@dimen/text_7weather_T" />
 
                             <TextView
@@ -369,22 +388,31 @@
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textSize="@dimen/text_7weather_blank" />
 
-                            <TextView
-                                android:id="@+id/text_7_2_min"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/blank2"
-                                android:layout_centerHorizontal="true"
-                                android:text="27°"
-                                android:textSize="@dimen/text_7weather_T" />
-
                             <ImageView
                                 android:id="@+id/image_7_2_min"
                                 android:layout_width="@dimen/icon_7weather"
                                 android:layout_height="@dimen/icon_7weather"
-                                android:layout_below="@+id/text_7_2_min"
+                                android:layout_below="@+id/blank2"
                                 android:layout_centerHorizontal="true"
                                 android:src="@drawable/abs__ic_go" />
+                            
+                            <TextView
+                                android:id="@+id/text_7_2_min"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/image_7_2_min"
+                                android:layout_centerHorizontal="true"
+                                android:text="晴"
+                                android:textSize="@dimen/text_7weather_T" />
+                            
+                            <TextView
+                                android:id="@+id/text_7_2_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/text_7_2_min"
+                                android:layout_centerHorizontal="true"
+                                android:text="7/25"
+                                android:textSize="@dimen/text_7weather_T" />
                         </RelativeLayout>
                         
                         <RelativeLayout
@@ -418,7 +446,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/image_7_3_max"
                                 android:layout_centerHorizontal="true"
-                                android:text="33°"
+                                android:text="多云"
                                 android:textSize="@dimen/text_7weather_T" />
 
                             <TextView
@@ -431,22 +459,31 @@
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textSize="@dimen/text_7weather_blank" />
 
-                            <TextView
-                                android:id="@+id/text_7_3_min"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/blank3"
-                                android:layout_centerHorizontal="true"
-                                android:text="27°"
-                                android:textSize="@dimen/text_7weather_T" />
-
                             <ImageView
                                 android:id="@+id/image_7_3_min"
                                 android:layout_width="@dimen/icon_7weather"
                                 android:layout_height="@dimen/icon_7weather"
-                                android:layout_below="@+id/text_7_3_min"
+                                android:layout_below="@+id/blank3"
                                 android:layout_centerHorizontal="true"
                                 android:src="@drawable/abs__ic_go" />
+                            
+                            <TextView
+                                android:id="@+id/text_7_3_min"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/image_7_3_min"
+                                android:layout_centerHorizontal="true"
+                                android:text="晴"
+                                android:textSize="@dimen/text_7weather_T" />
+                            
+                            <TextView
+                                android:id="@+id/text_7_3_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/text_7_3_min"
+                                android:layout_centerHorizontal="true"
+                                android:text="7/25"
+                                android:textSize="@dimen/text_7weather_T" />
                         </RelativeLayout>
                         
                         <RelativeLayout
@@ -480,7 +517,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/image_7_4_max"
                                 android:layout_centerHorizontal="true"
-                                android:text="33°"
+                                android:text="多云"
                                 android:textSize="@dimen/text_7weather_T" />
 
                             <TextView
@@ -493,22 +530,31 @@
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textSize="@dimen/text_7weather_blank" />
 
-                            <TextView
-                                android:id="@+id/text_7_4_min"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/blank4"
-                                android:layout_centerHorizontal="true"
-                                android:text="27°"
-                                android:textSize="@dimen/text_7weather_T" />
-
                             <ImageView
                                 android:id="@+id/image_7_4_min"
                                 android:layout_width="@dimen/icon_7weather"
                                 android:layout_height="@dimen/icon_7weather"
-                                android:layout_below="@+id/text_7_4_min"
+                                android:layout_below="@+id/blank4"
                                 android:layout_centerHorizontal="true"
                                 android:src="@drawable/abs__ic_go" />
+                            
+                            <TextView
+                                android:id="@+id/text_7_4_min"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/image_7_4_min"
+                                android:layout_centerHorizontal="true"
+                                android:text="晴"
+                                android:textSize="@dimen/text_7weather_T" />
+                            
+                            <TextView
+                                android:id="@+id/text_7_4_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/text_7_4_min"
+                                android:layout_centerHorizontal="true"
+                                android:text="7/25"
+                                android:textSize="@dimen/text_7weather_T" />
                         </RelativeLayout>
                         
                         <RelativeLayout
@@ -542,7 +588,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/image_7_5_max"
                                 android:layout_centerHorizontal="true"
-                                android:text="33°"
+                                android:text="多云"
                                 android:textSize="@dimen/text_7weather_T" />
 
                             <TextView
@@ -555,22 +601,31 @@
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textSize="@dimen/text_7weather_blank" />
 
-                            <TextView
-                                android:id="@+id/text_7_5_min"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/blank5"
-                                android:layout_centerHorizontal="true"
-                                android:text="27°"
-                                android:textSize="@dimen/text_7weather_T" />
-
                             <ImageView
                                 android:id="@+id/image_7_5_min"
                                 android:layout_width="@dimen/icon_7weather"
                                 android:layout_height="@dimen/icon_7weather"
-                                android:layout_below="@+id/text_7_5_min"
+                                android:layout_below="@+id/blank5"
                                 android:layout_centerHorizontal="true"
                                 android:src="@drawable/abs__ic_go" />
+                            
+                            <TextView
+                                android:id="@+id/text_7_5_min"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/image_7_5_min"
+                                android:layout_centerHorizontal="true"
+                                android:text="晴"
+                                android:textSize="@dimen/text_7weather_T" />
+                            
+                            <TextView
+                                android:id="@+id/text_7_5_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/text_7_5_min"
+                                android:layout_centerHorizontal="true"
+                                android:text="7/25"
+                                android:textSize="@dimen/text_7weather_T" />
                         </RelativeLayout>
                         
                         <RelativeLayout
@@ -604,7 +659,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/image_7_6_max"
                                 android:layout_centerHorizontal="true"
-                                android:text="33°"
+                                android:text="多云"
                                 android:textSize="@dimen/text_7weather_T" />
 
                             <TextView
@@ -617,22 +672,31 @@
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textSize="@dimen/text_7weather_blank" />
 
-                            <TextView
-                                android:id="@+id/text_7_6_min"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/blank6"
-                                android:layout_centerHorizontal="true"
-                                android:text="27°"
-                                android:textSize="@dimen/text_7weather_T" />
-
                             <ImageView
                                 android:id="@+id/image_7_6_min"
                                 android:layout_width="@dimen/icon_7weather"
                                 android:layout_height="@dimen/icon_7weather"
-                                android:layout_below="@+id/text_7_6_min"
+                                android:layout_below="@+id/blank6"
                                 android:layout_centerHorizontal="true"
                                 android:src="@drawable/abs__ic_go" />
+                            
+                            <TextView
+                                android:id="@+id/text_7_6_min"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/image_7_6_min"
+                                android:layout_centerHorizontal="true"
+                                android:text="晴"
+                                android:textSize="@dimen/text_7weather_T" />
+                            
+                            <TextView
+                                android:id="@+id/text_7_6_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/text_7_6_min"
+                                android:layout_centerHorizontal="true"
+                                android:text="7/25"
+                                android:textSize="@dimen/text_7weather_T" />
                         </RelativeLayout>
                         
                         <RelativeLayout
@@ -666,7 +730,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/image_7_7_max"
                                 android:layout_centerHorizontal="true"
-                                android:text="33°"
+                                android:text="多云"
                                 android:textSize="@dimen/text_7weather_T" />
 
                             <TextView
@@ -679,23 +743,33 @@
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textSize="@dimen/text_7weather_blank" />
 
-                            <TextView
-                                android:id="@+id/text_7_7_min"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/blank7"
-                                android:layout_centerHorizontal="true"
-                                android:text="27°"
-                                android:textSize="@dimen/text_7weather_T" />
-
                             <ImageView
                                 android:id="@+id/image_7_7_min"
                                 android:layout_width="@dimen/icon_7weather"
                                 android:layout_height="@dimen/icon_7weather"
-                                android:layout_below="@+id/text_7_7_min"
+                                android:layout_below="@+id/blank7"
                                 android:layout_centerHorizontal="true"
                                 android:src="@drawable/abs__ic_go" />
+                            
+                            <TextView
+                                android:id="@+id/text_7_7_min"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/image_7_7_min"
+                                android:layout_centerHorizontal="true"
+                                android:text="晴"
+                                android:textSize="@dimen/text_7weather_T" />
+                            
+                            <TextView
+                                android:id="@+id/text_7_7_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/text_7_7_min"
+                                android:layout_centerHorizontal="true"
+                                android:text="7/25"
+                                android:textSize="@dimen/text_7weather_T" />
                         </RelativeLayout>
+                        
                     </LinearLayout>
 
                 </RelativeLayout>
@@ -703,6 +777,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
                     android:orientation="horizontal" >
 
                     <RelativeLayout
@@ -713,11 +788,13 @@
 
                         <ImageView
                             android:id="@+id/image_zhishu_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/umeng_socialize_douban_on" />
+                            android:padding="2dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/clothes" />
 
                         <TextView
                             android:id="@+id/text_zhishu_1_name"
@@ -747,11 +824,13 @@
 
                         <ImageView
                             android:id="@+id/image_zhishu_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/umeng_socialize_douban_on" />
+                            android:padding="2dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/uv" />
 
                         <TextView
                             android:id="@+id/text_zhishu_2_name"
@@ -781,11 +860,13 @@
 
                         <ImageView
                             android:id="@+id/image_zhishu_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/umeng_socialize_douban_on" />
+                            android:padding="2dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/car" />
 
                         <TextView
                             android:id="@+id/text_zhishu_3_name"
@@ -821,11 +902,13 @@
 
                         <ImageView
                             android:id="@+id/image_zhishu_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/umeng_socialize_douban_on" />
+                            android:padding="2dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/travel" />
 
                         <TextView
                             android:id="@+id/text_zhishu_4_name"
@@ -855,11 +938,13 @@
 
                         <ImageView
                             android:id="@+id/image_zhishu_5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/umeng_socialize_douban_on" />
+                            android:padding="2dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/medicine" />
 
                         <TextView
                             android:id="@+id/text_zhishu_5_name"
@@ -889,11 +974,13 @@
 
                         <ImageView
                             android:id="@+id/image_zhishu_6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/umeng_socialize_douban_on" />
+                            android:padding="2dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/sport" />
 
                         <TextView
                             android:id="@+id/text_zhishu_6_name"
@@ -915,13 +1002,6 @@
 
                     </RelativeLayout>
                 </LinearLayout>
-                
-                <TextView
-                    android:id="@+id/text_weather"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textSize="20dp" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

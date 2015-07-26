@@ -4,6 +4,7 @@ package weatherforecast.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.SwingLeftInAnimationAdapter;
@@ -33,19 +34,23 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class CityListFragment extends ListFragment {
 	private CreateDB helper;
-	private Button addCity;
+	private ImageButton addCity;
 	private MyListAdapter<String> listAdapter;
 	private ArrayList<String> nameList;
-	public CityListFragment(CreateDB db) {
+	SlidingMenu slide;
+	
+	public CityListFragment(CreateDB db,SlidingMenu slide) {
 		super();
 		// TODO Auto-generated constructor stub
 		this.helper=db;
+		this.slide=slide;
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,7 +90,6 @@ public class CityListFragment extends ListFragment {
 			            	WeatherMainActivity mainAct= (WeatherMainActivity) getActivity();
 			            	CityDao.deleteCity(mainAct.adapter.getIdAt(position));
 			    			mainAct.adapter.remove(position);
-			    			System.out.println("ап╠М:"+position);
 			            }
 			        }
 			    }
@@ -95,7 +99,7 @@ public class CityListFragment extends ListFragment {
 
 		dyList.enableSimpleSwipeUndo();
 	
-		addCity = (Button)getActivity().findViewById(R.id.addCity);
+		addCity = (ImageButton)getActivity().findViewById(R.id.addCity);
 		addCity.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -116,12 +120,13 @@ public class CityListFragment extends ListFragment {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(requestCode==1 && resultCode!=-1){
 			WeatherMainActivity mainAct= (WeatherMainActivity) getActivity();
-			WeatherHomeFragment newPage = new WeatherHomeFragment(resultCode,helper);
+			WeatherHomeFragment newPage = new WeatherHomeFragment(resultCode,helper,slide);
 			mainAct.mFragments.add(newPage);
 			mainAct.adapter.notifyDataSetChanged();
 			mainAct.getVp().setCurrentItem(mainAct.mFragments.indexOf(newPage),false);
 			nameList.add(CityDao.getCityByID(resultCode).getNamecn());
 			listAdapter.notifyDataSetChanged();
+			slide.showContent();
 		}
 	}
 
