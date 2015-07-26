@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 import com.umeng.analytics.MobclickAgent;
@@ -22,6 +23,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -75,10 +77,14 @@ public class AddScheduleActivity extends Activity {
         });  
         
         timePicker = (TimePicker) findViewById(R.id.timePiker);
-        final Calendar cal = Calendar.getInstance();
-		cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-		hour = cal.get(Calendar.HOUR_OF_DAY);
-		minute = cal.get(Calendar.MINUTE);
+        //final Calendar cal = Calendar.getInstance();
+		//cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+        long sysTime = System.currentTimeMillis();
+        Date nowdate = new Date(sysTime);
+		//hour = cal.get(Calendar.HOUR_OF_DAY);
+		//minute = cal.get(Calendar.MINUTE);
+        hour = nowdate.getHours();
+        minute = nowdate.getMinutes();
 		//时间选择器初始化为当前时间
         timePicker.setCurrentHour(hour);
         timePicker.setCurrentMinute(minute);
@@ -116,10 +122,10 @@ public class AddScheduleActivity extends Activity {
 				pickerHour = timePicker.getCurrentHour();
 				pickerMinute = timePicker.getCurrentMinute();
 				//与当前时间进行比较
-				final Calendar cal = Calendar.getInstance();
-				cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-				nowHour = cal.get(Calendar.HOUR_OF_DAY);
-				nowMin = cal.get(Calendar.MINUTE);
+				long sysTime = System.currentTimeMillis();
+		        Date nowdate = new Date(sysTime);
+				nowHour = nowdate.getHours();
+				nowMin = nowdate.getMinutes();
 				if(nowHour == pickerHour){
 					if(nowMin >= pickerMinute){
 						Toast.makeText(AddScheduleActivity.this, "请选择有效的提醒时间！", Toast.LENGTH_LONG).show();
@@ -146,8 +152,8 @@ public class AddScheduleActivity extends Activity {
 	} 
     
 	private void addSchedule(){
-		final Calendar cal = Calendar.getInstance();
-		cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+		//long sysTime = System.currentTimeMillis();
+        //Date nowdate = new Date(sysTime);
 		pickerHour = timePicker.getCurrentHour();
 		pickerMinute = timePicker.getCurrentMinute();
 		String pHour = pickerHour.toString();

@@ -35,7 +35,17 @@
              android:text="7月24日  周三"
              android:textSize="20sp"
              />
+            <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" 
+            >
             
+            <ImageView
+                android:id="@+id/imageView_bigwidget"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/location" />    
             <TextView 
              android:id="@+id/bigwidgetTextviewlocation"
              android:layout_width="wrap_content"
@@ -44,6 +54,8 @@
              android:text="海淀区"
              android:textSize="20sp"
              />
+            </LinearLayout>
+            
             
             <TextView 
              android:id="@+id/bigwidgetTextviewschedule"
