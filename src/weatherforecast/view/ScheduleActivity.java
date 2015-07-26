@@ -304,7 +304,6 @@ public class ScheduleActivity extends Activity {
 		//将ar与R.layout.item中的参数进行适配，最后两个参数指定数据一一对应的关系
 		adapter = new SimpleAdapter(ScheduleActivity.this, ar, R.layout.item, new String[]{"id","时间","日程","地点"}, new int[]{R.id.scheID,R.id.time,R.id.content,R.id.place});
 		listView.setAdapter(adapter);
-		//}
 	}
 		
 	// 回调方法，从AddScheduleActivity回来的时候会执行这个方法  
