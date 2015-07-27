@@ -54,10 +54,8 @@ public class ScheduleActivity extends Activity {
 
 	private ScheduleDBHelper dbHelper = new ScheduleDBHelper(ScheduleActivity.this,"ScheduleDB");
 	private SQLiteDatabase db;
-	private TextView textView1;
-	private TextView textView2;
 	private ImageButton imageButton;
-	private Button button;
+	private ImageButton button;
 	private static final int msgKey1 = 1;
 	//private TableLayout tableLayout; 
 	private ListView listView;
@@ -65,8 +63,7 @@ public class ScheduleActivity extends Activity {
 	//得到ListView选中条目的行数，默认从0开始
 	//private int index = 0;
 	private SimpleAdapter adapter;
-	
-	private TableLayout tableLayout; 
+	 
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
@@ -83,15 +80,9 @@ public class ScheduleActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schedule);
-		textView1 = (TextView) findViewById(R.id.nowDate);
-		textView2 = (TextView) findViewById(R.id.time);
-		//显示当前日期与时间
-		GetDateTime gdt = new GetDateTime();
-		textView1.setText(gdt.stringDate());
-		//textView2.setText(gdt.stringTime());
-		new TimeThread().start();
-		imageButton = (ImageButton) findViewById(R.id.imageButton);
-		button = (Button) findViewById(R.id.ret);
+		
+		imageButton = (ImageButton) findViewById(R.id.btn_add_schedule);
+		button = (ImageButton) findViewById(R.id.ret);
 		//tableLayout = (TableLayout) findViewById(R.id.tableLayout);
 		listView = (ListView) findViewById(R.id.list);
 		//初始化ListView的第一条条目内容
@@ -145,9 +136,7 @@ public class ScheduleActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent();
-				intent.setClass(ScheduleActivity.this, WeatherMainActivity.class);
-				startActivity(intent);
+				onBackPressed();
 			}
 		});
 		
@@ -160,41 +149,7 @@ public class ScheduleActivity extends Activity {
 			}
         });	
 	}
-	
-	//线程里面无限循环，每隔一秒发送一个消息
-	public class TimeThread extends Thread{
-		@Override
-	    public void run(){
-			do{
-				try{
-					Thread.sleep(1000);
-	                Message msg = new Message();
-	                msg.what = msgKey1;
-	                mHandler.sendMessage(msg);
-				}
-				catch(InterruptedException e){
-					e.printStackTrace();
-				}
-			}while(true);
-		}
-	}
-	
-	//通过Handler来更新TextView2的显示的时间
-	private Handler mHandler = new Handler(){
-		@Override
-        public void handleMessage(Message msg){
-    	    super.handleMessage(msg);
-            switch(msg.what){
-		        case msgKey1:
-		      	    long sysTime = System.currentTimeMillis();
-	                CharSequence sysTimeStr = DateFormat.format("hh:mm:ss", sysTime);
-	                textView2.setText(sysTimeStr); 
-	            default:
-	                break;
-            }
-        }
-    };
-	
+
 	//根据传入日期将数据库中已有日程数据读取出来并显示在ListView中
 	public void initListView(String dateStr) {
 		dbHelper.getReadableDatabase();

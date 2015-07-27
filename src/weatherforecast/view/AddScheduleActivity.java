@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -51,8 +52,8 @@ public class AddScheduleActivity extends Activity {
 	private int minute;
 	private EditText contentText;
 	private EditText placeText;
-	private Button cancelButton;
-	private Button OKButton;
+	private ImageButton cancelButton;
+	private ImageButton OKButton;
 	private int id = 0;
 	private String remind = "";
 	private String dateTime = "";
@@ -95,8 +96,8 @@ public class AddScheduleActivity extends Activity {
         contentText.setText(it.getStringExtra("Schedule"));
         placeText.setText(it.getStringExtra("Place"));*/
         
-        cancelButton = (Button) findViewById(R.id.ret);
-        OKButton = (Button) findViewById(R.id.add);
+        cancelButton = (ImageButton) findViewById(R.id.ret);
+        OKButton = (ImageButton) findViewById(R.id.add);
         swibtn = (SwitchButton) findViewById(R.id.wiperSwitch);
         dbHelper.getReadableDatabase();
         
@@ -106,9 +107,7 @@ public class AddScheduleActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent i = new Intent();
-				i.setClass(AddScheduleActivity.this,ScheduleActivity.class);
-				startActivity(i);
+				onBackPressed();
 			}
 		});
 

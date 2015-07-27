@@ -505,7 +505,7 @@ public class JsonDaoPro {
             		brf1, txt1, brf2, txt2, brf3, txt3, brf4, txt4, brf5, txt5, brf6, txt6, brf7, txt7);
             System.out.println("parse finished");
         } catch (JSONException e) {  
-        	System.out.println("parse error");
+        	System.out.println("parse error:"+e.getMessage());
             e.printStackTrace();  
             return null;
         }   

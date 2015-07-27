@@ -1,6 +1,8 @@
 package weatherforecast.view;
 import weatherforecast.view.R;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.database.SQLException;
@@ -26,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -50,6 +54,7 @@ public class WeatherHomeFragment extends Fragment {
 	CreateDB myDbHelper;
 	ScrollView scrl;
 	PullRefreshLayout refreshView;
+	private static final int msgKey1 = 1123;
 	String[] weekOfDays = {"","周日", "周一", "周二", "周三", "周四", "周五", "周六"};
 	SlidingMenu slide;
 	
@@ -73,8 +78,6 @@ public class WeatherHomeFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		if (savedInstanceState != null)
-			cityId = savedInstanceState.getInt("index");
 		View v = inflater.inflate(R.layout.weather_home_fragment, container, false);
 		
 		ImageButton menu=(ImageButton)v.findViewById(R.id.imageButton1);
@@ -88,21 +91,41 @@ public class WeatherHomeFragment extends Fragment {
 		});
 		
 		refreshView = (PullRefreshLayout)v.findViewById(R.id.swipeRefreshLayout);
+		refreshView.setRefreshStyle(PullRefreshLayout.STYLE_WATER_DROP);
 		refreshView.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshView.postDelayed(new Runnable() {
+                refreshView.post(new Runnable() {
                     @Override
                     public void run() {
-                        refreshView.setRefreshing(false);
+                    	Message msg = new Message();
+                    	msg.obj=getActivity();
+						msg.what = msgKey1;
+						mHandler.sendMessage(msg);
                     }
-                }, 1500);
+                });
             }
         });
 
-		initView(v);
+		initView(v,false);
 		return v;
 	}
+	
+	private Handler mHandler = new Handler(){
+		@Override
+        public void handleMessage(Message msg){
+    	    super.handleMessage(msg);
+            switch(msg.what){
+		        case msgKey1:
+		        	if(initView(getView(),true) == -1){
+		        		Toast toast=Toast.makeText((Activity)msg.obj, "咦？手机没信号了？", Toast.LENGTH_SHORT);
+		        	}
+		        	refreshView.setRefreshing(false);
+	            default:
+	                break;
+            }
+        }
+    };
 	
 	private void initChart(View v,CityWeather city){
 
@@ -192,12 +215,14 @@ public class WeatherHomeFragment extends Fragment {
 	    
 	}
 	
-	private void initView(View v){
+	private int initView(View v,boolean isRefresh){
 		TextView t;
 		TextView t1,t2;
-		CityWeather cityWeather=JsonDaoPro.parseJson(getJson(cityId));
-		refreshView = (PullRefreshLayout) v.findViewById(R.id.swipeRefreshLayout);
-		refreshView.setRefreshStyle(PullRefreshLayout.STYLE_WATER_DROP);
+		String jsonData=getJson(isRefresh);
+		if(jsonData==null)
+			return -1;
+		CityWeather cityWeather=JsonDaoPro.parseJson(jsonData);
+		String span=getDateDifference();
 		scrl=(ScrollView)v.findViewById(R.id.scrollView1);
 		int screenHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
 		LinearLayout imagePanel;
@@ -316,7 +341,7 @@ public class WeatherHomeFragment extends Fragment {
 		TextView text_zhishu6_content=(TextView)v.findViewById(R.id.text_zhishu_6_content);
 		
 		textCityName.setText(cityWeather.getCity());
-		lastRefresh.setText("发布时间"+cityWeather.getLoc());
+		lastRefresh.setText(span);
 		nowT.setText(cityWeather.getNtmp()+"°");
 		now_max_T.setText(cityWeather.getMax1());
 		now_min_T.setText(cityWeather.getMin1());
@@ -421,25 +446,61 @@ public class WeatherHomeFragment extends Fragment {
 		text_zhishu6_name.setText("运动");
 		text_zhishu6_content.setText(cityWeather.getBrf5());
 		System.out.println("运动:"+cityWeather.getBrf5());
-			
+		
+		return 0;
 	}
 	
 	private String setJson(int cityId){
 		String name=String.valueOf(cityId);
 		String value=JsonDaoPro.getWeatherJSON(name);
+		System.out.println("json data:"+value);
+		if(value == null)
+			return null;
 		SharedPreferences mySharedPreferences= getActivity().getSharedPreferences("cityData",Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = mySharedPreferences.edit();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String last=df.format(new Date());// new Date()为获取当前系统时间
 		editor.putString(name,value); 
+		editor.putString(name+"-l",last);
 		editor.commit();
 		return value;
 	}
 	
-	public String getJson(int cityId){
+	public String getJson(boolean isRefresh){
 		SharedPreferences mySharedPreferences= getActivity().getSharedPreferences("cityData",Activity.MODE_PRIVATE); 
 		String jsonData=mySharedPreferences.getString(String.valueOf(cityId), "");
-		if(jsonData == "")
+		if(jsonData == "" || isRefresh)
 			jsonData=setJson(cityId);
 		return jsonData; 
+	}
+	
+	public String getDateDifference(){
+		String dif="";
+		Date now=new Date();
+		SharedPreferences mySharedPreferences= getActivity().getSharedPreferences("cityData",Activity.MODE_PRIVATE); 
+		String oldTime=mySharedPreferences.getString(String.valueOf(cityId)+"-l", "");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		Date old=new Date();
+		try {
+			old=df.parse(oldTime);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		long span=now.getTime()-old.getTime();
+		int day=(int) (span/(24*60*60*1000));
+		int hour=(int) (span/(60*60*1000));
+		int min=(int) (span/(60*1000));
+		if(day>0)
+			dif=day+"天前";
+		else if(hour>0)
+			dif=hour+"小时前";
+		else if(min>0)
+			dif=min+"分钟前";
+		else
+			dif="刚刚";
+		return dif;
 	}
 	
 	public void scrollToTop(){

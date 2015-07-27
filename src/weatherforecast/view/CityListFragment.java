@@ -107,7 +107,7 @@ public class CityListFragment extends ListFragment {
 				// TODO Auto-generated method stub
 				Intent i=new Intent();
 				i.setClass(getActivity(), AddCityActivity.class);
-				startActivityForResult(i, 1);
+				startActivityForResult(i, 101);
 			}
 			
 		});
@@ -117,10 +117,12 @@ public class CityListFragment extends ListFragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode==1 && resultCode!=-1){
+	//	super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode==101 && resultCode!=-1){
 			WeatherMainActivity mainAct= (WeatherMainActivity) getActivity();
+			System.out.println("sss");
 			WeatherHomeFragment newPage = new WeatherHomeFragment(resultCode,helper,slide);
+			System.out.println("nnn");
 			mainAct.mFragments.add(newPage);
 			mainAct.adapter.notifyDataSetChanged();
 			mainAct.getVp().setCurrentItem(mainAct.mFragments.indexOf(newPage),false);

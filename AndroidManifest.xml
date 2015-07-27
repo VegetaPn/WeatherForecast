@@ -69,7 +69,7 @@
             android:label="@string/app_name" >
             
         </activity>
-        <activity android:name="weatherforecast.view.AddCityActivity" ></activity>   
+        <activity android:name="weatherforecast.view.AddCityActivity" android:theme="@android:style/Theme.Holo.Light.NoActionBar"></activity>   
         <activity android:name="weatherforecast.view.testSucceed" >
             
            
@@ -77,12 +77,12 @@
         <activity android:name="weatherforecast.service.NotiService" ></activity>
         
         <activity
-            android:name="weatherforecast.view.ScheduleActivity" >
+            android:name="weatherforecast.view.ScheduleActivity" android:theme="@android:style/Theme.Holo.Light.NoActionBar">
             
         </activity>
         
         <activity
-            android:name="weatherforecast.view.AddScheduleActivity" >
+            android:name="weatherforecast.view.AddScheduleActivity" android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         </activity>
         
         <receiver 
