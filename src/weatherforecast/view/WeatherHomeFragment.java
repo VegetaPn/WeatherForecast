@@ -359,8 +359,8 @@ public class WeatherHomeFragment extends Fragment {
 		try {
 			calendar.setTime(format.parse(cityWeather.getDate1()));
 			text7_1_ch.setText("½ñÌì");
-			image7_1_max.setImageResource(getResources().getIdentifier("d"+cityWeather.getCode_d1(),"drawable", getActivity().getPackageName()));
-			text7_1_max.setText(cityWeather.getTxt_d1());
+			image7_1_max.setImageResource(getResources().getIdentifier("d"+cityWeather.getNcode(),"drawable", getActivity().getPackageName()));
+			text7_1_max.setText(cityWeather.getNtxt());
 			text7_1_min.setText(cityWeather.getTxt_n1());
 			image7_1_min.setImageResource(getResources().getIdentifier("n"+cityWeather.getCode_n1(),"drawable", getActivity().getPackageName()));
 			text7_1_date.setText(calendar.get(Calendar.MONTH)+1+"/"+calendar.get(Calendar.DAY_OF_MONTH));

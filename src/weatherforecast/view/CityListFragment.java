@@ -120,9 +120,7 @@ public class CityListFragment extends ListFragment {
 	//	super.onActivityResult(requestCode, resultCode, data);
 		if(requestCode==101 && resultCode!=-1){
 			WeatherMainActivity mainAct= (WeatherMainActivity) getActivity();
-			System.out.println("sss");
 			WeatherHomeFragment newPage = new WeatherHomeFragment(resultCode,helper,slide);
-			System.out.println("nnn");
 			mainAct.mFragments.add(newPage);
 			mainAct.adapter.notifyDataSetChanged();
 			mainAct.getVp().setCurrentItem(mainAct.mFragments.indexOf(newPage),false);

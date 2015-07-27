@@ -152,10 +152,8 @@ public class JsonDaoPro {
             boolean isDaylight;                  // Experimental var
             String code_d1 = null , code_n1 = null, txt_d1 = null, txt_n1 = null ;
             try {
-            	code_d1 = condObj1.getString( "code_d" );
-            	code_n1 = condObj1.getString( "code_n" );
             	txt_d1 = condObj1.getString( "txt_d" );
-            	txt_n1 = condObj1.getString( "txt_n" );
+            	code_d1 = condObj1.getString( "code_d" );
                            
                 isDaylight = true ;
         	} catch (Exception e) {
@@ -163,7 +161,10 @@ public class JsonDaoPro {
         		e.printStackTrace();
         		isDaylight = false ;
         	}
-            
+
+        	txt_n1 = condObj1.getString( "txt_n" );
+        	code_n1 = condObj1.getString( "code_n" );
+        	
             String date1 = dailObj1.getString("date");
             String hum1 = dailObj1.getString("hum");
             String pcpn1 = dailObj1.getString("pcpn");
@@ -193,9 +194,9 @@ public class JsonDaoPro {
             
             JSONObject condObj2 = dailObj2.getJSONObject("cond");
             
-            String code_d2 = condObj1.getString("code_d");
+            String code_d2 = condObj2.getString("code_d");
             String code_n2 = condObj2.getString("code_n");
-            String txt_d2 = condObj1.getString("txt_d");
+            String txt_d2 = condObj2.getString("txt_d");
             String txt_n2 = condObj2.getString("txt_n");
             
             String date2 = dailObj2.getString("date");
@@ -227,9 +228,9 @@ public class JsonDaoPro {
             
             JSONObject condObj3 = dailObj3.getJSONObject("cond");
             
-            String code_d3 = condObj1.getString("code_d");
+            String code_d3 = condObj3.getString("code_d");
             String code_n3 = condObj3.getString("code_n");
-            String txt_d3 = condObj1.getString("txt_d");
+            String txt_d3 = condObj3.getString("txt_d");
             String txt_n3 = condObj3.getString("txt_n");
             
             String date3 = dailObj3.getString("date");
