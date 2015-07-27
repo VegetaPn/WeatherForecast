@@ -148,10 +148,21 @@ public class JsonDaoPro {
             
             JSONObject condObj1 = dailObj1.getJSONObject("cond");
             
-            String code_d1 = condObj1.getString("code_d");
-            String code_n1 = condObj1.getString("code_n");
-            String txt_d1 = condObj1.getString("txt_d");
-            String txt_n1 = condObj1.getString("txt_n");
+            // if night, is null
+            boolean isDaylight;                  // Experimental var
+            String code_d1 = null , code_n1 = null, txt_d1 = null, txt_n1 = null ;
+            try {
+            	code_d1 = condObj1.getString( "code_d" );
+            	code_n1 = condObj1.getString( "code_n" );
+            	txt_d1 = condObj1.getString( "txt_d" );
+            	txt_n1 = condObj1.getString( "txt_n" );
+                           
+                isDaylight = true ;
+        	} catch (Exception e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        		isDaylight = false ;
+        	}
             
             String date1 = dailObj1.getString("date");
             String hum1 = dailObj1.getString("hum");
@@ -394,34 +405,34 @@ public class JsonDaoPro {
             String hspd1 = hwindObj1.getString("spd");
             
             
-            JSONObject hourlyObj2 = hourlyArr.getJSONObject(1);
-            
-            String hdate2 = hourlyObj2.getString("date");
-            String hhum2 = hourlyObj2.getString("hum");
-            String hpop2 = hourlyObj2.getString("pop");
-            String hpres2 = hourlyObj2.getString("pres");
-            String htmp2 = hourlyObj2.getString("tmp");
-            
-            JSONObject hwindObj2 = hourlyObj2.getJSONObject("wind");
-            String hdeg2 = hwindObj2.getString("deg");
-            String hdir2 = hwindObj2.getString("dir");
-            String hsc2 = hwindObj2.getString("sc");
-            String hspd2 = hwindObj2.getString("spd");
-            
-            
-            JSONObject hourlyObj3 = hourlyArr.getJSONObject(2);
-            
-            String hdate3 = hourlyObj3.getString("date");
-            String hhum3 = hourlyObj3.getString("hum");
-            String hpop3 = hourlyObj3.getString("pop");
-            String hpres3 = hourlyObj3.getString("pres");
-            String htmp3 = hourlyObj3.getString("tmp");
-            
-            JSONObject hwindObj3 = hourlyObj3.getJSONObject("wind");
-            String hdeg3 = hwindObj3.getString("deg");
-            String hdir3 = hwindObj3.getString("dir");
-            String hsc3 = hwindObj3.getString("sc");
-            String hspd3 = hwindObj3.getString("spd");
+//            JSONObject hourlyObj2 = hourlyArr.getJSONObject(1);
+//            
+//            String hdate2 = hourlyObj2.getString("date");
+//            String hhum2 = hourlyObj2.getString("hum");
+//            String hpop2 = hourlyObj2.getString("pop");
+//            String hpres2 = hourlyObj2.getString("pres");
+//            String htmp2 = hourlyObj2.getString("tmp");
+//            
+//            JSONObject hwindObj2 = hourlyObj2.getJSONObject("wind");
+//            String hdeg2 = hwindObj2.getString("deg");
+//            String hdir2 = hwindObj2.getString("dir");
+//            String hsc2 = hwindObj2.getString("sc");
+//            String hspd2 = hwindObj2.getString("spd");
+//            
+//            
+//            JSONObject hourlyObj3 = hourlyArr.getJSONObject(2);
+//            
+//            String hdate3 = hourlyObj3.getString("date");
+//            String hhum3 = hourlyObj3.getString("hum");
+//            String hpop3 = hourlyObj3.getString("pop");
+//            String hpres3 = hourlyObj3.getString("pres");
+//            String htmp3 = hourlyObj3.getString("tmp");
+//            
+//            JSONObject hwindObj3 = hourlyObj3.getJSONObject("wind");
+//            String hdeg3 = hwindObj3.getString("deg");
+//            String hdir3 = hwindObj3.getString("dir");
+//            String hsc3 = hwindObj3.getString("sc");
+//            String hspd3 = hwindObj3.getString("spd");
             
             
             JSONObject nowObj = weaObj.getJSONObject("now");
@@ -498,9 +509,7 @@ public class JsonDaoPro {
             		sr5, ss5, code_d5, code_n5, txt_d5, txt_n5, date5, hum5, pcpn5, pop5, pres5, max5, min5, vis5, deg5, dir5, sc5, spd5, 
             		sr6, ss6, code_d6, code_n6, txt_d6, txt_n6, date6, hum6, pcpn6, pop6, pres6, max6, min6, vis6, deg6, dir6, sc6, spd6, 
             		sr7, ss7, code_d7, code_n7, txt_d7, txt_n7, date7, hum7, pcpn7, pop7, pres7, max7, min7, vis7, deg7, dir7, sc7, spd7, 
-            		hdate1, hhum1, hpop1, hpres1, htmp1, hdeg1, hdir1, hsc1, hspd1, 
-            		hdate2, hhum2, hpop2, hpres2, htmp2, hdeg2, hdir2, hsc2, hspd2, 
-            		hdate3, hhum3, hpop3, hpres3, htmp3, hdeg3, hdir3, hsc3, hspd3, 
+            		hdate1, hhum1, hpop1, hpres1, htmp1, hdeg1, hdir1, hsc1, hspd1,
             		ncode, ntxt, nfl, nhum, npcpn, npres, ntmp, nvis, ndeg, ndir, nsc, nspd, status, 
             		brf1, txt1, brf2, txt2, brf3, txt3, brf4, txt4, brf5, txt5, brf6, txt6, brf7, txt7);
             System.out.println("parse finished");
