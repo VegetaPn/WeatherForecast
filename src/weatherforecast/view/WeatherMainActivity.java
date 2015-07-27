@@ -277,10 +277,14 @@ public class WeatherMainActivity extends BaseActivity {
     				public void run() {
     					// TODO Auto-generated method stub
     					System.out.println("code"+myListener.getErrcode());
-    					if(myListener.getErrcode()!=-1&&iflocate==false)
+    					if(myListener.getErrcode()==161&&iflocate==false)
     					{
     						handler.sendEmptyMessage(0);
-    					}	
+    					}else if(myListener.getErrcode()!=-1&&myListener.getErrcode()!=161)
+    					{
+    						mLocationClient.start(); 
+    						mLocationClient.requestLocation();
+    					}
     				}
     			};
 		handler=new android.os.Handler()
@@ -293,10 +297,12 @@ public class WeatherMainActivity extends BaseActivity {
 				if(msg.what==0)
 				{
 			    	
+					System.out.println(myListener.getDistrictName());
 					City_ID list=CityDao.getCurrentCityID(myListener.getDistrictName());
 					CityWeather cityWeather = JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(list.getId()+""));
 					if(cityWeather!=null)
 					{
+						System.out.println("hhahhahha");
 						Calendar cal = Calendar.getInstance();
 						int nowID;
 						if(5<cal.get(Calendar.HOUR_OF_DAY)&&cal.get(Calendar.HOUR_OF_DAY)<21)
@@ -366,9 +372,13 @@ public class WeatherMainActivity extends BaseActivity {
 			public void run() {
 				// TODO Auto-generated method stub
 				
-				if(myListener.getErrcode()!=-1)
+				if(myListener.getErrcode()==161)
 				{
 					handler.sendEmptyMessage(0x123);
+				}else if(myListener.getErrcode()!=-1&&myListener.getErrcode()!=161)
+				{
+					mLocationClient.start(); 
+					mLocationClient.requestLocation();
 				}
 			}
 		}, 0, 3600000);

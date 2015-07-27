@@ -64,43 +64,43 @@ public class WeatherWidgetB extends AppWidgetProvider{
 		//声明romoteviews
 		RemoteViews  rViews=new RemoteViews(context.getPackageName(), R.layout.widget_layout_big);
 		
-		ArrayList<City_ID> list=CityDao.getIDByName("海淀");
-		CityWeather cityWeather = JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(list.get(0).getId()+""));
-		
-		if(cityWeather!=null)
-		{
-			Calendar cal = Calendar.getInstance();
-			int nowID,tomorrowID,tomorrowID2,tomorrowID3;
-			//System.out.println("小时数："+cal.get(Calendar.HOUR_OF_DAY));
-			if(5<cal.get(Calendar.HOUR_OF_DAY)&&cal.get(Calendar.HOUR_OF_DAY)<21)
-			{
-				nowID=context.getResources().getIdentifier("d"+cityWeather.getCode_d1(),"drawable", context.getPackageName());
-				tomorrowID=context.getResources().getIdentifier("d"+cityWeather.getCode_d2(),"drawable", context.getPackageName());
-				tomorrowID2=context.getResources().getIdentifier("d"+cityWeather.getCode_d3(),"drawable", context.getPackageName());
-				tomorrowID3=context.getResources().getIdentifier("d"+cityWeather.getCode_d4(),"drawable", context.getPackageName());
-			}else
-			{
-				
-				nowID=context.getResources().getIdentifier("n"+cityWeather.getCode_n1(),"drawable", context.getPackageName());
-				tomorrowID=context.getResources().getIdentifier("n"+cityWeather.getCode_n2(),"drawable", context.getPackageName());
-				tomorrowID2=context.getResources().getIdentifier("n"+cityWeather.getCode_n3(),"drawable", context.getPackageName());
-				tomorrowID3=context.getResources().getIdentifier("n"+cityWeather.getCode_n4(),"drawable", context.getPackageName());
-			}
-			
-			rViews.setImageViewResource(R.id.imageViewwidgetbigtoday, nowID);
-			rViews.setImageViewResource(R.id.imageViewwidgetbigtomorrow, tomorrowID);
-			rViews.setImageViewResource(R.id.imageViewwidgetbigtomorrow2, tomorrowID2);
-			rViews.setImageViewResource(R.id.imageViewwidgetbigtomorrow3, tomorrowID3);
-			
-			rViews.setTextViewText(R.id.bigwidgetTextviewtempNow, cityWeather.getNtmp()+"° ");
-			rViews.setTextViewText(R.id.bigwidgetTextviewtemp, cityWeather.getMax1()+"°/"+cityWeather.getMin1()+"°");
-			rViews.setTextViewText(R.id.bigwidgetTextviewtempdes, cityWeather.getNtxt());
-			rViews.setTextViewText(R.id.bigwidgetTextviewlocation, cityWeather.getCity());
-			rViews.setTextViewText(R.id.bigwidgetTextviewtomorrowtemp, cityWeather.getMax2()+"°/"+cityWeather.getMin2()+"°");
-			rViews.setTextViewText(R.id.bigwidgetTextviewtomorrowtemp2, cityWeather.getMax3()+"°/"+cityWeather.getMin3()+"°");
-			rViews.setTextViewText(R.id.bigwidgetTextviewtomorrowtemp3, cityWeather.getMax4()+"°/"+cityWeather.getMin4()+"°");
-			
-		}
+//		ArrayList<City_ID> list=CityDao.getIDByName("海淀");
+//		CityWeather cityWeather = JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(list.get(0).getId()+""));
+//		
+//		if(cityWeather!=null)
+//		{
+//			Calendar cal = Calendar.getInstance();
+//			int nowID,tomorrowID,tomorrowID2,tomorrowID3;
+//			//System.out.println("小时数："+cal.get(Calendar.HOUR_OF_DAY));
+//			if(5<cal.get(Calendar.HOUR_OF_DAY)&&cal.get(Calendar.HOUR_OF_DAY)<21)
+//			{
+//				nowID=context.getResources().getIdentifier("d"+cityWeather.getCode_d1(),"drawable", context.getPackageName());
+//				tomorrowID=context.getResources().getIdentifier("d"+cityWeather.getCode_d2(),"drawable", context.getPackageName());
+//				tomorrowID2=context.getResources().getIdentifier("d"+cityWeather.getCode_d3(),"drawable", context.getPackageName());
+//				tomorrowID3=context.getResources().getIdentifier("d"+cityWeather.getCode_d4(),"drawable", context.getPackageName());
+//			}else
+//			{
+//				
+//				nowID=context.getResources().getIdentifier("n"+cityWeather.getCode_n1(),"drawable", context.getPackageName());
+//				tomorrowID=context.getResources().getIdentifier("n"+cityWeather.getCode_n2(),"drawable", context.getPackageName());
+//				tomorrowID2=context.getResources().getIdentifier("n"+cityWeather.getCode_n3(),"drawable", context.getPackageName());
+//				tomorrowID3=context.getResources().getIdentifier("n"+cityWeather.getCode_n4(),"drawable", context.getPackageName());
+//			}
+//			
+//			rViews.setImageViewResource(R.id.imageViewwidgetbigtoday, nowID);
+//			rViews.setImageViewResource(R.id.imageViewwidgetbigtomorrow, tomorrowID);
+//			rViews.setImageViewResource(R.id.imageViewwidgetbigtomorrow2, tomorrowID2);
+//			rViews.setImageViewResource(R.id.imageViewwidgetbigtomorrow3, tomorrowID3);
+//			
+//			rViews.setTextViewText(R.id.bigwidgetTextviewtempNow, cityWeather.getNtmp()+"° ");
+//			rViews.setTextViewText(R.id.bigwidgetTextviewtemp, cityWeather.getMax1()+"°/"+cityWeather.getMin1()+"°");
+//			rViews.setTextViewText(R.id.bigwidgetTextviewtempdes, cityWeather.getNtxt());
+//			rViews.setTextViewText(R.id.bigwidgetTextviewlocation, cityWeather.getCity());
+//			rViews.setTextViewText(R.id.bigwidgetTextviewtomorrowtemp, cityWeather.getMax2()+"°/"+cityWeather.getMin2()+"°");
+//			rViews.setTextViewText(R.id.bigwidgetTextviewtomorrowtemp2, cityWeather.getMax3()+"°/"+cityWeather.getMin3()+"°");
+//			rViews.setTextViewText(R.id.bigwidgetTextviewtomorrowtemp3, cityWeather.getMax4()+"°/"+cityWeather.getMin4()+"°");
+//			
+//		}
 		
 		Date now = new Date(); 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");//获得当前时间
@@ -193,7 +193,7 @@ public class WeatherWidgetB extends AppWidgetProvider{
 				{
 					rViews.setTextViewText(R.id.bigwidgetTextviewschedule, "您今日暂无行程");
 				}
-				if(iflocate==false)
+				if(iflocate==false&&myListener.getErrcode()==161)
 				{
 					// 
 					City_ID list=CityDao.getCurrentCityID(myListener.getDistrictName());
@@ -292,7 +292,11 @@ public class WeatherWidgetB extends AppWidgetProvider{
 					
 				}
 				
-				
+				if(myListener.getErrcode()!=161&&iflocate==false)
+				{
+					mLocationClient.start(); 
+					mLocationClient.requestLocation();
+				}
 			}
 		}, 0, 1000);
 		
