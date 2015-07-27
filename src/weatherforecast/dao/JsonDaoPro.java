@@ -35,7 +35,7 @@ public class JsonDaoPro {
 	private final static String appkey = "a2258557594344cd90cb1592e4602da9";
 	private static String preurl = "https://api.heweather.com/x3/weather?cityid=CN";		// 请求网址的前部分
 	private static CityWeather cityWeather = null; 											// 返回的对象
-    private volatile static String strResult = "";											// JSON结果字符串
+    private volatile static String strResult = null;											// JSON结果字符串
     private static Thread thread;															// 线程——请求操作必须在线程中进行
     
     public static String getWeatherJSON(String cityID) {
@@ -48,7 +48,9 @@ public class JsonDaoPro {
 			e.printStackTrace();
 			return null;
 		}
-		return (strResult);
+		String jsonResult = strResult;
+		strResult = null;
+		return (jsonResult);
 	}
         
     /**
