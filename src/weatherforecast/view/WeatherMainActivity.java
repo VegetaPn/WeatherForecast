@@ -3,14 +3,25 @@ package weatherforecast.view;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import weatherforecast.dao.CityDao;
+import weatherforecast.dao.JsonDaoPro;
+import weatherforecast.model.CityWeather;
 import weatherforecast.model.City_ID;
+import weatherforecast.service.MyLocationListener;
 import weatherforecast.util.CreateDB;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -21,8 +32,11 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RemoteViews;
 import android.widget.ScrollView;
 
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 public class WeatherMainActivity extends BaseActivity {
@@ -32,13 +46,32 @@ public class WeatherMainActivity extends BaseActivity {
 	ScrollView scrl;
 	ArrayList<Fragment> mFragments;
 	WeatherPagerAdapter adapter;
-	
+	private LocationClient mLocationClient;
+	private MyLocationListener myListener;
+	private  Timer timer,timer2;
+	private boolean iflocate=false;
+	private RemoteViews remoteViews;
+	private Notification notification;
+	private android.os.Handler handler;
+	private NotificationManager nManager;
+	private PendingIntent pIntent;
+	private TimerTask task;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		myListener = new MyLocationListener();
+		LocationClientOption option = new LocationClientOption(); 
+		option.setIsNeedAddress(true);
+		mLocationClient=new LocationClient(WeatherMainActivity.this);
+		mLocationClient.setLocOption(option);
+		mLocationClient.registerLocationListener( myListener );				//注册监听函数
+		mLocationClient.start(); 
+		mLocationClient.requestLocation();
+		
 		mFragments=new ArrayList<Fragment>();
 		initDB();
+				
 		getSupportActionBar().hide();
 		vp = new ViewPager(this);
 		vp.setId("VP".hashCode());
@@ -56,6 +89,11 @@ public class WeatherMainActivity extends BaseActivity {
 		.commit();
 		vp.setCurrentItem(0);//璁剧疆鍚姩椤甸潰
 		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+		
+		//通知栏
+		initNotification();
+		
+		
 	}
 	
 	private void setViewPagerScrollSpeed(ViewPager vp){  
@@ -198,4 +236,142 @@ public class WeatherMainActivity extends BaseActivity {
 		
 		
 	}
+    
+    private void initNotification(){
+    	
+    	
+    	
+    	nManager=(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    	Intent intent=new Intent(this,WeatherMainActivity.class);
+    	pIntent=PendingIntent.getActivity(WeatherMainActivity.this, 0, intent, 0);
+    	notification=new Notification();
+    	
+    	remoteViews=new RemoteViews(getPackageName(),R.layout.notification_layout);
+    	
+//    	ArrayList<City_ID> list=CityDao.getIDByName("烟台");
+//		CityWeather cityWeather = JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(list.get(0).getId()+""));
+    	
+
+//		if(cityWeather!=null)
+//		{
+//			Calendar cal = Calendar.getInstance();
+//			int nowID;
+//			if(5<cal.get(Calendar.HOUR_OF_DAY)&&cal.get(Calendar.HOUR_OF_DAY)<21)
+//			{
+//				nowID=WeatherMainActivity.this.getResources().getIdentifier("d"+cityWeather.getCode_d1(),"drawable", WeatherMainActivity.this.getPackageName());	
+//			}else
+//			{
+//				
+//				nowID=WeatherMainActivity.this.getResources().getIdentifier("n"+cityWeather.getCode_n1(),"drawable", WeatherMainActivity.this.getPackageName());
+//			}
+//			remoteViews.setImageViewResource(R.id.imageViewNotification, nowID);
+//			remoteViews.setTextViewText(R.id.textViewNotificationTemNow, cityWeather.getNtmp()+"℃");
+//			remoteViews.setTextViewText(R.id.textViewNotificationTem, cityWeather.getMax1()+"°~"+cityWeather.getMin1()+"°");
+//			remoteViews.setTextViewText(R.id.textViewNotificationLoc,cityWeather.getCity()+"   ");
+//			notification.icon=nowID;
+//	    	notification.tickerText="今日温度："+cityWeather.getNtmp()+"℃";
+//		}
+    	task=new TimerTask() {
+    				
+    				@Override
+    				public void run() {
+    					// TODO Auto-generated method stub
+    					System.out.println("code"+myListener.getErrcode());
+    					if(myListener.getErrcode()!=-1&&iflocate==false)
+    					{
+    						handler.sendEmptyMessage(0);
+    					}	
+    				}
+    			};
+		handler=new android.os.Handler()
+		 {
+			 @Override
+			public void handleMessage(Message msg) {
+				// TODO Auto-generated method stub
+				super.handleMessage(msg);
+				
+				if(msg.what==0)
+				{
+			    	
+					City_ID list=CityDao.getCurrentCityID(myListener.getDistrictName());
+					CityWeather cityWeather = JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(list.getId()+""));
+					if(cityWeather!=null)
+					{
+						Calendar cal = Calendar.getInstance();
+						int nowID;
+						if(5<cal.get(Calendar.HOUR_OF_DAY)&&cal.get(Calendar.HOUR_OF_DAY)<21)
+						{
+							nowID=WeatherMainActivity.this.getResources().getIdentifier("d"+cityWeather.getCode_d1(),"drawable", WeatherMainActivity.this.getPackageName());	
+						}else
+						{
+							
+							nowID=WeatherMainActivity.this.getResources().getIdentifier("n"+cityWeather.getCode_n1(),"drawable", WeatherMainActivity.this.getPackageName());
+						}
+						remoteViews.setImageViewResource(R.id.imageViewNotification, nowID);
+						remoteViews.setTextViewText(R.id.textViewNotificationTemNow, cityWeather.getNtmp()+"℃");
+						remoteViews.setTextViewText(R.id.textViewNotificationTem, cityWeather.getMax1()+"°~"+cityWeather.getMin1()+"°");
+						remoteViews.setTextViewText(R.id.textViewNotificationLoc,cityWeather.getCity()+"   ");
+						notification.icon=nowID;
+				    	notification.tickerText="今日温度："+cityWeather.getNtmp()+"℃";
+				    	notification.contentView=remoteViews;
+				    	notification.contentIntent=pIntent;
+				    	notification.flags |= Notification.FLAG_ONGOING_EVENT; 
+				    	nManager.notify(0, notification);
+				    	iflocate=true;
+				    	task.cancel();
+					}
+					
+					
+				}else if(msg.what==0x123)
+				{
+					
+					City_ID list=CityDao.getCurrentCityID(myListener.getDistrictName());
+					CityWeather cityWeather = JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(list.getId()+""));
+					if(cityWeather!=null)
+					{
+						Calendar cal = Calendar.getInstance();
+						int nowID;
+						if(5<cal.get(Calendar.HOUR_OF_DAY)&&cal.get(Calendar.HOUR_OF_DAY)<21)
+						{
+							nowID=WeatherMainActivity.this.getResources().getIdentifier("d"+cityWeather.getCode_d1(),"drawable", WeatherMainActivity.this.getPackageName());	
+						}else
+						{
+							
+							nowID=WeatherMainActivity.this.getResources().getIdentifier("n"+cityWeather.getCode_n1(),"drawable", WeatherMainActivity.this.getPackageName());
+						}
+						remoteViews.setImageViewResource(R.id.imageViewNotification, nowID);
+						remoteViews.setTextViewText(R.id.textViewNotificationTemNow, cityWeather.getNtmp()+"℃");
+						remoteViews.setTextViewText(R.id.textViewNotificationTem, cityWeather.getMax1()+"°~"+cityWeather.getMin1()+"°");
+						remoteViews.setTextViewText(R.id.textViewNotificationLoc,cityWeather.getCity()+"   ");
+						notification.icon=nowID;
+				    	notification.tickerText="今日温度："+cityWeather.getNtmp()+"℃";
+				    	notification.contentView=remoteViews;
+				    	notification.contentIntent=pIntent;
+				    	notification.flags |= Notification.FLAG_ONGOING_EVENT; 
+				    	nManager.notify(0, notification);
+					}
+				}
+			}
+		 };
+		 
+		 
+	   
+		timer=new Timer();
+		timer.schedule(task,0, 5000);
+		
+		timer2=new Timer();
+		timer2.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+				if(myListener.getErrcode()!=-1)
+				{
+					handler.sendEmptyMessage(0x123);
+				}
+			}
+		}, 0, 3600000);
+		 
+    }
 }
