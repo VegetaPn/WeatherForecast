@@ -53,15 +53,13 @@ public class CityWeather {
     private String sr6, ss6, code_d6, code_n6, txt_d6, txt_n6, date6, hum6, pcpn6, pop6, pres6, max6, min6, vis6, deg6, dir6, sc6, spd6;
     private String sr7, ss7, code_d7, code_n7, txt_d7, txt_n7, date7, hum7, pcpn7, pop7, pres7, max7, min7, vis7, deg7, dir7, sc7, spd7;
     private String hdate1, hhum1, hpop1, hpres1, htmp1, hdeg1, hdir1, hsc1, hspd1;
-    private String hdate2, hhum2, hpop2, hpres2, htmp2, hdeg2, hdir2, hsc2, hspd2;
-    private String hdate3, hhum3, hpop3, hpres3, htmp3, hdeg3, hdir3, hsc3, hspd3;
+//    private String hdate2, hhum2, hpop2, hpres2, htmp2, hdeg2, hdir2, hsc2, hspd2;
+//    private String hdate3, hhum3, hpop3, hpres3, htmp3, hdeg3, hdir3, hsc3, hspd3;
     private String ncode, ntxt, nfl, nhum, npcpn, npres, ntmp, nvis, ndeg, ndir, nsc, nspd;
     private String status;
     private String brf1, txt1, brf2, txt2, brf3, txt3, brf4, txt4, brf5, txt5, brf6, txt6, brf7, txt7;
     
     
-    
-
 
 	public CityWeather(String aqi, String pm10, String pm25, String qlty,
 			String city, String cnty, String id, String lat, String lon,
@@ -95,17 +93,12 @@ public class CityWeather {
 			String min7, String vis7, String deg7, String dir7, String sc7,
 			String spd7, String hdate1, String hhum1, String hpop1,
 			String hpres1, String htmp1, String hdeg1, String hdir1,
-			String hsc1, String hspd1, String hdate2, String hhum2,
-			String hpop2, String hpres2, String htmp2, String hdeg2,
-			String hdir2, String hsc2, String hspd2, String hdate3,
-			String hhum3, String hpop3, String hpres3, String htmp3,
-			String hdeg3, String hdir3, String hsc3, String hspd3,
-			String ncode, String ntxt, String nfl, String nhum, String npcpn,
-			String npres, String ntmp, String nvis, String ndeg, String ndir,
-			String nsc, String nspd, String status, String brf1, String txt1,
-			String brf2, String txt2, String brf3, String txt3, String brf4,
-			String txt4, String brf5, String txt5, String brf6, String txt6,
-			String brf7, String txt7) {
+			String hsc1, String hspd1, String ncode, String ntxt, String nfl,
+			String nhum, String npcpn, String npres, String ntmp, String nvis,
+			String ndeg, String ndir, String nsc, String nspd, String status,
+			String brf1, String txt1, String brf2, String txt2, String brf3,
+			String txt3, String brf4, String txt4, String brf5, String txt5,
+			String brf6, String txt6, String brf7, String txt7) {
 		super();
 		this.aqi = aqi;
 		this.pm10 = pm10;
@@ -253,24 +246,6 @@ public class CityWeather {
 		this.hdir1 = hdir1;
 		this.hsc1 = hsc1;
 		this.hspd1 = hspd1;
-		this.hdate2 = hdate2;
-		this.hhum2 = hhum2;
-		this.hpop2 = hpop2;
-		this.hpres2 = hpres2;
-		this.htmp2 = htmp2;
-		this.hdeg2 = hdeg2;
-		this.hdir2 = hdir2;
-		this.hsc2 = hsc2;
-		this.hspd2 = hspd2;
-		this.hdate3 = hdate3;
-		this.hhum3 = hhum3;
-		this.hpop3 = hpop3;
-		this.hpres3 = hpres3;
-		this.htmp3 = htmp3;
-		this.hdeg3 = hdeg3;
-		this.hdir3 = hdir3;
-		this.hsc3 = hsc3;
-		this.hspd3 = hspd3;
 		this.ncode = ncode;
 		this.ntxt = ntxt;
 		this.nfl = nfl;
@@ -1333,220 +1308,220 @@ public class CityWeather {
 
 
 
-
-
-	/**
-	 * @return the hdate2
-	 */
-	public String getHdate2() {
-		return hdate2;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the hhum2
-	 */
-	public String getHhum2() {
-		return hhum2;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the hpop2
-	 */
-	public String getHpop2() {
-		return hpop2;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the hpres2
-	 */
-	public String getHpres2() {
-		return hpres2;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the htmp2
-	 */
-	public String getHtmp2() {
-		return htmp2;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the hdeg2
-	 */
-	public String getHdeg2() {
-		return hdeg2;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the hdir2
-	 */
-	public String getHdir2() {
-		return hdir2;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the hsc2
-	 */
-	public String getHsc2() {
-		return hsc2;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the hspd2
-	 */
-	public String getHspd2() {
-		return hspd2;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the hdate3
-	 */
-	public String getHdate3() {
-		return hdate3;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the hhum3
-	 */
-	public String getHhum3() {
-		return hhum3;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the hpop3
-	 */
-	public String getHpop3() {
-		return hpop3;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the hpres3
-	 */
-	public String getHpres3() {
-		return hpres3;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the htmp3
-	 */
-	public String getHtmp3() {
-		return htmp3;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the hdeg3
-	 */
-	public String getHdeg3() {
-		return hdeg3;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the hdir3
-	 */
-	public String getHdir3() {
-		return hdir3;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the hsc3
-	 */
-	public String getHsc3() {
-		return hsc3;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the hspd3
-	 */
-	public String getHspd3() {
-		return hspd3;
-	}
-
-
+//
+//
+//	/**
+//	 * @return the hdate2
+//	 */
+//	public String getHdate2() {
+//		return hdate2;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the hhum2
+//	 */
+//	public String getHhum2() {
+//		return hhum2;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the hpop2
+//	 */
+//	public String getHpop2() {
+//		return hpop2;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the hpres2
+//	 */
+//	public String getHpres2() {
+//		return hpres2;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the htmp2
+//	 */
+//	public String getHtmp2() {
+//		return htmp2;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the hdeg2
+//	 */
+//	public String getHdeg2() {
+//		return hdeg2;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the hdir2
+//	 */
+//	public String getHdir2() {
+//		return hdir2;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the hsc2
+//	 */
+//	public String getHsc2() {
+//		return hsc2;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the hspd2
+//	 */
+//	public String getHspd2() {
+//		return hspd2;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the hdate3
+//	 */
+//	public String getHdate3() {
+//		return hdate3;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the hhum3
+//	 */
+//	public String getHhum3() {
+//		return hhum3;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the hpop3
+//	 */
+//	public String getHpop3() {
+//		return hpop3;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the hpres3
+//	 */
+//	public String getHpres3() {
+//		return hpres3;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the htmp3
+//	 */
+//	public String getHtmp3() {
+//		return htmp3;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the hdeg3
+//	 */
+//	public String getHdeg3() {
+//		return hdeg3;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the hdir3
+//	 */
+//	public String getHdir3() {
+//		return hdir3;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the hsc3
+//	 */
+//	public String getHsc3() {
+//		return hsc3;
+//	}
+//
+//
+//
+//
+//
+//
+//	/**
+//	 * @return the hspd3
+//	 */
+//	public String getHspd3() {
+//		return hspd3;
+//	}
+//
+//
 
 
 
