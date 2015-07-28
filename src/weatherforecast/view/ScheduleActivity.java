@@ -9,7 +9,6 @@ import java.util.TimeZone;
 import com.umeng.analytics.MobclickAgent;
 
 
-import weatherforecast.service.GetDateTime;
 import weatherforecast.util.ScheduleDBHelper;
 import android.R.integer;
 import android.app.Activity;
