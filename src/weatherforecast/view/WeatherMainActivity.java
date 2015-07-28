@@ -2,6 +2,7 @@ package weatherforecast.view;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Timer;
@@ -56,6 +57,7 @@ public class WeatherMainActivity extends BaseActivity {
 	private NotificationManager nManager;
 	private PendingIntent pIntent;
 	private TimerTask task;
+	private int cityId=0;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -238,6 +240,8 @@ public class WeatherMainActivity extends BaseActivity {
 	}
     
     private void initNotification(){
+
+    
     	
     	
     	
@@ -248,29 +252,6 @@ public class WeatherMainActivity extends BaseActivity {
     	
     	remoteViews=new RemoteViews(getPackageName(),R.layout.notification_layout);
     	
-//    	ArrayList<City_ID> list=CityDao.getIDByName("烟台");
-//		CityWeather cityWeather = JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(list.get(0).getId()+""));
-    	
-
-//		if(cityWeather!=null)
-//		{
-//			Calendar cal = Calendar.getInstance();
-//			int nowID;
-//			if(5<cal.get(Calendar.HOUR_OF_DAY)&&cal.get(Calendar.HOUR_OF_DAY)<21)
-//			{
-//				nowID=WeatherMainActivity.this.getResources().getIdentifier("d"+cityWeather.getCode_d1(),"drawable", WeatherMainActivity.this.getPackageName());	
-//			}else
-//			{
-//				
-//				nowID=WeatherMainActivity.this.getResources().getIdentifier("n"+cityWeather.getCode_n1(),"drawable", WeatherMainActivity.this.getPackageName());
-//			}
-//			remoteViews.setImageViewResource(R.id.imageViewNotification, nowID);
-//			remoteViews.setTextViewText(R.id.textViewNotificationTemNow, cityWeather.getNtmp()+"℃");
-//			remoteViews.setTextViewText(R.id.textViewNotificationTem, cityWeather.getMax1()+"°~"+cityWeather.getMin1()+"°");
-//			remoteViews.setTextViewText(R.id.textViewNotificationLoc,cityWeather.getCity()+"   ");
-//			notification.icon=nowID;
-//	    	notification.tickerText="今日温度："+cityWeather.getNtmp()+"℃";
-//		}
     	task=new TimerTask() {
     				
     				@Override
@@ -300,6 +281,7 @@ public class WeatherMainActivity extends BaseActivity {
 					CityWeather cityWeather = null;
 					System.out.println(myListener.getDistrictName());
 					City_ID list=CityDao.getCurrentCityID(myListener.getDistrictName());
+					cityId=list.getId();
 					String jsonString=JsonDaoPro.getWeatherJSON(list.getId()+"");
 					if(jsonString!=null)
 					{
@@ -390,5 +372,10 @@ public class WeatherMainActivity extends BaseActivity {
 			}
 		}, 0, 3600000);
 		 
+    }
+    
+    public  int getCityId()
+    {
+    	return cityId;
     }
 }

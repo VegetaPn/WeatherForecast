@@ -66,30 +66,9 @@ public class WeatherWidget extends AppWidgetProvider{
 		mLocationClient.requestLocation();
 		iflocate=false;	     
 	     
-//		ArrayList<City_ID> list=CityDao.getIDByName("海淀");
-//		CityWeather cityWeather = JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(list.get(0).getId()+""));
 //		//设置remoteVeiw
 		RemoteViews rViews=new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-//		if(cityWeather!=null)
-//		{
-//			Calendar cal = Calendar.getInstance();
-//			int nowID;
-//			if(5<cal.get(Calendar.HOUR_OF_DAY)&&cal.get(Calendar.HOUR_OF_DAY)<21)
-//			{
-//				nowID=context.getResources().getIdentifier("d"+cityWeather.getCode_d1(),"drawable", context.getPackageName());	
-//			}else
-//			{
-//				
-//				nowID=context.getResources().getIdentifier("n"+cityWeather.getCode_n1(),"drawable", context.getPackageName());
-//			}
-//			rViews.setImageViewResource(R.id.imageView_widgetlayout, nowID);
-//			rViews.setTextViewText(R.id.textViewWidgetTempNow, cityWeather.getNtmp()+"°");
-//			rViews.setTextViewText(R.id.textViewWidgetTemp, cityWeather.getMax1()+"°/"+cityWeather.getMin1()+"°");
-//			rViews.setTextViewText(R.id.widgetTextviewCity,cityWeather.getCity());
-//			rViews.setTextViewText(R.id.textViewWidgetWeather,cityWeather.getNtxt());
-//			rViews.setTextViewText(R.id.textViewWidgetIndex,"空气质量指数:"+cityWeather.getAqi()+"\nPM2.5:"+cityWeather.getPm25());
-//			
-//		}
+
 				
 		Date now = new Date(); 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");//获得当前时间
