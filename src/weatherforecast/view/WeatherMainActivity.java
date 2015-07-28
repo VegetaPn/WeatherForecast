@@ -29,9 +29,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RemoteViews;
 import android.widget.ScrollView;
@@ -89,7 +87,7 @@ public class WeatherMainActivity extends BaseActivity {
 		.beginTransaction()
 		.replace(R.id.menu_frame, new CityListFragment(myDbHelper,getSlidingMenu()))
 		.commit();
-		vp.setCurrentItem(0);//设置启动页面
+		vp.setCurrentItem(0);
 		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 		
 		//֪ͨ��
@@ -168,7 +166,7 @@ public class WeatherMainActivity extends BaseActivity {
 		@Override
 		public Object instantiateItem(ViewGroup container,int position) {
 
-			//得到缓存的fragment
+
 		    Fragment fragment = (Fragment)super.instantiateItem(container,position);
 		    System.out.println("instantiate:"+fragment.getTag());
 		    if(fragment.getTag() != mFragments.get(position).getTag()){
@@ -176,10 +174,10 @@ public class WeatherMainActivity extends BaseActivity {
 			    
 			    String preTag = fragment.getTag(); 
 			    
-			    //移除旧的fragment
+
 			    ft.remove(fragment);
 			    fragment=mFragments.get(position);
-			    //换成新的fragment
+
 			    ft.add(container.getId(), fragment, preTag);
 			    ft.attach(fragment);
 			    ft.commit();
