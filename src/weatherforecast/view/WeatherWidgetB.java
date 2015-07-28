@@ -196,8 +196,15 @@ public class WeatherWidgetB extends AppWidgetProvider{
 				if(iflocate==false&&myListener.getErrcode()==161)
 				{
 					// 
+					CityWeather cityWeather = null;
+					System.out.println(myListener.getDistrictName());
 					City_ID list=CityDao.getCurrentCityID(myListener.getDistrictName());
-					CityWeather cityWeather = JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(list.getId()+""));
+					String jsonString=JsonDaoPro.getWeatherJSON(list.getId()+"");
+					if(jsonString!=null)
+					{
+						cityWeather = JsonDaoPro.parseJson(jsonString);
+						
+					}
 					if(cityWeather!=null)
 					{
 						Calendar cal = Calendar.getInstance();

@@ -43,13 +43,18 @@ import lecho.lib.hellocharts.view.LineChartView;
 
 import com.baoyz.widget.PullRefreshLayout;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
 
 import weatherforecast.dao.*;
 import weatherforecast.model.CityWeather;
 import weatherforecast.util.CreateDB;
 
 public class WeatherHomeFragment extends Fragment {
-
+	UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 	private int cityId;
 	CreateDB myDbHelper;
 	ScrollView scrl;
@@ -79,6 +84,9 @@ public class WeatherHomeFragment extends Fragment {
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(R.layout.weather_home_fragment, container, false);
+		String jsonData=getJson(true);
+		
+		final CityWeather cityWeather=JsonDaoPro.parseJson(jsonData);
 		
 		ImageButton menu=(ImageButton)v.findViewById(R.id.imageButton1);
 		menu.setOnClickListener(new OnClickListener() {
@@ -106,7 +114,31 @@ public class WeatherHomeFragment extends Fragment {
                 });
             }
         });
-
+		ImageButton share=(ImageButton)v.findViewById(R.id.imageButton2);
+		mController.getConfig().setPlatforms(SHARE_MEDIA.SINA,SHARE_MEDIA.RENREN,
+				SHARE_MEDIA.QZONE,SHARE_MEDIA.SMS,SHARE_MEDIA.EMAIL);
+		
+		share.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				String str="#分享天气# 我的当前地点是 "+cityWeather.getCity()+",现在的温度是:"+cityWeather.getNtmp()
+						+"度，今日最高温度:"+cityWeather.getMax1()+"度，最低温度："+cityWeather.getMin1()+"度，"+cityWeather.getTxt1();
+				mController.setShareContent(str);
+				mController.openShare(getActivity(), new SnsPostListener() {
+					@Override
+					public void onStart() {
+					//分享开始
+					}
+					@Override
+					public void onComplete(SHARE_MEDIA platform, int eCode, SocializeEntity entity) {
+					//分享结束，eCode==200代表分享成功，非200代表分享失败
+					}
+					});
+			}
+		});
+		
 		initView(v,false);
 		return v;
 	}
@@ -119,7 +151,7 @@ public class WeatherHomeFragment extends Fragment {
 		        case msgKey1:
 		        	if(initView(getView(),true) == -1){
 		        		Toast toast=Toast.makeText((Activity)msg.obj, "咦？手机没信号了？", Toast.LENGTH_SHORT);
-		        		toast.show();
+		        	toast.show();
 		        	}
 		        	refreshView.setRefreshing(false);
 	            default:
