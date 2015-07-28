@@ -297,9 +297,16 @@ public class WeatherMainActivity extends BaseActivity {
 				if(msg.what==0)
 				{
 			    	
+					CityWeather cityWeather = null;
 					System.out.println(myListener.getDistrictName());
 					City_ID list=CityDao.getCurrentCityID(myListener.getDistrictName());
-					CityWeather cityWeather = JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(list.getId()+""));
+					String jsonString=JsonDaoPro.getWeatherJSON(list.getId()+"");
+					if(jsonString!=null)
+					{
+						cityWeather = JsonDaoPro.parseJson(jsonString);
+						
+					}		
+					
 					if(cityWeather!=null)
 					{
 						System.out.println("hhahhahha");
