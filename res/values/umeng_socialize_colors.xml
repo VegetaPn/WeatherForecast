@@ -14,6 +14,8 @@
 	<color name="umeng_socialize_grid_divider_line">#F8F8F8</color>
 	<color name="blueeee">#EEEEFF</color>
 	<color name="bluee">#495A80</color>
+	<color name="divider">#94b2f5</color>
 	<color name="whitee">#FFFFFF</color>
+	<color name="btn_pressed">#536794</color>
 	
 </resources>

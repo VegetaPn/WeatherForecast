@@ -227,16 +227,9 @@ public class WeatherHomeFragment extends Fragment {
 		scrl=(ScrollView)v.findViewById(R.id.scrollView1);
 		int screenHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
 		LinearLayout imagePanel;
-		Button aqi = (Button)v.findViewById(R.id.button_aqi);
 		imagePanel = (LinearLayout)v.findViewById(R.id.imagePanel);
 		LayoutParams p = imagePanel.getLayoutParams();
-		LayoutParams b = aqi.getLayoutParams();
-		int[] position=new int[2];
-		aqi.getLocationOnScreen(position);
 		p.height=screenHeight/2;
-		System.out.println("image height:"+p.height);
-		System.out.println("btn y:"+position[1]);
-		System.out.println("btn height:"+aqi.getMeasuredHeight());
 		imagePanel.setLayoutParams(p);
 		
 		initChart(v,cityWeather);
@@ -418,35 +411,33 @@ public class WeatherHomeFragment extends Fragment {
 			e.printStackTrace();
 		}
 		
-	//	image_zhishu1.setImageResource();
+		int screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+		LayoutParams lp=image_zhishu1.getLayoutParams();
+		lp.width=(int) (screenWidth/3*0.5);
+		lp.height=lp.width;
+		image_zhishu1.setLayoutParams(lp);
 		text_zhishu1_name.setText("穿衣");
 		text_zhishu1_content.setText(cityWeather.getBrf3());
-		System.out.println("穿衣:"+cityWeather.getBrf3());
 	
-	//	image_zhishu2.setImageResource();
+		image_zhishu2.setLayoutParams(lp);
 		text_zhishu2_name.setText("紫外线");
 		text_zhishu2_content.setText(cityWeather.getBrf7());
-		System.out.println("紫外线:"+cityWeather.getBrf7());
 		
-	//	image_zhishu3.setImageResource();
+		image_zhishu3.setLayoutParams(lp);
 		text_zhishu3_name.setText("洗车");
 		text_zhishu3_content.setText(cityWeather.getBrf2());
-		System.out.println("洗车:"+cityWeather.getBrf2());
 		
-	//	image_zhishu4.setImageResource();
+		image_zhishu4.setLayoutParams(lp);
 		text_zhishu4_name.setText("旅游");
 		text_zhishu4_content.setText(cityWeather.getBrf6());
-		System.out.println("旅游:"+cityWeather.getBrf6());
 		
-	//	image_zhishu5.setImageResource();
+		image_zhishu5.setLayoutParams(lp);
 		text_zhishu5_name.setText("感冒");
 		text_zhishu5_content.setText(cityWeather.getBrf4());
-		System.out.println("感冒:"+cityWeather.getBrf4());
 		
-	//	image_zhishu6.setImageResource();
+		image_zhishu6.setLayoutParams(lp);
 		text_zhishu6_name.setText("运动");
 		text_zhishu6_content.setText(cityWeather.getBrf5());
-		System.out.println("运动:"+cityWeather.getBrf5());
 		
 		return 0;
 	}
