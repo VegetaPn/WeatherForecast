@@ -119,6 +119,7 @@ public class WeatherHomeFragment extends Fragment {
 		        case msgKey1:
 		        	if(initView(getView(),true) == -1){
 		        		Toast toast=Toast.makeText((Activity)msg.obj, "咦？手机没信号了？", Toast.LENGTH_SHORT);
+		        		toast.show();
 		        	}
 		        	refreshView.setRefreshing(false);
 	            default:
