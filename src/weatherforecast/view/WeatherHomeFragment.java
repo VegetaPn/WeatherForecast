@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,10 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.database.SQLException;
 import android.graphics.Color;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,13 +29,13 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.TimerTask;
 
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
-import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.LineChartView;
 
 import com.baoyz.widget.PullRefreshLayout;
@@ -84,9 +81,7 @@ public class WeatherHomeFragment extends Fragment {
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(R.layout.weather_home_fragment, container, false);
-		String jsonData=getJson(true);
 		
-		final CityWeather cityWeather=JsonDaoPro.parseJson(jsonData);
 		
 		ImageButton menu=(ImageButton)v.findViewById(R.id.imageButton1);
 		menu.setOnClickListener(new OnClickListener() {
@@ -97,6 +92,12 @@ public class WeatherHomeFragment extends Fragment {
 				slide.showMenu();
 			}
 		});
+		scrl=(ScrollView)v.findViewById(R.id.scrollView1);
+		
+		if(cityId == 0){
+			scrl.setVisibility(View.GONE);
+			return v;
+		}
 		
 		refreshView = (PullRefreshLayout)v.findViewById(R.id.swipeRefreshLayout);
 		refreshView.setRefreshStyle(PullRefreshLayout.STYLE_WATER_DROP);
@@ -123,8 +124,10 @@ public class WeatherHomeFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				String str="#分享天气# 我的当前地点是 "+cityWeather.getCity()+",现在的温度是:"+cityWeather.getNtmp()
-						+"度，今日最高温度:"+cityWeather.getMax1()+"度，最低温度："+cityWeather.getMin1()+"度，"+cityWeather.getTxt1();
+				String jsonData=getJson(false);
+				CityWeather cityWeather=JsonDaoPro.parseJson(jsonData);
+				String str="#分享天气# 今天"+cityWeather.getCity()+",温度是:"+cityWeather.getNtmp()
+						+"度，最高温:"+cityWeather.getMax1()+"度，最低温："+cityWeather.getMin1()+"度，"+cityWeather.getTxt1();
 				mController.setShareContent(str);
 				mController.openShare(getActivity(), new SnsPostListener() {
 					@Override
@@ -149,10 +152,7 @@ public class WeatherHomeFragment extends Fragment {
     	    super.handleMessage(msg);
             switch(msg.what){
 		        case msgKey1:
-		        	if(initView(getView(),true) == -1){
-		        		Toast toast=Toast.makeText((Activity)msg.obj, "咦？手机没信号了？", Toast.LENGTH_SHORT);
-		        	toast.show();
-		        	}
+		        	( (WeatherMainActivity)getActivity() ).refreshFragments();
 		        	refreshView.setRefreshing(false);
 	            default:
 	                break;
@@ -248,15 +248,23 @@ public class WeatherHomeFragment extends Fragment {
 	    
 	}
 	
+	public int refreshView(){
+		int resault=0;
+		if(cityId != 0){
+			if(getView() != null)
+				resault=initView(getView(),true);
+			else
+				return -111;
+		}
+		return resault;
+	}
+	
 	private int initView(View v,boolean isRefresh){
-		TextView t;
-		TextView t1,t2;
 		String jsonData=getJson(isRefresh);
 		if(jsonData==null)
 			return -1;
 		CityWeather cityWeather=JsonDaoPro.parseJson(jsonData);
 		String span=getDateDifference();
-		scrl=(ScrollView)v.findViewById(R.id.scrollView1);
 		int screenHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
 		LinearLayout imagePanel;
 		imagePanel = (LinearLayout)v.findViewById(R.id.imagePanel);
@@ -474,13 +482,12 @@ public class WeatherHomeFragment extends Fragment {
 		return 0;
 	}
 	
-	private String setJson(int cityId){
+	public String setJson(int cityId,Activity mainActivity){
 		String name=String.valueOf(cityId);
 		String value=JsonDaoPro.getWeatherJSON(name);
-		System.out.println("json data:"+value);
 		if(value == null)
 			return null;
-		SharedPreferences mySharedPreferences= getActivity().getSharedPreferences("cityData",Activity.MODE_PRIVATE);
+		SharedPreferences mySharedPreferences= mainActivity.getSharedPreferences("cityData",Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = mySharedPreferences.edit();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String last=df.format(new Date());// new Date()为获取当前系统时间
@@ -493,8 +500,11 @@ public class WeatherHomeFragment extends Fragment {
 	public String getJson(boolean isRefresh){
 		SharedPreferences mySharedPreferences= getActivity().getSharedPreferences("cityData",Activity.MODE_PRIVATE); 
 		String jsonData=mySharedPreferences.getString(String.valueOf(cityId), "");
-		if(jsonData == "" || isRefresh)
-			jsonData=setJson(cityId);
+		System.out.println("local:"+jsonData);
+		if(jsonData == "" || isRefresh){
+			System.out.println("get json from server:"+cityId);
+			jsonData=setJson(cityId,getActivity());
+		}
 		return jsonData; 
 	}
 	

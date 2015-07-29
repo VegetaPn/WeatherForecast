@@ -3,6 +3,8 @@ package weatherforecast.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
@@ -20,6 +22,8 @@ import weatherforecast.util.CreateDB;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -37,6 +41,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class CityListFragment extends ListFragment {
@@ -44,6 +49,7 @@ public class CityListFragment extends ListFragment {
 	private ImageButton addCity;
 	private MyListAdapter<String> listAdapter;
 	private ArrayList<String> nameList;
+	private Handler locHandler;
 	SlidingMenu slide;
 	
 	public CityListFragment(CreateDB db,SlidingMenu slide) {
@@ -88,15 +94,14 @@ public class CityListFragment extends ListFragment {
 			            for (int position : reverseSortedPositions) {
 			            	listAdapter.remove(nameList.get(position));
 			            	WeatherMainActivity mainAct= (WeatherMainActivity) getActivity();
-			            	CityDao.deleteCity(mainAct.adapter.getIdAt(position));
-			    			mainAct.adapter.remove(position);
+			            	CityDao.deleteCity(mainAct.adapter.getIdAt(position+1));
+			    			mainAct.adapter.remove(position+1);
 			            }
 			        }
 			    }
 			);
 		swipeUndoAdapter.setAbsListView(dyList);
 		setListAdapter(swipeUndoAdapter);
-
 		dyList.enableSimpleSwipeUndo();
 	
 		addCity = (ImageButton)getActivity().findViewById(R.id.addCity);
@@ -111,6 +116,18 @@ public class CityListFragment extends ListFragment {
 			}
 			
 		});
+		
+		RelativeLayout btnLoc=(RelativeLayout) getView().findViewById(R.id.btnLocation);
+		btnLoc.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				switchFragment(0);
+			}
+		});
+		
+		this.startTimer();
 	}
 
 
@@ -126,14 +143,13 @@ public class CityListFragment extends ListFragment {
 			mainAct.getVp().setCurrentItem(mainAct.mFragments.indexOf(newPage),false);
 			nameList.add(CityDao.getCityByID(resultCode).getNamecn());
 			listAdapter.notifyDataSetChanged();
-			slide.showContent();
 		}
 	}
 
 	@Override
 	public void onListItemClick(ListView lv, View v, int position, long id) {
 
-		switchFragment(position);
+		switchFragment(position+1);
 	}
 	
 	// the meat of switching the above fragment
@@ -149,6 +165,7 @@ public class CityListFragment extends ListFragment {
 	}
 	
 	public class MyListAdapter<T> extends ArrayAdapter<T> implements UndoAdapter {
+
 		private final Context mContext;
 		
 		
@@ -179,5 +196,43 @@ public class CityListFragment extends ListFragment {
 	        return view;
 		}
 
+	}
+	
+	public void startTimer(){
+		final WeatherMainActivity mainActivity=(WeatherMainActivity)getActivity();
+		locHandler=new Handler(){
+
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO Auto-generated method stub
+				super.handleMessage(msg);
+				if(msg.what == 6666){
+					WeatherHomeFragment newPage = new WeatherHomeFragment(mainActivity.getLocId(),helper,slide);
+					mainActivity.mFragments.remove(0);
+					mainActivity.mFragments.add(0, newPage);
+					mainActivity.adapter.notifyDataSetChanged();
+					TextView locText=(TextView) getView().findViewById(R.id.textLocname);
+					locText.setText(CityDao.getCityByID(mainActivity.getLocId()).getNamecn());
+				}
+			}
+			
+		};
+		TimerTask task = new TimerTask() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				int locID=mainActivity.getLocId();
+				if(locID != 0){
+					Message msg = new Message();
+					msg.what = 6666;
+					locHandler.sendMessage(msg);
+					this.cancel();
+				}
+			}
+		};
+		
+		Timer timer = new Timer();
+		timer.schedule(task,0, 1000);
 	}
 }

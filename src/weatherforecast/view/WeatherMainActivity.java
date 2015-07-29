@@ -15,6 +15,7 @@ import weatherforecast.model.City_ID;
 import weatherforecast.service.MyLocationListener;
 import weatherforecast.util.CreateDB;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -33,6 +34,7 @@ import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.RemoteViews;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
@@ -55,7 +57,7 @@ public class WeatherMainActivity extends BaseActivity {
 	private NotificationManager nManager;
 	private PendingIntent pIntent;
 	private TimerTask task;
-	private int cityId=0;
+	private int locId=0;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -128,120 +130,26 @@ public class WeatherMainActivity extends BaseActivity {
         }
         
         ArrayList<City_ID> list = CityDao.showicity();
+        mFragments.add(new WeatherHomeFragment(0,myDbHelper,getSlidingMenu()));
 		for (City_ID city : list)
 			mFragments.add(new WeatherHomeFragment(city.getId(),myDbHelper,getSlidingMenu()));
 	}
 	
-	public ViewPager getVp(){
-		return this.vp;
-	}
-	
-	public class WeatherPagerAdapter extends FragmentPagerAdapter {
-		
-		private ArrayList<Fragment> mFragments;
-		private FragmentManager fm;
-		
-		public WeatherPagerAdapter(FragmentManager fm,ArrayList<Fragment> frag) {
-			super(fm);
-			this.mFragments=frag;
-			this.fm=fm;
+	public void refreshFragments(){
+		WeatherHomeFragment page;
+		for(Fragment f:this.mFragments){
+			page=(WeatherHomeFragment)f;
+			int resault=page.refreshView();
+			if(resault == -1){
+				Toast toast=Toast.makeText(this, "咦？手机没信号了？", Toast.LENGTH_SHORT);
+		    	toast.show();
+		    	break;
+			}else if(resault == -111)
+				page.setJson(page.getCityId(), this);
 		}
-
-		@Override
-		public int getCount() {
-			return mFragments.size();
-		}
-
-		@Override
-		public Fragment getItem(int position) {
-			return mFragments.get(position);
-		}
-		
-		@Override
-		public int getItemPosition(Object object) {
-			// TODO Auto-generated method stub
-			return PagerAdapter.POSITION_NONE;
-		}
-
-		@Override
-		public Object instantiateItem(ViewGroup container,int position) {
-
-
-		    Fragment fragment = (Fragment)super.instantiateItem(container,position);
-		    System.out.println("instantiate:"+fragment.getTag());
-		    if(fragment.getTag() != mFragments.get(position).getTag()){
-			    FragmentTransaction ft =fm.beginTransaction();
-			    
-			    String preTag = fragment.getTag(); 
-			    
-
-			    ft.remove(fragment);
-			    fragment=mFragments.get(position);
-
-			    ft.add(container.getId(), fragment, preTag);
-			    ft.attach(fragment);
-			    ft.commit();
-			    fm.executePendingTransactions();
-		    }
-		    return fragment;
-
-		}
-		
-		public void remove(int index){
-			FragmentTransaction ft =fm.beginTransaction();
-			mFragments.remove(index);
-			ArrayList<Fragment> newFragments = new ArrayList<Fragment>();
-			for(Fragment f : mFragments){
-				WeatherHomeFragment ff=(WeatherHomeFragment)f;
-				WeatherHomeFragment newF=new WeatherHomeFragment(ff.getCityId(),myDbHelper,getSlidingMenu());
-				newFragments.add(newF);
-				System.out.println("remove run:oldtag-"+ff.getTag()+"newtag-"+newF.getTag());
-			}
-			mFragments.clear();
-			mFragments.addAll(newFragments);
-			notifyDataSetChanged();
-		}
-		
-		public int getIdAt(int index){
-			WeatherHomeFragment w = (WeatherHomeFragment) mFragments.get(index);
-			return w.getCityId();
-		}
-	}
-	
-	public class MyViewPager extends ViewPager{
-
-	    float preX;
-		public MyViewPager(Context context) {
-			super(context);
-			preX = 0;
-			// TODO Auto-generated constructor stub
-		}
-
-		@Override
-		public boolean onInterceptTouchEvent(MotionEvent event) {
-			// TODO Auto-generated method stub
-			boolean res = super.onInterceptTouchEvent(event);
-			if(event.getAction() == MotionEvent.ACTION_DOWN) {  
-		        preX = event.getX();  
-		    } else {  
-		        if( Math.abs(event.getX() - preX)> 2 ) {  
-		            return true;  
-		        } else {  
-		            preX = event.getX();  
-		        }  
-		    }  
-		    return res; 
-		}
-		
-		
-		
 	}
     
     private void initNotification(){
-
-    
-    	
-    	
     	
     	nManager=(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     	Intent intent=new Intent(this,WeatherMainActivity.class);
@@ -251,21 +159,21 @@ public class WeatherMainActivity extends BaseActivity {
     	remoteViews=new RemoteViews(getPackageName(),R.layout.notification_layout);
     	
     	task=new TimerTask() {
-    				
-    				@Override
-    				public void run() {
-    					// TODO Auto-generated method stub
-    					System.out.println("code"+myListener.getErrcode());
-    					if(myListener.getErrcode()==161&&iflocate==false)
-    					{
-    						handler.sendEmptyMessage(0);
-    					}else if(myListener.getErrcode()!=-1&&myListener.getErrcode()!=161)
-    					{
-    						mLocationClient.start(); 
-    						mLocationClient.requestLocation();
-    					}
-    				}
-    			};
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				System.out.println("code"+myListener.getErrcode());
+				if(myListener.getErrcode()==161&&iflocate==false)
+				{
+					handler.sendEmptyMessage(0);
+				}else if(myListener.getErrcode()!=-1&&myListener.getErrcode()!=161)
+				{
+					mLocationClient.start(); 
+					mLocationClient.requestLocation();
+				}
+			}
+		};
 		handler=new android.os.Handler()
 		 {
 			 @Override
@@ -279,7 +187,7 @@ public class WeatherMainActivity extends BaseActivity {
 					CityWeather cityWeather = null;
 					System.out.println(myListener.getDistrictName());
 					City_ID list=CityDao.getCurrentCityID(myListener.getDistrictName());
-					cityId=list.getId();
+					locId=list.getId();
 					String jsonString=JsonDaoPro.getWeatherJSON(list.getId()+"");
 					if(jsonString!=null)
 					{
@@ -350,7 +258,7 @@ public class WeatherMainActivity extends BaseActivity {
 		 
 	   
 		timer=new Timer();
-		timer.schedule(task,0, 5000);
+		timer.schedule(task,0, 1000);
 		
 		timer2=new Timer();
 		timer2.schedule(new TimerTask() {
@@ -372,8 +280,113 @@ public class WeatherMainActivity extends BaseActivity {
 		 
     }
     
-    public  int getCityId()
+    public  int getLocId()
     {
-    	return cityId;
+    	return locId;
     }
+    
+
+	public ViewPager getVp(){
+		return this.vp;
+	}
+	
+	public class WeatherPagerAdapter extends FragmentPagerAdapter {
+		
+		private ArrayList<Fragment> mFragments;
+		private FragmentManager fm;
+		
+		public WeatherPagerAdapter(FragmentManager fm,ArrayList<Fragment> frag) {
+			super(fm);
+			this.mFragments=frag;
+			this.fm=fm;
+		}
+
+		@Override
+		public int getCount() {
+			return mFragments.size();
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			return mFragments.get(position);
+		}
+		
+		@Override
+		public int getItemPosition(Object object) {
+			// TODO Auto-generated method stub
+			return PagerAdapter.POSITION_NONE;
+		}
+
+		@Override
+		public Object instantiateItem(ViewGroup container,int position) {
+
+
+		    Fragment fragment = (Fragment)super.instantiateItem(container,position);
+		    System.out.println("instantiate:"+fragment.getTag());
+		    if(fragment.getTag() != mFragments.get(position).getTag()){
+			    FragmentTransaction ft =fm.beginTransaction();
+			    
+			    String preTag = fragment.getTag(); 
+			    
+
+			    ft.remove(fragment);
+			    fragment=mFragments.get(position);
+
+			    ft.add(container.getId(), fragment, preTag);
+			    ft.attach(fragment);
+			    ft.commit();
+			    fm.executePendingTransactions();
+		    }
+		    return fragment;
+
+		}
+		
+		public void remove(int index){
+			mFragments.remove(index);
+			ArrayList<Fragment> newFragments = new ArrayList<Fragment>();
+			for(Fragment f : mFragments){
+				WeatherHomeFragment ff=(WeatherHomeFragment)f;
+				WeatherHomeFragment newF=new WeatherHomeFragment(ff.getCityId(),myDbHelper,getSlidingMenu());
+				newFragments.add(newF);
+				System.out.println("remove run:oldtag-"+ff.getTag()+"newtag-"+newF.getTag());
+			}
+			mFragments.clear();
+			mFragments.addAll(newFragments);
+			notifyDataSetChanged();
+		}
+		
+		public int getIdAt(int index){
+			WeatherHomeFragment w = (WeatherHomeFragment) mFragments.get(index);
+			return w.getCityId();
+		}
+	}
+	
+	public class MyViewPager extends ViewPager{
+
+	    float preX;
+		public MyViewPager(Context context) {
+			super(context);
+			preX = 0;
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+		public boolean onInterceptTouchEvent(MotionEvent event) {
+			// TODO Auto-generated method stub
+			boolean res = super.onInterceptTouchEvent(event);
+			if(event.getAction() == MotionEvent.ACTION_DOWN) {  
+		        preX = event.getX();  
+		    } else {  
+		        if( Math.abs(event.getX() - preX)> 2 ) {  
+		            return true;  
+		        } else {  
+		            preX = event.getX();  
+		        }  
+		    }  
+		    return res; 
+		}
+		
+		
+		
+	}
 }
