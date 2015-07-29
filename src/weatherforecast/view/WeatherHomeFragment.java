@@ -259,6 +259,55 @@ public class WeatherHomeFragment extends Fragment {
 		return resault;
 	}
 	
+	private void initListener(){
+
+		RelativeLayout btn7_1=(RelativeLayout)getView().findViewById(R.id.btn_7_1);
+		RelativeLayout btn7_2=(RelativeLayout)getView().findViewById(R.id.btn_7_2);
+		RelativeLayout btn7_3=(RelativeLayout)getView().findViewById(R.id.btn_7_3);
+		RelativeLayout btn7_4=(RelativeLayout)getView().findViewById(R.id.btn_7_4);
+		RelativeLayout btn7_5=(RelativeLayout)getView().findViewById(R.id.btn_7_5);
+		RelativeLayout btn7_6=(RelativeLayout)getView().findViewById(R.id.btn_7_6);
+		RelativeLayout btn7_7=(RelativeLayout)getView().findViewById(R.id.btn_7_7);
+		RelativeLayout zhishu1=(RelativeLayout)getView().findViewById(R.id.zhishu1);
+		RelativeLayout zhishu2=(RelativeLayout)getView().findViewById(R.id.zhishu2);
+		RelativeLayout zhishu3=(RelativeLayout)getView().findViewById(R.id.zhishu3);
+		RelativeLayout zhishu4=(RelativeLayout)getView().findViewById(R.id.zhishu4);
+		RelativeLayout zhishu5=(RelativeLayout)getView().findViewById(R.id.zhishu5);
+		RelativeLayout zhishu6=(RelativeLayout)getView().findViewById(R.id.zhishu6);
+		
+		OnClickListener forecastListener=new OnClickListener(){
+
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				switch(view.getId()){
+				case R.id.btn_7_1:
+					
+					break;
+				case R.id.btn_7_2:
+					
+					break;
+				case R.id.btn_7_3:
+					
+					break;
+				case R.id.btn_7_4:
+									
+					break;
+				case R.id.btn_7_5:
+					
+					break;
+				case R.id.btn_7_6:
+					
+					break;
+				case R.id.btn_7_7:
+					
+					break;
+				}
+			}
+			
+		};
+	}
+	
 	private int initView(View v,boolean isRefresh){
 		String jsonData=getJson(isRefresh);
 		if(jsonData==null)
@@ -266,6 +315,26 @@ public class WeatherHomeFragment extends Fragment {
 		CityWeather cityWeather=JsonDaoPro.parseJson(jsonData);
 		String span=getDateDifference();
 		int screenHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
+		LinearLayout appLayout=(LinearLayout) v.findViewById(R.id.LinearLayout1);
+		int weatherCode=Integer.parseInt(cityWeather.getNcode());
+		switch(weatherCode/100){
+			case 1:
+				appLayout.setBackgroundResource(getResources().getIdentifier("bg1","drawable", getActivity().getPackageName()));
+				break;
+			case 2:
+				appLayout.setBackgroundResource(getResources().getIdentifier("bg2","drawable", getActivity().getPackageName()));
+				break;
+			case 3:
+			case 5:
+				appLayout.setBackgroundResource(getResources().getIdentifier("bg3","drawable", getActivity().getPackageName()));
+				break;
+			case 4:
+				appLayout.setBackgroundResource(getResources().getIdentifier("bg4","drawable", getActivity().getPackageName()));
+				break;
+			default:
+				break;
+			
+		}
 		LinearLayout imagePanel;
 		imagePanel = (LinearLayout)v.findViewById(R.id.imagePanel);
 		LayoutParams p = imagePanel.getLayoutParams();
@@ -286,13 +355,6 @@ public class WeatherHomeFragment extends Fragment {
 		TextView textTomorrowT=(TextView)v.findViewById(R.id.text_tomorrow_T);
 		TextView textTomorrowWind=(TextView)v.findViewById(R.id.text_tomorrow_wind);
 		TextView textTomorrowDescrip=(TextView)v.findViewById(R.id.text_tomorrow_descrip);
-		RelativeLayout btn7_1=(RelativeLayout)v.findViewById(R.id.btn_7_1);
-		RelativeLayout btn7_2=(RelativeLayout)v.findViewById(R.id.btn_7_2);
-		RelativeLayout btn7_3=(RelativeLayout)v.findViewById(R.id.btn_7_3);
-		RelativeLayout btn7_4=(RelativeLayout)v.findViewById(R.id.btn_7_4);
-		RelativeLayout btn7_5=(RelativeLayout)v.findViewById(R.id.btn_7_5);
-		RelativeLayout btn7_6=(RelativeLayout)v.findViewById(R.id.btn_7_6);
-		RelativeLayout btn7_7=(RelativeLayout)v.findViewById(R.id.btn_7_7);
 		
 		TextView text7_1_ch=(TextView)v.findViewById(R.id.text_7_1_ch);
 		ImageView image7_1_max=(ImageView)v.findViewById(R.id.image_7_1_max);
@@ -342,13 +404,6 @@ public class WeatherHomeFragment extends Fragment {
 		TextView text7_7_min=(TextView)v.findViewById(R.id.text_7_7_min);
 		ImageView image7_7_min=(ImageView)v.findViewById(R.id.image_7_7_min);
 		TextView text7_7_date=(TextView)v.findViewById(R.id.text_7_7_date);
-		
-		RelativeLayout zhishu1=(RelativeLayout)v.findViewById(R.id.zhishu1);
-		RelativeLayout zhishu2=(RelativeLayout)v.findViewById(R.id.zhishu2);
-		RelativeLayout zhishu3=(RelativeLayout)v.findViewById(R.id.zhishu3);
-		RelativeLayout zhishu4=(RelativeLayout)v.findViewById(R.id.zhishu4);
-		RelativeLayout zhishu5=(RelativeLayout)v.findViewById(R.id.zhishu5);
-		RelativeLayout zhishu6=(RelativeLayout)v.findViewById(R.id.zhishu6);
 		
 		ImageView image_zhishu1=(ImageView)v.findViewById(R.id.image_zhishu_1);
 		TextView text_zhishu1_name=(TextView)v.findViewById(R.id.text_zhishu_1_name);
@@ -533,7 +588,7 @@ public class WeatherHomeFragment extends Fragment {
 		else if(min>0)
 			dif=min+"煦笘ヶ";
 		else
-			dif="試試";
+			dif="試試芃陔";
 		return dif;
 	}
 	

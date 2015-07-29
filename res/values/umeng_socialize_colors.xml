@@ -16,6 +16,6 @@
 	<color name="bluee">#495A80</color>
 	<color name="divider">#94b2f5</color>
 	<color name="whitee">#FFFFFF</color>
-	<color name="btn_pressed">#536794</color>
+	<color name="btn_pressed">#2FFFFFFF</color>
 	
 </resources>

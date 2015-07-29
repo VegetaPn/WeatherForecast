@@ -9,6 +9,7 @@ import java.util.TimeZone;
 import com.umeng.analytics.MobclickAgent;
 
 
+import weatherforecast.model.CityWeather;
 import weatherforecast.util.ScheduleDBHelper;
 import android.R.integer;
 import android.app.Activity;
@@ -62,7 +63,14 @@ public class ScheduleActivity extends Activity {
 	//得到ListView选中条目的行数，默认从0开始
 	//private int index = 0;
 	private SimpleAdapter adapter;
+	private CityWeather cityWeather;
 	 
+	public ScheduleActivity(CityWeather city) {
+		super();
+		// TODO Auto-generated constructor stub
+		cityWeather=city;
+	}
+	
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
