@@ -70,7 +70,7 @@
             
         </activity>
         <activity android:name="weatherforecast.view.AddCityActivity" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:screenOrientation="portrait"></activity>   
-        <activity android:name="weatherforecast.view.testSucceed" >
+        <activity android:name="weatherforecast.view.ExponentActivity" >
             
            
         </activity>

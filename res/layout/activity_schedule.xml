@@ -50,7 +50,7 @@
 
         <LinearLayout
             android:id="@+id/linearLayout2"
-            android:layout_below="@+id/imageView1"
+            android:layout_below="@+id/image_schedule_weather"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,6 +64,16 @@
                 android:textSize="20sp" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_schedule_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
     </RelativeLayout>
 
     <RelativeLayout

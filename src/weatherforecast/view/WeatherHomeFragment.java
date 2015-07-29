@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +19,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 
@@ -259,62 +261,15 @@ public class WeatherHomeFragment extends Fragment {
 		return resault;
 	}
 	
-	private void initListener(){
 
-		RelativeLayout btn7_1=(RelativeLayout)getView().findViewById(R.id.btn_7_1);
-		RelativeLayout btn7_2=(RelativeLayout)getView().findViewById(R.id.btn_7_2);
-		RelativeLayout btn7_3=(RelativeLayout)getView().findViewById(R.id.btn_7_3);
-		RelativeLayout btn7_4=(RelativeLayout)getView().findViewById(R.id.btn_7_4);
-		RelativeLayout btn7_5=(RelativeLayout)getView().findViewById(R.id.btn_7_5);
-		RelativeLayout btn7_6=(RelativeLayout)getView().findViewById(R.id.btn_7_6);
-		RelativeLayout btn7_7=(RelativeLayout)getView().findViewById(R.id.btn_7_7);
-		RelativeLayout zhishu1=(RelativeLayout)getView().findViewById(R.id.zhishu1);
-		RelativeLayout zhishu2=(RelativeLayout)getView().findViewById(R.id.zhishu2);
-		RelativeLayout zhishu3=(RelativeLayout)getView().findViewById(R.id.zhishu3);
-		RelativeLayout zhishu4=(RelativeLayout)getView().findViewById(R.id.zhishu4);
-		RelativeLayout zhishu5=(RelativeLayout)getView().findViewById(R.id.zhishu5);
-		RelativeLayout zhishu6=(RelativeLayout)getView().findViewById(R.id.zhishu6);
-		
-		OnClickListener forecastListener=new OnClickListener(){
-
-			@Override
-			public void onClick(View view) {
-				// TODO Auto-generated method stub
-				switch(view.getId()){
-				case R.id.btn_7_1:
-					
-					break;
-				case R.id.btn_7_2:
-					
-					break;
-				case R.id.btn_7_3:
-					
-					break;
-				case R.id.btn_7_4:
-									
-					break;
-				case R.id.btn_7_5:
-					
-					break;
-				case R.id.btn_7_6:
-					
-					break;
-				case R.id.btn_7_7:
-					
-					break;
-				}
-			}
-			
-		};
-	}
-	
 	private int initView(View v,boolean isRefresh){
 		String jsonData=getJson(isRefresh);
 		if(jsonData==null)
 			return -1;
-		CityWeather cityWeather=JsonDaoPro.parseJson(jsonData);
+		final CityWeather cityWeather=JsonDaoPro.parseJson(jsonData);
 		String span=getDateDifference();
 		int screenHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
+		
 		LinearLayout appLayout=(LinearLayout) v.findViewById(R.id.LinearLayout1);
 		int weatherCode=Integer.parseInt(cityWeather.getNcode());
 		switch(weatherCode/100){
@@ -338,10 +293,79 @@ public class WeatherHomeFragment extends Fragment {
 		LinearLayout imagePanel;
 		imagePanel = (LinearLayout)v.findViewById(R.id.imagePanel);
 		LayoutParams p = imagePanel.getLayoutParams();
-		p.height=screenHeight/2;
+		p.height=screenHeight/3;
 		imagePanel.setLayoutParams(p);
 		
 		initChart(v,cityWeather);
+		
+		RelativeLayout btn7_1=(RelativeLayout)v.findViewById(R.id.btn_7_1);
+		RelativeLayout btn7_2=(RelativeLayout)v.findViewById(R.id.btn_7_2);
+		RelativeLayout btn7_3=(RelativeLayout)v.findViewById(R.id.btn_7_3);
+		RelativeLayout btn7_4=(RelativeLayout)v.findViewById(R.id.btn_7_4);
+		RelativeLayout btn7_5=(RelativeLayout)v.findViewById(R.id.btn_7_5);
+		RelativeLayout btn7_6=(RelativeLayout)v.findViewById(R.id.btn_7_6);
+		RelativeLayout btn7_7=(RelativeLayout)v.findViewById(R.id.btn_7_7);
+		RelativeLayout zhishu1=(RelativeLayout)v.findViewById(R.id.zhishu1);
+		RelativeLayout zhishu2=(RelativeLayout)v.findViewById(R.id.zhishu2);
+		RelativeLayout zhishu3=(RelativeLayout)v.findViewById(R.id.zhishu3);
+		RelativeLayout zhishu4=(RelativeLayout)v.findViewById(R.id.zhishu4);
+		RelativeLayout zhishu5=(RelativeLayout)v.findViewById(R.id.zhishu5);
+		RelativeLayout zhishu6=(RelativeLayout)v.findViewById(R.id.zhishu6);
+		
+		final WeatherMainActivity mainAct=(WeatherMainActivity)getActivity();
+		/*
+		Button aqi=(Button)v.findViewById(R.id.button_aqi);
+		aqi.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent aqiIntent=new Intent(mainAct,ExponentActivity.class);
+				mainAct.startActivity(aqiIntent);
+			}
+			
+		});
+		*/
+		OnClickListener forecastListener=new OnClickListener(){
+
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(mainAct,ScheduleActivity.class);
+				switch(view.getId()){
+				case R.id.btn_7_1:
+					intent.putExtra("dateString", cityWeather.getDate1());
+					break;
+				case R.id.btn_7_2:
+					intent.putExtra("dateString", cityWeather.getDate2());
+					break;
+				case R.id.btn_7_3:
+					intent.putExtra("dateString", cityWeather.getDate3());
+					break;
+				case R.id.btn_7_4:
+					intent.putExtra("dateString", cityWeather.getDate4());			
+					break;
+				case R.id.btn_7_5:
+					intent.putExtra("dateString", cityWeather.getDate5());
+					break;
+				case R.id.btn_7_6:
+					intent.putExtra("dateString", cityWeather.getDate6());
+					break;
+				case R.id.btn_7_7:
+					intent.putExtra("dateString", cityWeather.getDate7());
+					break;
+				}
+				mainAct.startActivity(intent);
+			}
+			
+		};
+		btn7_1.setOnClickListener(forecastListener);
+		btn7_2.setOnClickListener(forecastListener);
+		btn7_3.setOnClickListener(forecastListener);
+		btn7_4.setOnClickListener(forecastListener);
+		btn7_5.setOnClickListener(forecastListener);
+		btn7_6.setOnClickListener(forecastListener);
+		btn7_7.setOnClickListener(forecastListener);
 		
 		TextView textCityName=(TextView)v.findViewById(R.id.textCityname);
 		TextView lastRefresh=(TextView)v.findViewById(R.id.textLastRefresh);
@@ -436,7 +460,26 @@ public class WeatherHomeFragment extends Fragment {
 		now_min_T.setText(cityWeather.getMin1());
 		nowChinese.setText(cityWeather.getNtxt());
 		nowDescrip.setText(cityWeather.getTxt1());
-		nowWeather.setImageResource(getResources().getIdentifier("d"+cityWeather.getNcode(),"drawable", getActivity().getPackageName()));
+		
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
+		try {
+			Date sunRise=df.parse(cityWeather.getDate1()+" "+cityWeather.getSr1());
+			Date sunDown=df.parse(cityWeather.getDate1()+" "+cityWeather.getSs1());
+			System.out.println("sunrise:"+sunRise);
+			Date now=new Date();
+			if(now.compareTo(sunRise)>0 && now.compareTo(sunDown)<0){
+				nowWeather.setImageResource(getResources().getIdentifier("b"+cityWeather.getNcode(),"drawable", getActivity().getPackageName()));
+			}else{
+				nowWeather.setImageResource(getResources().getIdentifier("c"+cityWeather.getNcode(),"drawable", getActivity().getPackageName()));
+				if(Integer.parseInt(cityWeather.getNcode())/100 == 1){
+					appLayout.setBackgroundResource(getResources().getIdentifier("bg1_n","drawable", getActivity().getPackageName()));
+				}
+			}
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		imageTomorrow.setImageResource(getResources().getIdentifier("d"+cityWeather.getCode_d2(),"drawable", getActivity().getPackageName()));
 		textTomorrowT.setText(cityWeather.getMax2()+"°~"+cityWeather.getMin2()+"°");
 		textTomorrowWind.setText(cityWeather.getDir2()+"/"+cityWeather.getSc2());
@@ -555,7 +598,6 @@ public class WeatherHomeFragment extends Fragment {
 	public String getJson(boolean isRefresh){
 		SharedPreferences mySharedPreferences= getActivity().getSharedPreferences("cityData",Activity.MODE_PRIVATE); 
 		String jsonData=mySharedPreferences.getString(String.valueOf(cityId), "");
-		System.out.println("local:"+jsonData);
 		if(jsonData == "" || isRefresh){
 			System.out.println("get json from server:"+cityId);
 			jsonData=setJson(cityId,getActivity());

@@ -64,12 +64,6 @@ public class ScheduleActivity extends Activity {
 	//private int index = 0;
 	private SimpleAdapter adapter;
 	private CityWeather cityWeather;
-	 
-	public ScheduleActivity(CityWeather city) {
-		super();
-		// TODO Auto-generated constructor stub
-		cityWeather=city;
-	}
 	
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -121,6 +115,11 @@ public class ScheduleActivity extends Activity {
 		} else {
 			nowDate = tmp;
 		}
+		
+
+		TextView textDate=(TextView)findViewById(R.id.text_schedule_date);
+		textDate.setText(nowDate);
+		
 		//根据传入日期将数据库中已有日程数据读取出来并显示在ListView中
 		initListView(nowDate);
 		
