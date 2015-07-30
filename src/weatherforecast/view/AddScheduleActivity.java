@@ -73,7 +73,7 @@ public class AddScheduleActivity extends Activity {
             public void onChange(SwitchButton sb, boolean state) {  
                 // TODO Auto-generated method stub  
                 Log.d("switchButton", state ? "开":"关");  
-                Toast.makeText(AddScheduleActivity.this, state ? "开":"关", Toast.LENGTH_SHORT).show();  
+            //    Toast.makeText(AddScheduleActivity.this, state ? "开":"关", Toast.LENGTH_SHORT).show();  
             }  
         });  
         

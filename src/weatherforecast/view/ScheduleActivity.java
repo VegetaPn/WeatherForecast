@@ -9,7 +9,10 @@ import java.util.TimeZone;
 import com.umeng.analytics.MobclickAgent;
 
 
+import weatherforecast.dao.CityDao;
+import weatherforecast.dao.JsonDaoPro;
 import weatherforecast.model.CityWeather;
+import weatherforecast.model.City_ID;
 import weatherforecast.util.ScheduleDBHelper;
 import android.R.integer;
 import android.app.Activity;
@@ -41,6 +44,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TableLayout;
@@ -115,10 +119,21 @@ public class ScheduleActivity extends Activity {
 		} else {
 			nowDate = tmp;
 		}
-		
+		String cityName=it.getStringExtra("cityName");
+		if(cityName == null){
+			cityName="海淀";
+		}
+		City_ID cityID=CityDao.getCurrentCityID(cityName);
+		cityWeather= JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(cityID.getId()+""));
 
 		TextView textDate=(TextView)findViewById(R.id.text_schedule_date);
 		textDate.setText(nowDate);
+		
+		ImageView scheduleImage=(ImageView)findViewById(R.id.image_schedule_weather);
+		TextView textSchedule=(TextView)findViewById(R.id.text_schedule_T);
+		
+		scheduleImage.setImageResource(getResources().getIdentifier("b"+cityWeather.getCode_d3(),"drawable", this.getPackageName()));
+		textSchedule.setText(cityWeather.getMax3()+"℃~"+cityWeather.getMin3()+"℃");
 		
 		//根据传入日期将数据库中已有日程数据读取出来并显示在ListView中
 		initListView(nowDate);

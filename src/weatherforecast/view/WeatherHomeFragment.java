@@ -355,6 +355,7 @@ public class WeatherHomeFragment extends Fragment {
 					intent.putExtra("dateString", cityWeather.getDate7());
 					break;
 				}
+				intent.putExtra("cityName",cityWeather.getCity());
 				mainAct.startActivity(intent);
 			}
 			

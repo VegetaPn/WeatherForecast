@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="240dp"
-    android:background="@drawable/widgetback"
-    android:orientation="vertical" >
+    android:background="@drawable/bgw1"
+    android:orientation="vertical"
+    android:padding="8dp" >
     
     <LinearLayout 
         android:layout_width="match_parent"
@@ -18,23 +19,25 @@
           android:layout_weight="2"
           android:orientation="vertical" 
           >
-            <TextView 
-             android:id="@+id/bigwidgetTextviewtime"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_weight="3"
-             android:text="15:18"
-             android:textSize="60sp"
-             />
+
+            <TextView
+                android:id="@+id/bigwidgetTextviewtime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="15:18"
+                android:textColor="@color/whitee"
+                android:textSize="60sp" />
             
-            <TextView 
-             android:id="@+id/bigwidgetTextviewdate"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:text="7月24日  周三"
-             android:textSize="20sp"
-             />
+            <TextView
+                android:id="@+id/bigwidgetTextviewdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="7月24日  周三"
+                android:textColor="@color/whitee"
+                android:textSize="20sp" />
+
             <LinearLayout 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,25 +49,28 @@
                 android:layout_width="20dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/location" />    
-            <TextView 
-             android:id="@+id/bigwidgetTextviewlocation"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:text="海淀区"
-             android:textSize="20sp"
-             />
+
+            <TextView
+                android:id="@+id/bigwidgetTextviewlocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="海淀区"
+                android:textColor="@color/whitee"
+                android:textSize="20sp" />
+
             </LinearLayout>
             
-            
-            <TextView 
-             android:id="@+id/bigwidgetTextviewschedule"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:textSize="20sp"
-             android:text="您有两个日程"
-             />
+            <TextView
+                android:id="@+id/bigwidgetTextviewschedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="您有两个日程"
+                android:textColor="@color/whitee"
+                android:textSize="20sp" />
+
         </LinearLayout>
         
         <LinearLayout
@@ -76,7 +82,8 @@
             <ImageView
                 android:id="@+id/imageViewwidgetbigtoday"
                 android:layout_width="146dp"
-                android:layout_height="92dp"
+                android:layout_height="85dp"
+                android:scaleType="fitCenter"
                 android:src="@drawable/d100" />
             
            <LinearLayout 
@@ -87,28 +94,32 @@
            >
             
            <TextView
-            android:id="@+id/bigwidgetTextviewtempNow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:text="30 " />
-            <TextView 
-             android:id="@+id/bigwidgetTextviewtemp"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:text="30-20"
-             android:textSize="20sp"
-             />
+               android:id="@+id/bigwidgetTextviewtempNow"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="30 "
+               android:textColor="@color/whitee"
+               android:textSize="25sp" />
+
+           <TextView
+               android:id="@+id/bigwidgetTextviewtempdes"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:text="多云"
+               android:textColor="@color/whitee"
+               android:textSize="18sp" />
+
             </LinearLayout>
-            <TextView 
-             android:id="@+id/bigwidgetTextviewtempdes"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:text="多云"
-             android:textSize="18sp"
-             />
+
+           <TextView
+               android:id="@+id/bigwidgetTextviewtemp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:text="30-20"
+               android:textColor="@color/whitee"
+               android:textSize="15sp" />
             
         </LinearLayout>
     </LinearLayout>
@@ -141,18 +152,21 @@
            android:gravity="center_vertical"
            android:orientation="vertical" 
            >
-             <TextView 
-             android:id="@+id/bigwidgetTextviewtomorrow"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="明日"
-             />
+
+             <TextView
+                 android:id="@+id/bigwidgetTextviewtomorrow"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="明日"
+                 android:textColor="@color/whitee" />
           
              <TextView
-              android:id="@+id/bigwidgetTextviewtomorrowtemp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="30-20" />
+                 android:id="@+id/bigwidgetTextviewtomorrowtemp"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="30-20"
+                 android:textColor="@color/whitee" />
+
            </LinearLayout>
         
          </LinearLayout>
@@ -175,18 +189,21 @@
            android:layout_weight="1"
            android:orientation="vertical" 
            >
-             <TextView 
-             android:id="@+id/bigwidgetTextviewtomorrow2"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="明日"
-             />
+
+             <TextView
+                 android:id="@+id/bigwidgetTextviewtomorrow2"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="明日"
+                 android:textColor="@color/whitee" />
           
              <TextView
-              android:id="@+id/bigwidgetTextviewtomorrowtemp2"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="30-20" />
+                 android:id="@+id/bigwidgetTextviewtomorrowtemp2"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="30-20"
+                 android:textColor="@color/whitee" />
+
            </LinearLayout> 
         </LinearLayout>
         
@@ -209,18 +226,21 @@
            android:gravity="center_vertical"
            android:layout_weight="1"
            >
-             <TextView 
-             android:id="@+id/bigwidgetTextviewtomorrow3"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="明日"
-             />
+
+             <TextView
+                 android:id="@+id/bigwidgetTextviewtomorrow3"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="明日"
+                 android:textColor="@color/whitee" />
           
              <TextView
-              android:id="@+id/bigwidgetTextviewtomorrowtemp3"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="30-20" />
+                 android:id="@+id/bigwidgetTextviewtomorrowtemp3"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="30-20"
+                 android:textColor="@color/whitee" />
+
            </LinearLayout>  
         </LinearLayout>
         

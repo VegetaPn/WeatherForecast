@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="105dp"
-    android:layout_gravity="center_horizontal"  
-    android:background="@drawable/widgetback"
-    android:orientation="horizontal" >
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/bgw2"
+    android:orientation="horizontal"
+    android:padding="5dp" >
 
     <LinearLayout
         android:layout_width="106dp"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:gravity="right"
         android:orientation="vertical" >
 
@@ -17,21 +19,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="17:30"
+            android:textColor="@color/whitee"
             android:textSize="32sp" />
 
         <TextView
             android:id="@+id/textViewWidgetTime2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp" 
-            android:text="星期五" />
+            android:text="星期五"
+            android:textColor="@color/whitee"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/textViewWidgetDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:textSize="15sp"
-            android:text="7月17日" />
+            android:text="7月17日"
+            android:textColor="@color/whitee"
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -49,10 +54,12 @@
                 android:id="@+id/widgetTextviewCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_vertical"
                 android:gravity="center_horizontal"
-                 android:textSize="15sp"
-                android:text="思密达" />
+                android:text="思密达"
+                android:textColor="@color/whitee"
+                android:textSize="15sp" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -63,47 +70,52 @@
         android:layout_height="match_parent"
         android:src="@drawable/d100" />
 
-    <LinearLayout 
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:layout_weight="1"
-       
-       >
-
-        <LinearLayout 
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"       
-       >
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal" >
             
         <TextView
             android:id="@+id/textViewWidgetTempNow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:textSize="28sp"
-            android:text="30 " />
+            android:text="30 "
+            android:textColor="@color/whitee"
+            android:textSize="30sp" />
+
         <TextView
             android:id="@+id/textViewWidgetTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:textSize="24sp"
-            android:text="20-30" />
+            android:text="20-30"
+            android:textColor="@color/whitee"
+            android:textSize="15sp" />
+
         </LinearLayout>
 
         <TextView
             android:id="@+id/textViewWidgetWeather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:textSize="20dp"
-            android:text="晴朗" />
+            android:text="晴朗"
+            android:textColor="@color/whitee"
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/textViewWidgetIndex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:textSize="15sp"
-            android:text="适合不穿衣服" />
+            android:text="适合不穿衣服"
+            android:textColor="@color/whitee"
+            android:textSize="15sp" />
         
     </LinearLayout>
     
