@@ -36,10 +36,11 @@ public class NotiService {
 		Intent intent = new Intent(m_context, WeatherMainActivity.class);
 		PendingIntent pi = PendingIntent.getActivity(m_context, 0, intent, 0);
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(m_context); 
+		int id=m_context.getResources().getIdentifier("warning","drawable", m_context.getPackageName());
 		mBuilder
 			.setAutoCancel(false)
 			.setTicker(title)
-			.setSmallIcon(R.drawable.btn_star_big_on)
+			.setSmallIcon(id)
 			.setContentTitle(title)
 			.setContentText(msg)
 			.setWhen(System.currentTimeMillis())

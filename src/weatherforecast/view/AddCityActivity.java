@@ -69,18 +69,11 @@ public class AddCityActivity  extends Activity{
 					toast.show();
 					
 				}
-				//System.out.println("dianji"+list.get(arg2).getNamecn());
 				
 			}
 		});
         
-//        TextView t = new TextView(this);
-//        t.setText("当前定位城市");
-//        linearLayout.addView(t);
-//        t = new TextView(this);
-//        t.setText("热门城市列表");
-//        linearLayout.addView(t);    
-        
+
         edit.setOnClickListener(new OnClickListener() {
 			
 			@Override
