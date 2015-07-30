@@ -13,6 +13,7 @@ import weatherforecast.dao.JsonDaoPro;
 import weatherforecast.model.CityWeather;
 import weatherforecast.model.City_ID;
 import weatherforecast.service.MyLocationListener;
+import weatherforecast.service.NotiService;
 import weatherforecast.util.CreateDB;
 
 import android.app.Activity;
@@ -158,6 +159,8 @@ public class WeatherMainActivity extends BaseActivity {
     	
     	remoteViews=new RemoteViews(getPackageName(),R.layout.notification_layout);
     	
+    	final NotiService notiService=new NotiService(getApplicationContext());
+    	
     	task=new TimerTask() {
 			
 			@Override
@@ -218,6 +221,8 @@ public class WeatherMainActivity extends BaseActivity {
 				    	notification.contentIntent=pIntent;
 				    	notification.flags |= Notification.FLAG_ONGOING_EVENT; 
 				    	nManager.notify(0, notification);
+				    	
+				    	notiService.showNotify("实时提醒","今日天气："+cityWeather.getNtxt()+"。请做好防范");
 				    	iflocate=true;
 				    	task.cancel();
 					}

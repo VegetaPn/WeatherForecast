@@ -54,7 +54,6 @@ public class WeatherWidget extends AppWidgetProvider{
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 		this.context=context;
 		
-			 
 		 
 		myListener = new MyLocationListener();
 		LocationClientOption option = new LocationClientOption(); 
@@ -66,7 +65,7 @@ public class WeatherWidget extends AppWidgetProvider{
 		mLocationClient.requestLocation();
 		iflocate=false;	     
 	     
-//		//…Ë÷√remoteVeiw
+ 		//…Ë÷√remoteVeiw
 		RemoteViews rViews=new RemoteViews(context.getPackageName(), R.layout.widget_layout);
 
 				
