@@ -23,6 +23,8 @@ public class CityDao {
 	}
 	public static City_ID getCurrentCityID(String name){//根据定位城市的名称获取实体类
 		String name1=(String) name.subSequence(0, name.length()-1);
+		if(CityDao.getIDByNameCN1(name1).size() == 0)
+			return null;
 		return CityDao.getIDByNameCN1(name1).get(0);
 		
 	}

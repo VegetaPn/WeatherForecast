@@ -189,7 +189,15 @@ public class WeatherMainActivity extends BaseActivity {
 			    	
 					CityWeather cityWeather = null;
 					System.out.println(myListener.getDistrictName());
-					City_ID list=CityDao.getCurrentCityID(myListener.getDistrictName());
+					String name=myListener.getDistrictName();
+					City_ID list=CityDao.getCurrentCityID(name);
+					System.out.println(list);
+					
+					if(list == null){
+						System.out.println("获取城市位置");
+						name=myListener.getCityName();
+						list=CityDao.getCurrentCityID(name);
+					}
 					locId=list.getId();
 					String jsonString=JsonDaoPro.getWeatherJSON(list.getId()+"");
 					if(jsonString!=null)
@@ -230,8 +238,14 @@ public class WeatherMainActivity extends BaseActivity {
 					
 				}else if(msg.what==0x123)
 				{
+					String name=myListener.getDistrictName();
+					City_ID list=CityDao.getCurrentCityID(name);					
+					if(list == null){
+						System.out.println("获取城市位置");
+						name=myListener.getCityName();
+						list=CityDao.getCurrentCityID(name);
+					}
 					
-					City_ID list=CityDao.getCurrentCityID(myListener.getDistrictName());
 					CityWeather cityWeather = JsonDaoPro.parseJson(JsonDaoPro.getWeatherJSON(list.getId()+""));
 					if(cityWeather!=null)
 					{

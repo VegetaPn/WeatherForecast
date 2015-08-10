@@ -117,7 +117,13 @@ public class WeatherWidget extends AppWidgetProvider{
 						
 						CityWeather cityWeather = null;
 						System.out.println(myListener.getDistrictName());
-						City_ID list=CityDao.getCurrentCityID(myListener.getDistrictName());
+						String name=myListener.getDistrictName();
+						City_ID list=CityDao.getCurrentCityID(name);					
+						if(list == null){
+							System.out.println("获取城市位置");
+							name=myListener.getCityName();
+							list=CityDao.getCurrentCityID(name);
+						}
 						String jsonString=JsonDaoPro.getWeatherJSON(list.getId()+"");
 						if(jsonString!=null)
 						{

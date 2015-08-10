@@ -19,8 +19,10 @@ import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.UndoAd
 import weatherforecast.dao.CityDao;
 import weatherforecast.model.City_ID;
 import weatherforecast.util.CreateDB;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -94,6 +96,7 @@ public class CityListFragment extends ListFragment {
 			            for (int position : reverseSortedPositions) {
 			            	listAdapter.remove(nameList.get(position));
 			            	WeatherMainActivity mainAct= (WeatherMainActivity) getActivity();
+			            	removeKey(mainAct.adapter.getIdAt(position+1));
 			            	CityDao.deleteCity(mainAct.adapter.getIdAt(position+1));
 			    			mainAct.adapter.remove(position+1);
 			            }
@@ -162,6 +165,14 @@ public class CityListFragment extends ListFragment {
 			pager.getVp().setCurrentItem(position, false);
 			pager.getSlidingMenu().showContent();
 		}
+	}
+	
+	public void removeKey(int id){
+		SharedPreferences mySharedPreferences= getActivity().getSharedPreferences("cityData",Activity.MODE_PRIVATE); 
+		SharedPreferences.Editor edit = mySharedPreferences.edit();
+		edit.remove(String.valueOf(id));
+		edit.remove(String.valueOf(id)+"-l");
+		edit.commit();
 	}
 	
 	public class MyListAdapter<T> extends ArrayAdapter<T> implements UndoAdapter {
